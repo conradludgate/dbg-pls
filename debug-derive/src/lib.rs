@@ -6,6 +6,9 @@ use syn::{
     DeriveInput, Fields, FieldsNamed, FieldsUnnamed, Path, Variant,
 };
 
+/// Derives the standard `DebugPls` implementation.
+///
+/// Works exactly like [`Debug`]
 #[proc_macro_derive(DebugPls, attributes(dbg_pls))]
 pub fn derive(input: TokenStream) -> TokenStream {
     DebugImpl(parse_macro_input!(input as DeriveInput))
