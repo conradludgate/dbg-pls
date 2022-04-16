@@ -1,6 +1,6 @@
 [package]
 name = "dbg-pls-derive"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Conrad Ludgate <conradludgate@gmail.com>"]
 edition = "2018"
 description = "derive(Debug)"

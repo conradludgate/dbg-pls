@@ -22,7 +22,7 @@ impl<'a> DebugStruct<'a> {
         }
     }
 
-    pub fn field(mut self, name: &str, value: &dyn DebugPls) -> DebugStruct<'a> {
+    pub fn field(mut self, name: &str, value: &dyn DebugPls) -> Self {
         self.expr.fields.push(syn::FieldValue {
             expr: Formatter::process(value),
             attrs: vec![],
@@ -33,7 +33,7 @@ impl<'a> DebugStruct<'a> {
     }
 
     pub fn finish(self) {
-        *self.formatter.expr = syn::Expr::Struct(self.expr);
+        self.formatter.write_expr(self.expr);
     }
 
     pub fn finish_non_exhaustive(mut self) {

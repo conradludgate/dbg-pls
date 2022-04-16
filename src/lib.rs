@@ -41,16 +41,19 @@
 
 use debug_list::DebugList;
 use debug_struct::DebugStruct;
-use syn::__private::TokenStream2;
+use debug_tuple::DebugTuple;
+use syn::__private::{Span, TokenStream2};
 
 mod debug_list;
 mod debug_struct;
+mod debug_tuple;
 mod impls;
 #[cfg(feature = "pretty")]
 mod pretty;
 #[cfg(feature = "pretty")]
 pub use pretty::debug;
 
+pub use dbg_pls_derive::DebugPls;
 
 /// Syntax aware pretty-printed debug formatting.
 ///
@@ -79,8 +82,19 @@ impl<'a> Formatter<'a> {
     pub fn debug_struct(self, name: &str) -> DebugStruct<'a> {
         DebugStruct::new(self, name)
     }
+    pub fn debug_tuple(self, name: &str) -> DebugTuple<'a> {
+        DebugTuple::new(self, name)
+    }
     pub fn debug_list(self) -> DebugList<'a> {
         DebugList::new(self)
+    }
+    pub fn debug_ident(self, name: &str) {
+        let path: syn::Path = syn::Ident::new(name, Span::call_site()).into();
+        self.write_expr(syn::ExprPath {
+            attrs: vec![],
+            qself: None,
+            path,
+        })
     }
 }
 
@@ -88,19 +102,11 @@ impl<'a> Formatter<'a> {
 mod tests {
     use super::*;
 
-    #[derive(Copy, Clone)]
+    #[derive(DebugPls, Copy, Clone)]
+    #[dbg_pls(crate = "crate")]
     pub struct Demo {
         foo: i32,
         bar: &'static str,
-    }
-
-    impl DebugPls for Demo {
-        fn fmt(&self, f: Formatter<'_>) {
-            f.debug_struct("Demo")
-                .field("foo", &self.foo)
-                .field("bar", &self.bar)
-                .finish()
-        }
     }
 
     #[test]
