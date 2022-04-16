@@ -60,4 +60,5 @@ val[6].bar = "Hello, world! I am a very long string";
 println!("{}", color(&val));
 ```
 Outputs:
+
 ![](readme/highlighted.png)

@@ -17,7 +17,8 @@
 //! let mut val = [Demo { foo: 5, bar: "hello" }; 10];
 //! val[6].bar = "Hello, world! I am a very long string";
 //!
-//! assert_eq!(debug(&val).to_string(), r#"[
+//! let output = format!("{}", debug(&val));
+//! let expected = r#"[
 //!     Demo { foo: 5, bar: "hello" },
 //!     Demo { foo: 5, bar: "hello" },
 //!     Demo { foo: 5, bar: "hello" },
@@ -31,7 +32,9 @@
 //!     Demo { foo: 5, bar: "hello" },
 //!     Demo { foo: 5, bar: "hello" },
 //!     Demo { foo: 5, bar: "hello" },
-//! ]"#);
+//! ]"#;
+//!
+//! assert_eq!(output, expected);
 //! ```
 //!
 //! # Example with highlighting
@@ -51,7 +54,8 @@
 //! println!("{}", color(&val));
 //! ```
 //! Outputs:
-//! ![](https://github.com/conradludgate/dbg-pls/readme/highlighted.png)
+//!
+//! ![](https://raw.githubusercontent.com/conradludgate/dbg-pls/5dee03187a3f83693739e0288d56da5980e1d486/readme/highlighted.png)
 
 use syn::__private::{Span, TokenStream2};
 
@@ -161,10 +165,6 @@ mod tests {
             bar: "hello",
         }; 10];
         val[6].bar = "Hello, world! I am a very long string";
-
-        println!("{}", color(&val));
-
-        panic!("");
 
         assert_eq!(
             debug(&val).to_string(),
