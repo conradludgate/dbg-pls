@@ -6,18 +6,13 @@
 //! # Example usage
 //!
 //! ```
-//! use dbg_pls::debug;
-//! # #[derive(Copy, Clone)]
-//! # pub struct Demo {
-//! #     foo: i32,
-//! #     bar: &'static str,
-//! # }
-
-//! # impl dbg_pls::DebugPls for Demo {
-//! #     fn fmt(&self, f: dbg_pls::Formatter<'_>) {
-//! #         f.debug_struct("Demo").field("foo", &self.foo).field("bar", &self.bar).finish()
-//! #     }
-//! # }
+//! use dbg_pls::{debug, DebugPls};
+//!
+//! #[derive(DebugPls, Copy, Clone)]
+//! pub struct Demo {
+//!     foo: i32,
+//!     bar: &'static str,
+//! }
 //!
 //! let mut val = [Demo { foo: 5, bar: "hello" }; 10];
 //! val[6].bar = "Hello, world! I am a very long string";
@@ -38,20 +33,46 @@
 //!     Demo { foo: 5, bar: "hello" },
 //! ]"#);
 //! ```
+//!
+//! # Example with highlighting
+//!
+//! ```
+//! use dbg_pls::{color, DebugPls};
+//!
+//! #[derive(DebugPls, Copy, Clone)]
+//! pub struct Demo {
+//!     foo: i32,
+//!     bar: &'static str,
+//! }
+//!
+//! let mut val = [Demo { foo: 5, bar: "hello" }; 10];
+//! val[6].bar = "Hello, world! I am a very long string";
+//!
+//! println!("{}", color(&val));
+//! ```
+//! Outputs:
+//! ![](https://github.com/conradludgate/dbg-pls/readme/highlighted.png)
 
-use debug_list::DebugList;
-use debug_struct::DebugStruct;
-use debug_tuple::DebugTuple;
 use syn::__private::{Span, TokenStream2};
+
+mod impls;
 
 mod debug_list;
 mod debug_struct;
 mod debug_tuple;
-mod impls;
+use debug_list::DebugList;
+use debug_struct::DebugStruct;
+use debug_tuple::DebugTuple;
+
 #[cfg(feature = "pretty")]
 mod pretty;
 #[cfg(feature = "pretty")]
 pub use pretty::debug;
+
+#[cfg(feature = "colors")]
+mod colors;
+#[cfg(feature = "colors")]
+pub use colors::color;
 
 pub use dbg_pls_derive::DebugPls;
 
@@ -140,6 +161,11 @@ mod tests {
             bar: "hello",
         }; 10];
         val[6].bar = "Hello, world! I am a very long string";
+
+        println!("{}", color(&val));
+
+        panic!("");
+
         assert_eq!(
             debug(&val).to_string(),
             r#"[

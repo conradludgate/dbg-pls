@@ -1,54 +1,85 @@
-use syn::__private::Span;
+// use bat::PrettyPrinter;
 
-use crate::{DebugPls, Formatter};
+// use crate::{pretty::process, DebugPls};
 
-pub(crate) fn process(value: &dyn DebugPls) -> String {
-    let output = prettyplease::unparse(&syn::File {
-        shebang: None,
-        attrs: vec![],
-        items: vec![syn::Item::Const(syn::ItemConst {
-            expr: Box::new(Formatter::process(value)),
-            // junk...
-            attrs: vec![],
-            vis: syn::Visibility::Inherited,
-            const_token: syn::token::Const::default(),
-            ident: syn::Ident::new("_", Span::call_site()),
-            colon_token: syn::token::Colon::default(),
-            ty: Box::new(syn::Type::Tuple(syn::TypeTuple {
-                paren_token: syn::token::Paren::default(),
-                elems: syn::punctuated::Punctuated::default(),
-            })),
-            eq_token: syn::token::Eq::default(),
-            semi_token: syn::token::Semi::default(),
-        })],
-    });
+// /// Prints the pretty printed code to stdout
+// pub fn print_colorful(value: &dyn DebugPls) {
+//     let output = process(value);
+//     let _ = PrettyPrinter::new()
+//         .input_from_bytes(output.as_bytes())
+//         .language("rust")
+//         .line_numbers(true)
+//         .print();
+// }
 
-    // strip out the junk
-    let output = &output[14..];
-    let output = &output[..output.len() - 2];
-    textwrap::dedent(output)
+use std::io::Cursor;
+
+use once_cell::sync::OnceCell;
+use syntect::{
+    highlighting::{Theme, ThemeSet},
+    parsing::{SyntaxDefinition, SyntaxSet, SyntaxSetBuilder},
+};
+
+use crate::{pretty::process, DebugPls};
+
+fn syntax() -> &'static SyntaxSet {
+    static INSTANCE: OnceCell<SyntaxSet> = OnceCell::new();
+    INSTANCE.get_or_init(|| {
+        let mut syntax_set = SyntaxSetBuilder::new();
+        syntax_set.add(
+            SyntaxDefinition::load_from_str(
+                include_str!("../assets/syntaxes/Rust/Rust.sublime-syntax"),
+                true,
+                None,
+            )
+            .unwrap(),
+        );
+        syntax_set.build()
+    })
 }
 
-struct PolyFill(dyn DebugPls);
+fn theme() -> &'static Theme {
+    static INSTANCE: OnceCell<Theme> = OnceCell::new();
+    INSTANCE.get_or_init(|| {
+        let s = include_str!("../assets/themes/sublime-monokai-extended/Monokai Extended.tmTheme");
+        ThemeSet::load_from_reader(&mut Cursor::new(s.as_bytes())).unwrap()
+    })
+}
 
-impl std::fmt::Debug for PolyFill {
+struct ColorFill(dyn DebugPls);
+
+impl std::fmt::Debug for ColorFill {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(&process(&self.0))
+        use syntect::easy::HighlightLines;
+        use syntect::util::{as_24_bit_terminal_escaped, LinesWithEndings};
+
+        let ps = syntax();
+
+        let syntax = ps.find_syntax_by_name("Rust").unwrap();
+        let mut h = HighlightLines::new(syntax, theme());
+
+        let s = process(&self.0);
+
+        for line in LinesWithEndings::from(&s) {
+            let ranges = h.highlight(line, ps);
+            write!(f, "{}", as_24_bit_terminal_escaped(&ranges[..], false))?;
+        }
+        write!(f, "\x1b[0m")
     }
 }
 
-impl std::fmt::Display for PolyFill {
+impl std::fmt::Display for ColorFill {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Debug::fmt(self, f)
     }
 }
 
 /// Wraps a [`Debug`] type into a [`std::fmt::Debug`] type for use in regular [`format!`]
-pub fn debug(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display + '_ {
+pub fn color(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display + '_ {
     debug_impl(value)
 }
 
-fn debug_impl(value: &dyn DebugPls) -> &PolyFill {
+fn debug_impl(value: &dyn DebugPls) -> &ColorFill {
     unsafe { std::mem::transmute(value) }
 }
 
@@ -91,7 +122,7 @@ fn debug_impl(value: &dyn DebugPls) -> &PolyFill {
 /// [stderr]: https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)
 /// [`debug!`]: https://docs.rs/log/*/log/macro.debug.html
 /// [`log`]: https://crates.io/crates/log
-macro_rules! dbg_pls {
+macro_rules! color_pls {
     () => {
         ::std::eprintln!("[{}:{}]", ::std::file!(), ::std::line!())
     };
@@ -99,7 +130,7 @@ macro_rules! dbg_pls {
         match $val {
             tmp => {
                 ::std::eprintln!("[{}:{}] {} = {:#?}",
-                    ::std::file!(), ::std::line!(), ::std::stringify!($val), $crate::debug(&tmp));
+                    ::std::file!(), ::std::line!(), ::std::stringify!($val), $crate::color(&tmp));
                 tmp
             }
         }
