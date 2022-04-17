@@ -1,31 +1,24 @@
-use syn::__private::Span;
-
 use crate::{DebugPls, Formatter};
 
 pub struct DebugTuple<'a> {
     formatter: Formatter<'a>,
-    expr: syn::ExprCall,
+    expr: syn::ExprTuple,
 }
 
 impl<'a> DebugTuple<'a> {
-    pub(crate) fn new(formatter: Formatter<'a>, name: &str) -> Self {
+    pub(crate) fn new(formatter: Formatter<'a>) -> Self {
         DebugTuple {
             formatter,
-            expr: syn::ExprCall {
+            expr: syn::ExprTuple {
                 attrs: vec![],
-                func: Box::new(syn::Expr::Path(syn::ExprPath {
-                    attrs: vec![],
-                    qself: None,
-                    path: syn::Ident::new(name, Span::call_site()).into(),
-                })),
                 paren_token: syn::token::Paren::default(),
-                args: syn::punctuated::Punctuated::new(),
+                elems: syn::punctuated::Punctuated::new(),
             },
         }
     }
 
     pub fn field(mut self, value: &dyn DebugPls) -> Self {
-        self.expr.args.push(Formatter::process(value));
+        self.expr.elems.push(Formatter::process(value));
         self
     }
 

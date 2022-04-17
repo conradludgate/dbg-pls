@@ -176,7 +176,7 @@ impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a FieldsUnnamed)> {
 
         tokens.extend(quote! {
             let #ident #pat = self;
-            f.debug_tuple(#name)
+            f.debug_tuple_struct(#name)
         });
         unnamed_idents(fields).for_each(|ident| {
             tokens.extend(quote! {
