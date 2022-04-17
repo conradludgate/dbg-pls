@@ -6,7 +6,7 @@ use crate::{DebugPls, Formatter};
 /// # Examples
 ///
 /// ```rust
-/// use dbg_pls::{debug, DebugPls, Formatter};
+/// use dbg_pls::{pretty, DebugPls, Formatter};
 /// use std::collections::BTreeSet;
 ///
 /// struct Foo(BTreeSet<String>);
@@ -21,7 +21,7 @@ use crate::{DebugPls, Formatter};
 ///     "World".to_string(),
 /// ]));
 /// assert_eq!(
-///     format!("{}", debug(&value)),
+///     format!("{}", pretty(&value)),
 /// "{
 ///     \"Hello\";
 ///     \"World\"

@@ -3,4 +3,4 @@
 	url = https://github.com/jonschlinkert/sublime-monokai-extended
 [submodule "assets/syntaxes"]
 	path = assets/syntaxes
-	url = https://github.com/sublimehq/Packages/
+	url = https://github.com/sublimehq/Packages

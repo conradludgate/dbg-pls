@@ -2,12 +2,19 @@ use syn::__private::Span;
 
 use crate::{DebugPls, Formatter};
 
-pub(crate) fn process(value: &dyn DebugPls) -> String {
-    let output = prettyplease::unparse(&syn::File {
+pub(crate) fn pretty_string(expr: syn::Expr) -> String {
+    // unparse requires a `syn::File`, so we are forced to wrap
+    // our expression in some junk. This is equivalent to
+    // ```rust
+    // const _: () = {
+    //     #expr
+    // };
+    // ```
+    let file = syn::File {
         shebang: None,
         attrs: vec![],
         items: vec![syn::Item::Const(syn::ItemConst {
-            expr: Box::new(Formatter::process(value)),
+            expr: Box::new(expr),
             // junk...
             attrs: vec![],
             vis: syn::Visibility::Inherited,
@@ -21,7 +28,8 @@ pub(crate) fn process(value: &dyn DebugPls) -> String {
             eq_token: syn::token::Eq::default(),
             semi_token: syn::token::Semi::default(),
         })],
-    });
+    };
+    let output = prettyplease::unparse(&file);
 
     // strip out the junk
     let output = &output[14..];
@@ -29,15 +37,25 @@ pub(crate) fn process(value: &dyn DebugPls) -> String {
     textwrap::dedent(output)
 }
 
-struct PolyFill<'a>(&'a dyn DebugPls);
+/// Implementation detail for the `pretty!` macro
+pub struct Str<'a>(pub &'a str);
 
-impl<'a> std::fmt::Debug for PolyFill<'a> {
+impl<'a> std::fmt::Display for Str<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(&process(&self.0))
+        let expr = syn::parse_str(self.0).map_err(|_| std::fmt::Error)?;
+        f.write_str(&pretty_string(expr))
     }
 }
 
-impl<'a> std::fmt::Display for PolyFill<'a> {
+struct Pretty<'a>(&'a dyn DebugPls);
+
+impl<'a> std::fmt::Debug for Pretty<'a> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(&pretty_string(Formatter::process(self.0)))
+    }
+}
+
+impl<'a> std::fmt::Display for Pretty<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Debug::fmt(self, f)
     }
@@ -45,8 +63,8 @@ impl<'a> std::fmt::Display for PolyFill<'a> {
 
 #[cfg_attr(docsrs, doc(cfg(feature = "pretty")))]
 /// Wraps a [`Debug`] type into a [`std::fmt::Debug`] type for use in regular [`format!`]
-pub fn debug(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display + '_ {
-    PolyFill(value)
+pub fn pretty(value: &impl DebugPls) -> impl std::fmt::Debug + std::fmt::Display + '_ {
+    Pretty(value)
 }
 
 #[cfg_attr(docsrs, doc(cfg(feature = "pretty")))]
@@ -57,9 +75,9 @@ pub fn debug(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display +
 /// An example:
 ///
 /// ```rust
-/// # use dbg_pls::dbg_pls;
+/// # use dbg_pls::pretty;
 /// let a = 2;
-/// let b = dbg_pls!(a * 2) + 1;
+/// let b = pretty!(a * 2) + 1;
 /// //      ^-- prints: [src/main.rs:2] a * 2 = 4
 /// assert_eq!(b, 5);
 /// ```
@@ -72,10 +90,10 @@ pub fn debug(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display +
 /// Invoking the macro on an expression moves and takes ownership of it
 /// before returning the evaluated expression unchanged. If the type
 /// of the expression does not implement `Copy` and you don't want
-/// to give up ownership, you can instead borrow with `dbg!(&expr)`
+/// to give up ownership, you can instead borrow with `pretty!(&expr)`
 /// for some expression `expr`.
 ///
-/// The `dbg_pls!` macro works exactly the same in release builds.
+/// The `pretty!` macro works exactly the same in release builds.
 /// This is useful when debugging issues that only occur in release
 /// builds or when debugging in release mode is significantly faster.
 ///
@@ -88,20 +106,44 @@ pub fn debug(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display +
 /// [stderr]: https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)
 /// [`debug!`]: https://docs.rs/log/*/log/macro.debug.html
 /// [`log`]: https://crates.io/crates/log
-macro_rules! dbg_pls {
+macro_rules! pretty {
     () => {
         ::std::eprintln!("[{}:{}]", ::std::file!(), ::std::line!())
     };
     ($val:expr $(,)?) => {
         match $val {
             tmp => {
-                ::std::eprintln!("[{}:{}] {} = {:#?}",
-                    ::std::file!(), ::std::line!(), ::std::stringify!($val), $crate::debug(&tmp));
+                ::std::eprintln!(
+                    "[{}:{}] {} => {}",
+                    ::std::file!(),
+                    ::std::line!(),
+                    $crate::__private::PrettyStr(::std::stringify!($val)),
+                    $crate::pretty(&tmp)
+                );
                 tmp
             }
         }
     };
     ($($val:expr),+ $(,)?) => {
-        ($($crate::dbg_pls!($val)),+,)
+        ($($crate::pretty!($val)),+,)
     };
+}
+
+#[cfg(test)]
+mod tests {
+    use std::collections::HashMap;
+
+    use crate::pretty;
+
+    #[test]
+    fn pretty_macro() {
+        let map = pretty! {
+            HashMap::from([
+                ("hello", 1),
+                ("world", 2),
+            ])
+        };
+        // map is moved through properly
+        assert_eq!(map, HashMap::from([("hello", 1), ("world", 2),]));
+    }
 }

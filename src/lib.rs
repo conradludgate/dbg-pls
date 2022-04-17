@@ -9,7 +9,7 @@
 //! # Example usage
 //!
 //! ```
-//! use dbg_pls::{debug, DebugPls};
+//! use dbg_pls::{pretty, DebugPls};
 //!
 //! #[derive(DebugPls, Copy, Clone)]
 //! pub struct Demo {
@@ -20,7 +20,7 @@
 //! let mut val = [Demo { foo: 5, bar: "hello" }; 10];
 //! val[6].bar = "Hello, world! I am a very long string";
 //!
-//! let output = format!("{}", debug(&val));
+//! let output = format!("{}", pretty(&val));
 //! let expected = r#"[
 //!     Demo { foo: 5, bar: "hello" },
 //!     Demo { foo: 5, bar: "hello" },
@@ -59,6 +59,12 @@
 //! Outputs:
 //!
 //! ![](https://raw.githubusercontent.com/conradludgate/dbg-pls/5dee03187a3f83693739e0288d56da5980e1d486/readme/highlighted.png)
+//!
+//! # How it works
+//!
+//! All [`DebugPls`] implementations are forced to output only valid
+//! [`syn::Expr`] values. These are then formatted using [`prettyplease::unparse`].
+//! Finally,
 
 use syn::__private::{Span, TokenStream2};
 
@@ -80,7 +86,7 @@ pub use debug_tuple_struct::DebugTupleStruct;
 #[cfg(feature = "pretty")]
 mod pretty;
 #[cfg(feature = "pretty")]
-pub use pretty::debug;
+pub use pretty::pretty;
 
 #[cfg(feature = "colors")]
 mod colors;
@@ -90,6 +96,14 @@ pub use colors::color;
 #[cfg(feature = "derive")]
 #[cfg_attr(docsrs, doc(cfg(feature = "derive")))]
 pub use dbg_pls_derive::DebugPls;
+
+#[doc(hidden)]
+pub mod __private {
+    #[cfg(feature = "pretty")]
+    pub use crate::pretty::Str as PrettyStr;
+    #[cfg(feature = "colors")]
+    pub use crate::colors::ColorStr;
+}
 
 /// Syntax aware pretty-printed debug formatting.
 ///
@@ -102,7 +116,7 @@ pub use dbg_pls_derive::DebugPls;
 /// Deriving an implementation:
 ///
 /// ```
-/// use dbg_pls::{debug, DebugPls};
+/// use dbg_pls::{pretty, DebugPls};
 /// #[derive(DebugPls)]
 /// struct Point {
 ///     x: i32,
@@ -111,13 +125,13 @@ pub use dbg_pls_derive::DebugPls;
 ///
 /// let origin = Point { x: 0, y: 0 };
 ///
-/// assert_eq!(format!("The origin is: {}", debug(&origin)), "The origin is: Point { x: 0, y: 0 }");
+/// assert_eq!(format!("The origin is: {}", pretty(&origin)), "The origin is: Point { x: 0, y: 0 }");
 /// ```
 ///
 /// Manually implementing:
 ///
 /// ```
-/// use dbg_pls::{debug, DebugPls, Formatter};
+/// use dbg_pls::{pretty, DebugPls, Formatter};
 /// struct Point {
 ///     x: i32,
 ///     y: i32,
@@ -134,7 +148,7 @@ pub use dbg_pls_derive::DebugPls;
 ///
 /// let origin = Point { x: 0, y: 0 };
 ///
-/// assert_eq!(format!("The origin is: {}", debug(&origin)), "The origin is: Point { x: 0, y: 0 }");
+/// assert_eq!(format!("The origin is: {}", pretty(&origin)), "The origin is: Point { x: 0, y: 0 }");
 /// ```
 pub trait DebugPls {
     /// Formats the value using the given formatter.
@@ -142,7 +156,7 @@ pub trait DebugPls {
     /// # Examples
     ///
     /// ```
-    /// use dbg_pls::{debug, DebugPls, Formatter};
+    /// use dbg_pls::{pretty, DebugPls, Formatter};
     ///
     /// struct Position {
     ///     longitude: f32,
@@ -159,7 +173,7 @@ pub trait DebugPls {
     /// }
     ///
     /// let position = Position { longitude: 1.987, latitude: 2.983 };
-    /// assert_eq!(format!("{}", debug(&position)), "(1.987, 2.983)");
+    /// assert_eq!(format!("{}", pretty(&position)), "(1.987, 2.983)");
     /// ```
     fn fmt(&self, f: Formatter<'_>);
 }
@@ -188,7 +202,7 @@ impl<'a> Formatter<'a> {
     /// # Examples
     ///
     /// ```rust
-    /// use dbg_pls::{debug, DebugPls, Formatter};
+    /// use dbg_pls::{pretty, DebugPls, Formatter};
     ///
     /// struct Foo {
     ///     bar: i32,
@@ -208,7 +222,7 @@ impl<'a> Formatter<'a> {
     ///     baz: "Hello World".to_string(),
     /// };
     /// assert_eq!(
-    ///     format!("{}", debug(&value)),
+    ///     format!("{}", pretty(&value)),
     ///     "Foo { bar: 10, baz: \"Hello World\" }",
     /// );
     /// ```
@@ -223,7 +237,7 @@ impl<'a> Formatter<'a> {
     /// # Examples
     ///
     /// ```rust
-    /// use dbg_pls::{debug, DebugPls, Formatter};
+    /// use dbg_pls::{pretty, DebugPls, Formatter};
     ///
     /// struct Foo(i32, String);
     ///
@@ -237,7 +251,7 @@ impl<'a> Formatter<'a> {
     /// }
     ///
     /// let value = Foo(10, "Hello".to_string());
-    /// assert_eq!(format!("{}", debug(&value)), "(10, \"Hello\")");
+    /// assert_eq!(format!("{}", pretty(&value)), "(10, \"Hello\")");
     /// ```
     #[must_use]
     pub fn debug_tuple(self) -> DebugTuple<'a> {
@@ -250,7 +264,7 @@ impl<'a> Formatter<'a> {
     /// # Examples
     ///
     /// ```rust
-    /// use dbg_pls::{debug, DebugPls, Formatter};
+    /// use dbg_pls::{pretty, DebugPls, Formatter};
     ///
     /// struct Foo(i32, String);
     ///
@@ -264,7 +278,7 @@ impl<'a> Formatter<'a> {
     /// }
     ///
     /// let value = Foo(10, "Hello".to_string());
-    /// assert_eq!(format!("{}", debug(&value)), "Foo(10, \"Hello\")");
+    /// assert_eq!(format!("{}", pretty(&value)), "Foo(10, \"Hello\")");
     /// ```
     #[must_use]
     pub fn debug_tuple_struct(self, name: &str) -> DebugTupleStruct<'a> {
@@ -277,7 +291,7 @@ impl<'a> Formatter<'a> {
     /// # Examples
     ///
     /// ```rust
-    /// use dbg_pls::{debug, DebugPls, Formatter};
+    /// use dbg_pls::{pretty, DebugPls, Formatter};
     ///
     /// struct Foo(Vec<i32>);
     ///
@@ -288,7 +302,7 @@ impl<'a> Formatter<'a> {
     /// }
     ///
     /// let value = Foo(vec![10, 11]);
-    /// assert_eq!(format!("{}", debug(&value)), "[10, 11]");
+    /// assert_eq!(format!("{}", pretty(&value)), "[10, 11]");
     /// ```
     #[must_use]
     pub fn debug_list(self) -> DebugList<'a> {
@@ -301,7 +315,7 @@ impl<'a> Formatter<'a> {
     /// # Examples
     ///
     /// ```rust
-    /// use dbg_pls::{debug, DebugPls, Formatter};
+    /// use dbg_pls::{pretty, DebugPls, Formatter};
     /// use std::collections::BTreeMap;
     ///
     /// struct Foo(BTreeMap<String, i32>);
@@ -316,7 +330,7 @@ impl<'a> Formatter<'a> {
     ///     ("World".to_string(), 10),
     /// ]));
     /// assert_eq!(
-    ///     format!("{}", debug(&value)),
+    ///     format!("{}", pretty(&value)),
     /// "{
     ///     [\"Hello\"] = 5;
     ///     [\"World\"] = 10;
@@ -334,7 +348,7 @@ impl<'a> Formatter<'a> {
     /// # Examples
     ///
     /// ```rust
-    /// use dbg_pls::{debug, DebugPls, Formatter};
+    /// use dbg_pls::{pretty, DebugPls, Formatter};
     /// use std::collections::BTreeSet;
     ///
     /// struct Foo(BTreeSet<String>);
@@ -349,7 +363,7 @@ impl<'a> Formatter<'a> {
     ///     "World".to_string(),
     /// ]));
     /// assert_eq!(
-    ///     format!("{}", debug(&value)),
+    ///     format!("{}", pretty(&value)),
     /// "{
     ///     \"Hello\";
     ///     \"World\"
@@ -366,7 +380,7 @@ impl<'a> Formatter<'a> {
     /// # Examples
     ///
     /// ```rust
-    /// use dbg_pls::{debug, DebugPls, Formatter};
+    /// use dbg_pls::{pretty, DebugPls, Formatter};
     ///
     /// struct Foo;
     ///
@@ -376,7 +390,7 @@ impl<'a> Formatter<'a> {
     ///     }
     /// }
     ///
-    /// assert_eq!(format!("{}", debug(&Foo)), "Foo");
+    /// assert_eq!(format!("{}", pretty(&Foo)), "Foo");
     /// ```
     pub fn debug_ident(self, name: &str) {
         let path: syn::Path = syn::Ident::new(name, Span::call_site()).into();
@@ -407,7 +421,7 @@ mod tests {
             foo: 5,
             bar: "hello",
         };
-        assert_eq!(debug(&val).to_string(), r#"Demo { foo: 5, bar: "hello" }"#);
+        assert_eq!(pretty(&val).to_string(), r#"Demo { foo: 5, bar: "hello" }"#);
     }
 
     #[test]
@@ -417,7 +431,7 @@ mod tests {
             bar: "Hello, world! I am a very long string",
         };
         assert_eq!(
-            debug(&val).to_string(),
+            pretty(&val).to_string(),
             r#"Demo {
     foo: 5,
     bar: "Hello, world! I am a very long string",
@@ -434,7 +448,7 @@ mod tests {
         val[6].bar = "Hello, world! I am a very long string";
 
         assert_eq!(
-            debug(&val).to_string(),
+            pretty(&val).to_string(),
             r#"[
     Demo { foo: 5, bar: "hello" },
     Demo { foo: 5, bar: "hello" },
@@ -458,7 +472,7 @@ mod tests {
         let set = BTreeSet::from([420, 69]);
 
         assert_eq!(
-            debug(&set).to_string(),
+            pretty(&set).to_string(),
             r#"{
     69;
     420
@@ -480,7 +494,7 @@ mod tests {
         ]);
 
         assert_eq!(
-            debug(&set).to_string(),
+            pretty(&set).to_string(),
             r#"{
     Demo {
         foo: 5,
@@ -496,7 +510,7 @@ mod tests {
         let map = BTreeMap::from([("hello", 60), ("Hello, world! I am a very long string", 12)]);
 
         assert_eq!(
-            debug(&map).to_string(),
+            pretty(&map).to_string(),
             r#"{
     ["Hello, world! I am a very long string"] = 12;
     ["hello"] = 60;
@@ -524,7 +538,7 @@ mod tests {
         ]);
 
         assert_eq!(
-            debug(&map).to_string(),
+            pretty(&map).to_string(),
             r#"{
     [
         Demo {

@@ -16,11 +16,13 @@ use std::io::Cursor;
 
 use once_cell::sync::OnceCell;
 use syntect::{
+    easy::HighlightLines,
     highlighting::{Theme, ThemeSet},
     parsing::{SyntaxDefinition, SyntaxSet, SyntaxSetBuilder},
+    util::{as_24_bit_terminal_escaped, LinesWithEndings},
 };
 
-use crate::{pretty::process, DebugPls};
+use crate::{pretty::pretty_string, DebugPls, Formatter};
 
 fn syntax() -> &'static SyntaxSet {
     static INSTANCE: OnceCell<SyntaxSet> = OnceCell::new();
@@ -46,30 +48,39 @@ fn theme() -> &'static Theme {
     })
 }
 
-#[repr(transparent)]
-struct ColorFill<'a>(&'a dyn DebugPls);
+fn highlight(s: &str, mut w: impl std::fmt::Write) -> std::fmt::Result {
+    let ps = syntax();
+    let syntax = ps.find_syntax_by_name("Rust").unwrap();
+    let theme = theme();
 
-impl<'a> std::fmt::Debug for ColorFill<'a> {
+    let mut h = HighlightLines::new(syntax, theme);
+
+    for line in LinesWithEndings::from(s) {
+        let ranges = h.highlight(line, ps);
+        write!(w, "{}", as_24_bit_terminal_escaped(&ranges[..], false))?;
+    }
+    write!(w, "\x1b[0m") // reset the color
+}
+
+/// Implementation detail for the `color!` macro
+pub struct ColorStr<'a>(pub &'a str);
+
+impl<'a> std::fmt::Display for ColorStr<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        use syntect::easy::HighlightLines;
-        use syntect::util::{as_24_bit_terminal_escaped, LinesWithEndings};
-
-        let ps = syntax();
-
-        let syntax = ps.find_syntax_by_name("Rust").unwrap();
-        let mut h = HighlightLines::new(syntax, theme());
-
-        let s = process(&self.0);
-
-        for line in LinesWithEndings::from(&s) {
-            let ranges = h.highlight(line, ps);
-            write!(f, "{}", as_24_bit_terminal_escaped(&ranges[..], false))?;
-        }
-        write!(f, "\x1b[0m")
+        let expr = syn::parse_str(self.0).map_err(|_| std::fmt::Error)?;
+        highlight(&pretty_string(expr), f)
     }
 }
 
-impl<'a> std::fmt::Display for ColorFill<'a> {
+struct Color<'a>(&'a dyn DebugPls);
+
+impl<'a> std::fmt::Debug for Color<'a> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        highlight(&pretty_string(Formatter::process(self.0)), f)
+    }
+}
+
+impl<'a> std::fmt::Display for Color<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Debug::fmt(self, f)
     }
@@ -77,8 +88,8 @@ impl<'a> std::fmt::Display for ColorFill<'a> {
 
 #[cfg_attr(docsrs, doc(cfg(feature = "colors")))]
 /// Wraps a [`Debug`] type into a [`std::fmt::Debug`] type for use in regular [`format!`]
-pub fn color(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display + '_ {
-    ColorFill(value)
+pub fn color(value: &impl DebugPls) -> impl std::fmt::Debug + std::fmt::Display + '_ {
+    Color(value)
 }
 
 #[cfg_attr(docsrs, doc(cfg(feature = "colors")))]
@@ -89,10 +100,11 @@ pub fn color(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display +
 /// An example:
 ///
 /// ```rust
-/// # use dbg_pls::dbg_pls;
+/// # use dbg_pls::color;
 /// let a = 2;
-/// let b = dbg_pls!(a * 2) + 1;
+/// let b = color!(a * 2) + 1;
 /// //      ^-- prints: [src/main.rs:2] a * 2 = 4
+/// //          with syntax highlighting
 /// assert_eq!(b, 5);
 /// ```
 ///
@@ -104,10 +116,10 @@ pub fn color(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display +
 /// Invoking the macro on an expression moves and takes ownership of it
 /// before returning the evaluated expression unchanged. If the type
 /// of the expression does not implement `Copy` and you don't want
-/// to give up ownership, you can instead borrow with `dbg!(&expr)`
+/// to give up ownership, you can instead borrow with `color!(&expr)`
 /// for some expression `expr`.
 ///
-/// The `dbg_pls!` macro works exactly the same in release builds.
+/// The `color!` macro works exactly the same in release builds.
 /// This is useful when debugging issues that only occur in release
 /// builds or when debugging in release mode is significantly faster.
 ///
@@ -120,20 +132,44 @@ pub fn color(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display +
 /// [stderr]: https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)
 /// [`debug!`]: https://docs.rs/log/*/log/macro.debug.html
 /// [`log`]: https://crates.io/crates/log
-macro_rules! color_pls {
+macro_rules! color {
     () => {
         ::std::eprintln!("[{}:{}]", ::std::file!(), ::std::line!())
     };
     ($val:expr $(,)?) => {
         match $val {
             tmp => {
-                ::std::eprintln!("[{}:{}] {} = {:#?}",
-                    ::std::file!(), ::std::line!(), ::std::stringify!($val), $crate::color(&tmp));
+                ::std::eprintln!(
+                    "[{}:{}] {} => {}",
+                    ::std::file!(),
+                    ::std::line!(),
+                    $crate::__private::ColorStr(::std::stringify!($val)),
+                    $crate::color(&tmp)
+                );
                 tmp
             }
         }
     };
     ($($val:expr),+ $(,)?) => {
-        ($($crate::dbg_pls!($val)),+,)
+        ($($crate::color!($val)),+,)
     };
+}
+
+#[cfg(test)]
+mod tests {
+    use std::collections::HashMap;
+
+    use crate::color;
+
+    #[test]
+    fn colors() {
+        let map = color! {
+            HashMap::from([
+                ("hello", 1),
+                ("world", 2),
+            ])
+        };
+        // map is moved through properly
+        assert_eq!(map, HashMap::from([("hello", 1), ("world", 2),]));
+    }
 }

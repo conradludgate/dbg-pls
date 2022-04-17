@@ -8,7 +8,7 @@ use crate::{DebugPls, Formatter};
 /// # Examples
 ///
 /// ```rust
-/// use dbg_pls::{debug, DebugPls, Formatter};
+/// use dbg_pls::{pretty, DebugPls, Formatter};
 ///
 /// struct Foo(i32, String);
 ///
@@ -22,7 +22,7 @@ use crate::{DebugPls, Formatter};
 /// }
 ///
 /// let value = Foo(10, "Hello".to_string());
-/// assert_eq!(format!("{}", debug(&value)), "Foo(10, \"Hello\")");
+/// assert_eq!(format!("{}", pretty(&value)), "Foo(10, \"Hello\")");
 /// ```
 pub struct DebugTupleStruct<'a> {
     formatter: Formatter<'a>,

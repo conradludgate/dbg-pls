@@ -121,22 +121,22 @@ Add to your `Cargo.toml`
 dbg-pls = { version = "0.1", features = ["pretty"] }
 ```
 
-And print using `debug`, eg
+And print using `pretty`, eg
 
 ```rust
-println!("{}", debug(&value));
+println!("{}", dbg_pls::pretty(&value));
 ```
 
 ## Features
 
-* `derive` - enables the `#[derive(DebugPls)]` derive (default)
-* `pretty` - enables the `debug` function for pretty printing
+* `derive` - enables the `#[derive(DebugPls)]` derive
+* `pretty` - enables the `pretty` function for pretty printing
 * `colors` - enables the `color` function for syntax highlighted printing
 
 ## Example
 
 ```rust
-use dbg_pls::{debug, DebugPls};
+use dbg_pls::{pretty, DebugPls};
 
 #[derive(DebugPls, Copy, Clone)]
 pub struct Demo {
@@ -147,7 +147,7 @@ pub struct Demo {
 let mut val = [Demo { foo: 5, bar: "hello" }; 10];
 val[6].bar = "Hello, world! I am a very long string";
 
-println!("{}", debug(&val));
+println!("{}", pretty(&val));
 ```
 Outputs
 ```text
@@ -187,3 +187,45 @@ println!("{}", color(&val));
 Outputs:
 
 ![](readme/highlighted.png)
+
+## Example (dbg-style macros)
+
+```rust
+use dbg_pls::{color, DebugPls};
+
+#[derive(DebugPls, Copy, Clone)]
+pub struct Demo {
+    foo: i32,
+    bar: &'static str,
+}
+
+let foo = 5;
+let bar = "hello";
+let _ = color!(Demo { foo, bar });
+```
+Outputs:
+
+![](readme/color-macro.png)
+
+
+```rust
+use dbg_pls::{pretty, DebugPls};
+
+#[derive(DebugPls, Copy, Clone)]
+pub struct Demo {
+    foo: i32,
+    bar: &'static str,
+}
+
+let foo = 5;
+let bar = "hello";
+let _ = pretty!(Demo { foo, bar });
+```
+Outputs:
+
+```text
+[src/lib.rs:558] Demo { foo, bar } => Demo {
+    foo: 5,
+    bar: "Hello, World! This is the color macro",
+}
+```

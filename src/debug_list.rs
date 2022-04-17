@@ -6,7 +6,7 @@ use crate::{DebugPls, Formatter};
 /// # Examples
 ///
 /// ```rust
-/// use dbg_pls::{debug, DebugPls, Formatter};
+/// use dbg_pls::{pretty, DebugPls, Formatter};
 ///
 /// struct Foo(Vec<i32>);
 ///
@@ -17,7 +17,7 @@ use crate::{DebugPls, Formatter};
 /// }
 ///
 /// let value = Foo(vec![10, 11]);
-/// assert_eq!(format!("{}", debug(&value)), "[10, 11]");
+/// assert_eq!(format!("{}", pretty(&value)), "[10, 11]");
 /// ```
 pub struct DebugList<'a> {
     formatter: Formatter<'a>,

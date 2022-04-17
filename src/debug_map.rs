@@ -10,7 +10,7 @@ use crate::{DebugPls, Formatter};
 /// # Examples
 ///
 /// ```rust
-/// use dbg_pls::{debug, DebugPls, Formatter};
+/// use dbg_pls::{pretty, DebugPls, Formatter};
 /// use std::collections::BTreeMap;
 ///
 /// struct Foo(BTreeMap<String, i32>);
@@ -25,7 +25,7 @@ use crate::{DebugPls, Formatter};
 ///     ("World".to_string(), 10),
 /// ]));
 /// assert_eq!(
-///     format!("{}", debug(&value)),
+///     format!("{}", pretty(&value)),
 /// "{
 ///     [\"Hello\"] = 5;
 ///     [\"World\"] = 10;
