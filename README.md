@@ -2,6 +2,105 @@
 
 A `Debug`-like trait for rust that outputs properly formatted code
 
+## Showcase
+
+Take the following code:
+
+```rust
+let code = r#"
+    [
+        "Hello, World! I am a long string",
+        420,
+        "Wait, you can't mix and match types in arrays, is this python?",
+        69,
+        "Nice."
+    ]
+"#;
+let expr: syn::Expr = syn::parse_str(code).unwrap();
+println!("{expr:?}");
+```
+
+This outputs
+```
+Array(ExprArray { attrs: [], bracket_token: Bracket, elems: [Lit(ExprLit { attrs: [], lit: Str(LitStr { token: "Hello, World! I am a long string" }) }), Comma, Lit(ExprLit { attrs: [], lit: Int(LitInt { token: 420 }) }), Comma, Lit(ExprLit { attrs: [], lit: Str(LitStr { token: "Wait, you can't mix and match types in arrays, is this python?" }) }), Comma, Lit(ExprLit { attrs: [], lit: Int(LitInt { token: 69 }) }), Comma, Lit(ExprLit { attrs: [], lit: Str(LitStr { token: "Nice." }) })] })
+```
+which is far too dense to read.
+
+If we change the println to use the alternate printing (`:#?`), then we get
+```rust
+Array(
+    ExprArray {
+        attrs: [],
+        bracket_token: Bracket,
+        elems: [
+            Lit(
+                ExprLit {
+                    attrs: [],
+                    lit: Str(
+                        LitStr {
+                            token: "Hello, World! I am a long string",
+                        },
+                    ),
+                },
+            ),
+            Comma,
+            Lit(
+                ExprLit {
+                    attrs: [],
+                    lit: Int(
+                        LitInt {
+                            token: 420,
+                        },
+                    ),
+                },
+            ),
+            Comma,
+            Lit(
+                ExprLit {
+                    attrs: [],
+                    lit: Str(
+                        LitStr {
+                            token: "Wait, you can't mix and match types in arrays, is this python?",
+                        },
+                    ),
+                },
+            ),
+            Comma,
+            Lit(
+                ExprLit {
+                    attrs: [],
+                    lit: Int(
+                        LitInt {
+                            token: 69,
+                        },
+                    ),
+                },
+            ),
+            Comma,
+            Lit(
+                ExprLit {
+                    attrs: [],
+                    lit: Str(
+                        LitStr {
+                            token: "Nice.",
+                        },
+                    ),
+                },
+            ),
+        ],
+    },
+)
+```
+which is far too spread out to be natural.
+
+This is where `dbg_pls` comes in. Replace the println with
+```rust
+println!("{}", dbg_pls::color(&expr));
+```
+And you get
+
+![](readme/kitchen-sink.png)
+
 ## Usage in libraries
 
 Add to your `Cargo.toml`

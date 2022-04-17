@@ -2,6 +2,8 @@ use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 
 use syn::__private::Span;
 
+mod syn_impls;
+
 use crate::{DebugPls, Formatter};
 
 impl<D: DebugPls + ?Sized> DebugPls for Box<D> {
