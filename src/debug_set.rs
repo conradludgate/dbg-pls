@@ -24,7 +24,7 @@ use crate::{DebugPls, Formatter};
 ///     format!("{}", debug(&value)),
 /// "{
 ///     \"Hello\";
-///     \"World\";
+///     \"World\"
 /// }",
 /// );
 /// ```
@@ -63,7 +63,12 @@ impl<'a> DebugSet<'a> {
     }
 
     /// Closes off the set.
-    pub fn finish(self) {
+    pub fn finish(mut self) {
+        // remove the last semicolon
+        if let Some(syn::Stmt::Semi(entry, _)) = self.set.stmts.pop() {
+            self.set.stmts.push(syn::Stmt::Expr(entry));
+        }
+
         self.formatter.write_expr(syn::ExprBlock {
             attrs: vec![],
             label: None,

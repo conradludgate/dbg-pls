@@ -46,6 +46,7 @@ fn theme() -> &'static Theme {
     })
 }
 
+#[repr(transparent)]
 struct ColorFill(dyn DebugPls);
 
 impl std::fmt::Debug for ColorFill {

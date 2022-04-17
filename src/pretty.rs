@@ -29,6 +29,7 @@ pub(crate) fn process(value: &dyn DebugPls) -> String {
     textwrap::dedent(output)
 }
 
+#[repr(transparent)]
 struct PolyFill(dyn DebugPls);
 
 impl std::fmt::Debug for PolyFill {

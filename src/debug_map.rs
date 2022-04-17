@@ -1,3 +1,7 @@
+use std::iter::FromIterator;
+
+use syn::punctuated::Punctuated;
+
 use crate::{DebugPls, Formatter};
 
 /// A helper designed to assist with creation of
@@ -23,8 +27,8 @@ use crate::{DebugPls, Formatter};
 /// assert_eq!(
 ///     format!("{}", debug(&value)),
 /// "{
-///     \"Hello\" >> 5;
-///     \"World\" >> 10;
+///     [\"Hello\"] = 5;
+///     [\"World\"] = 10;
 /// }",
 /// );
 /// ```
@@ -61,10 +65,17 @@ impl<'a> DebugMap<'a> {
             .take()
             .expect("value() method called before key() on DebugMap value");
         let value = Formatter::process(value);
-        let entry = syn::ExprBinary {
+        let entry = syn::ExprAssign {
             attrs: vec![],
-            left: Box::new(key),
-            op: syn::BinOp::Shr(syn::token::Shr::default()),
+            left: Box::new(
+                syn::ExprArray {
+                    attrs: vec![],
+                    bracket_token: syn::token::Bracket::default(),
+                    elems: Punctuated::from_iter([key]),
+                }
+                .into(),
+            ),
+            eq_token: syn::token::Eq::default(),
             right: Box::new(value),
         };
         self.set

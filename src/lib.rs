@@ -312,8 +312,8 @@ impl<'a> Formatter<'a> {
     /// assert_eq!(
     ///     format!("{}", debug(&value)),
     /// "{
-    ///     \"Hello\" >> 5;
-    ///     \"World\" >> 10;
+    ///     [\"Hello\"] = 5;
+    ///     [\"World\"] = 10;
     /// }",
     /// );
     /// ```
@@ -345,7 +345,7 @@ impl<'a> Formatter<'a> {
     ///     format!("{}", debug(&value)),
     /// "{
     ///     \"Hello\";
-    ///     \"World\";
+    ///     \"World\"
     /// }",
     /// );
     /// ```
@@ -453,7 +453,7 @@ mod tests {
             debug(&set).to_string(),
             r#"{
     69;
-    420;
+    420
 }"#
         );
     }
@@ -478,7 +478,20 @@ mod tests {
         foo: 5,
         bar: "Hello, world! I am a very long string",
     };
-    Demo { foo: 5, bar: "hello" };
+    Demo { foo: 5, bar: "hello" }
+}"#
+        );
+    }
+
+    #[test]
+    fn debug_map() {
+        let map = BTreeMap::from([("hello", 60), ("Hello, world! I am a very long string", 12)]);
+
+        assert_eq!(
+            debug(&map).to_string(),
+            r#"{
+    ["Hello, world! I am a very long string"] = 12;
+    ["hello"] = 60;
 }"#
         );
     }
@@ -505,11 +518,13 @@ mod tests {
         assert_eq!(
             debug(&map).to_string(),
             r#"{
-    Demo {
-        foo: 5,
-        bar: "Hello, world! I am a very long string",
-    } >> 12;
-    Demo { foo: 5, bar: "hello" } >> 60;
+    [
+        Demo {
+            foo: 5,
+            bar: "Hello, world! I am a very long string",
+        },
+    ] = 12;
+    [Demo { foo: 5, bar: "hello" }] = 60;
 }"#
         );
     }
