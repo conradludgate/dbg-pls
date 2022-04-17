@@ -2,6 +2,36 @@ use syn::__private::Span;
 
 use crate::{DebugPls, Formatter};
 
+/// A helper designed to assist with creation of
+/// [`DebugPls`] implementations for structs.
+///
+/// # Examples
+///
+/// ```rust
+/// use dbg_pls::{debug, DebugPls, Formatter};
+///
+/// struct Foo {
+///     bar: i32,
+///     baz: String,
+/// }
+///
+/// impl DebugPls for Foo {
+///     fn fmt(&self, f: Formatter) {
+///         f.debug_struct("Foo")
+///             .field("bar", &self.bar)
+///             .field("baz", &self.baz)
+///             .finish()
+///     }
+/// }
+/// let value = Foo {
+///     bar: 10,
+///     baz: "Hello World".to_string(),
+/// };
+/// assert_eq!(
+///     format!("{}", debug(&value)),
+///     "Foo { bar: 10, baz: \"Hello World\" }",
+/// );
+/// ```
 pub struct DebugStruct<'a> {
     formatter: Formatter<'a>,
     expr: syn::ExprStruct,
@@ -22,6 +52,7 @@ impl<'a> DebugStruct<'a> {
         }
     }
 
+    /// Adds the field to the struct output.
     pub fn field(mut self, name: &str, value: &dyn DebugPls) -> Self {
         self.expr.fields.push(syn::FieldValue {
             expr: Formatter::process(value),
@@ -32,10 +63,12 @@ impl<'a> DebugStruct<'a> {
         self
     }
 
+    /// Closes off the struct.
     pub fn finish(self) {
         self.formatter.write_expr(self.expr);
     }
 
+    /// Closes off the struct with `..`.
     pub fn finish_non_exhaustive(mut self) {
         self.expr.dot2_token = Some(syn::token::Dot2::default());
         self.finish()

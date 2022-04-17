@@ -43,6 +43,7 @@ impl std::fmt::Display for PolyFill {
     }
 }
 
+#[cfg_attr(docsrs, doc(cfg(feature = "pretty")))]
 /// Wraps a [`Debug`] type into a [`std::fmt::Debug`] type for use in regular [`format!`]
 pub fn debug(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display + '_ {
     debug_impl(value)
@@ -52,8 +53,8 @@ fn debug_impl(value: &dyn DebugPls) -> &PolyFill {
     unsafe { std::mem::transmute(value) }
 }
 
+#[cfg_attr(docsrs, doc(cfg(feature = "pretty")))]
 #[macro_export]
-
 /// Prints and returns the value of a given expression for quick and dirty
 /// debugging. Same as [`std::dbg`]
 ///

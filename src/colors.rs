@@ -74,6 +74,7 @@ impl std::fmt::Display for ColorFill {
     }
 }
 
+#[cfg_attr(docsrs, doc(cfg(feature = "colors")))]
 /// Wraps a [`Debug`] type into a [`std::fmt::Debug`] type for use in regular [`format!`]
 pub fn color(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display + '_ {
     debug_impl(value)
@@ -83,8 +84,8 @@ fn debug_impl(value: &dyn DebugPls) -> &ColorFill {
     unsafe { std::mem::transmute(value) }
 }
 
+#[cfg_attr(docsrs, doc(cfg(feature = "colors")))]
 #[macro_export]
-
 /// Prints and returns the value of a given expression for quick and dirty
 /// debugging. Same as [`std::dbg`]
 ///
