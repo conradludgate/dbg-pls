@@ -1,3 +1,4 @@
+#![cfg_attr(docsrs, feature(doc_cfg))]
 //! Syntax aware debug printing.
 //!
 //! Makes use of `syn` and `prettyplease` in order to provide the most
