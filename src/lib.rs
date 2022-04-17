@@ -63,10 +63,14 @@ use syn::__private::{Span, TokenStream2};
 mod impls;
 
 mod debug_list;
+mod debug_map;
+mod debug_set;
 mod debug_struct;
 mod debug_tuple;
 mod debug_tuple_struct;
 pub use debug_list::DebugList;
+pub use debug_map::DebugMap;
+pub use debug_set::DebugSet;
 pub use debug_struct::DebugStruct;
 pub use debug_tuple::DebugTuple;
 pub use debug_tuple_struct::DebugTupleStruct;
@@ -158,6 +162,7 @@ pub trait DebugPls {
     fn fmt(&self, f: Formatter<'_>);
 }
 
+/// Tool for formatting, used within [`DebugPls`] implementations
 pub struct Formatter<'a> {
     expr: &'a mut syn::Expr,
 }
@@ -284,6 +289,70 @@ impl<'a> Formatter<'a> {
         DebugList::new(self)
     }
 
+    /// Creates a [`DebugMap`] builder designed to assist with creation of
+    /// [`DebugPls`] implementations for maps.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use dbg_pls::{debug, DebugPls, Formatter};
+    /// use std::collections::BTreeMap;
+    ///
+    /// struct Foo(BTreeMap<String, i32>);
+    ///
+    /// impl DebugPls for Foo {
+    ///     fn fmt(&self, f: Formatter) {
+    ///         f.debug_map().entries(&self.0).finish()
+    ///     }
+    /// }
+    /// let mut value = Foo(BTreeMap::from([
+    ///     ("Hello".to_string(), 5),
+    ///     ("World".to_string(), 10),
+    /// ]));
+    /// assert_eq!(
+    ///     format!("{}", debug(&value)),
+    /// "{
+    ///     \"Hello\" >> 5;
+    ///     \"World\" >> 10;
+    /// }",
+    /// );
+    /// ```
+    pub fn debug_map(self) -> DebugMap<'a> {
+        DebugMap::new(self)
+    }
+
+    /// Creates a [`DebugSet`] builder designed to assist with creation of
+    /// [`DebugPls`] implementations for sets.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use dbg_pls::{debug, DebugPls, Formatter};
+    /// use std::collections::BTreeSet;
+    ///
+    /// struct Foo(BTreeSet<String>);
+    ///
+    /// impl DebugPls for Foo {
+    ///     fn fmt(&self, f: Formatter) {
+    ///         f.debug_set().entries(&self.0).finish()
+    ///     }
+    /// }
+    /// let mut value = Foo(BTreeSet::from([
+    ///     "Hello".to_string(),
+    ///     "World".to_string(),
+    /// ]));
+    /// assert_eq!(
+    ///     format!("{}", debug(&value)),
+    /// "{
+    ///     \"Hello\";
+    ///     \"World\";
+    /// }",
+    /// );
+    /// ```
+    pub fn debug_set(self) -> DebugSet<'a> {
+        DebugSet::new(self)
+    }
+
     /// Writes an identifier into the formatter. Useful for unit structs/variants
     ///
     /// # Examples
@@ -313,9 +382,11 @@ impl<'a> Formatter<'a> {
 
 #[cfg(test)]
 mod tests {
+    use std::collections::{BTreeMap, BTreeSet};
+
     use super::*;
 
-    #[derive(DebugPls, Copy, Clone)]
+    #[derive(DebugPls, Copy, Clone, Hash, PartialEq, Eq, PartialOrd, Ord)]
     #[dbg_pls(crate = "crate")]
     pub struct Demo {
         foo: i32,
@@ -371,6 +442,75 @@ mod tests {
     Demo { foo: 5, bar: "hello" },
     Demo { foo: 5, bar: "hello" },
 ]"#
+        );
+    }
+
+    #[test]
+    fn debug_small_set() {
+        let set = BTreeSet::from([420, 69]);
+
+        assert_eq!(
+            debug(&set).to_string(),
+            r#"{
+    69;
+    420;
+}"#
+        );
+    }
+
+    #[test]
+    fn debug_nested_set() {
+        let set = BTreeSet::from([
+            Demo {
+                foo: 5,
+                bar: "hello",
+            },
+            Demo {
+                foo: 5,
+                bar: "Hello, world! I am a very long string",
+            },
+        ]);
+
+        assert_eq!(
+            debug(&set).to_string(),
+            r#"{
+    Demo {
+        foo: 5,
+        bar: "Hello, world! I am a very long string",
+    };
+    Demo { foo: 5, bar: "hello" };
+}"#
+        );
+    }
+
+    #[test]
+    fn debug_nested_map() {
+        let map = BTreeMap::from([
+            (
+                Demo {
+                    foo: 5,
+                    bar: "hello",
+                },
+                60,
+            ),
+            (
+                Demo {
+                    foo: 5,
+                    bar: "Hello, world! I am a very long string",
+                },
+                12,
+            ),
+        ]);
+
+        assert_eq!(
+            debug(&map).to_string(),
+            r#"{
+    Demo {
+        foo: 5,
+        bar: "Hello, world! I am a very long string",
+    } >> 12;
+    Demo { foo: 5, bar: "hello" } >> 60;
+}"#
         );
     }
 }

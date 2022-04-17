@@ -1,3 +1,5 @@
+use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
+
 use syn::__private::Span;
 
 use crate::{DebugPls, Formatter};
@@ -79,5 +81,29 @@ impl DebugPls for str {
 impl DebugPls for String {
     fn fmt(&self, f: Formatter<'_>) {
         DebugPls::fmt(self.as_str(), f)
+    }
+}
+
+impl<K: DebugPls, V: DebugPls> DebugPls for HashMap<K, V> {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_map().entries(self).finish()
+    }
+}
+
+impl<K: DebugPls, V: DebugPls> DebugPls for BTreeMap<K, V> {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_map().entries(self).finish()
+    }
+}
+
+impl<V: DebugPls> DebugPls for HashSet<V> {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_set().entries(self).finish()
+    }
+}
+
+impl<V: DebugPls> DebugPls for BTreeSet<V> {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_set().entries(self).finish()
     }
 }
