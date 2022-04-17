@@ -1,6 +1,6 @@
 use syn::{
     punctuated::{Pair, Punctuated},
-    token::*,
+    token::{Bracket, Comma},
     Attribute, Expr, ExprArray, ExprLit, Lit, LitInt, LitStr,
 };
 
@@ -60,7 +60,7 @@ impl DebugPls for ExprArray {
             .field("attrs", &self.attrs)
             .field("bracket_token", &self.bracket_token)
             .field("elems", &self.elems)
-            .finish()
+            .finish();
     }
 }
 
@@ -69,7 +69,7 @@ impl DebugPls for ExprLit {
         f.debug_struct("ExprLit")
             .field("attrs", &self.attrs)
             .field("lit", &self.lit)
-            .finish()
+            .finish();
     }
 }
 
@@ -93,7 +93,7 @@ impl DebugPls for LitStr {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("LitStr")
             .field("value", &self.value())
-            .finish()
+            .finish();
     }
 }
 
@@ -101,13 +101,13 @@ impl DebugPls for LitInt {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("LitInt")
             .field("value", &self.base10_digits())
-            .finish()
+            .finish();
     }
 }
 
 impl DebugPls for Attribute {
     fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("Attribute").finish_non_exhaustive()
+        f.debug_struct("Attribute").finish_non_exhaustive();
     }
 }
 
@@ -118,7 +118,7 @@ impl<T: DebugPls, P: DebugPls> DebugPls for Punctuated<T, P> {
                 Pair::Punctuated(t, p) => f.entry(t).entry(p),
                 Pair::End(t) => f.entry(t),
             })
-            .finish()
+            .finish();
     }
 }
 

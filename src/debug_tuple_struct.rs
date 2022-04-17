@@ -47,6 +47,7 @@ impl<'a> DebugTupleStruct<'a> {
     }
 
     /// Adds the field to the tuple struct output.
+    #[must_use]
     pub fn field(mut self, value: &dyn DebugPls) -> Self {
         self.expr.args.push(Formatter::process(value));
         self

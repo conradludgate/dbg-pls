@@ -45,6 +45,7 @@ impl<'a> DebugSet<'a> {
     }
 
     /// Adds the entry to the set output.
+    #[must_use]
     pub fn entry(mut self, value: &dyn DebugPls) -> Self {
         let expr = Formatter::process(value);
         self.set
@@ -54,6 +55,7 @@ impl<'a> DebugSet<'a> {
     }
 
     /// Adds all the entries to the set output.
+    #[must_use]
     pub fn entries<V, I>(self, entries: I) -> Self
     where
         V: DebugPls,

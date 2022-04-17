@@ -40,6 +40,7 @@ impl<'a> DebugTuple<'a> {
     }
 
     /// Adds the field to the tuple output.
+    #[must_use]
     pub fn field(mut self, value: &dyn DebugPls) -> Self {
         self.expr.elems.push(Formatter::process(value));
         self

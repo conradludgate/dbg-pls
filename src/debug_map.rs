@@ -51,19 +51,31 @@ impl<'a> DebugMap<'a> {
     }
 
     /// Adds the key part to the map output.
+    ///
+    /// # Panics
+    ///
+    /// `key` must be called before `value` and each call to `key` must be followed
+    /// by a corresponding call to `value`. Otherwise this method will panic.
+    #[must_use]
     pub fn key(mut self, key: &dyn DebugPls) -> Self {
         if self.key.replace(Formatter::process(key)).is_some() {
-            panic!("key() method called twice on DebugMap value")
+            panic!("attempted to begin a new map entry without completing the previous one");
         }
         self
     }
 
     /// Adds the value part to the map output.
+    ///
+    /// # Panics
+    ///
+    /// `key` must be called before `value` and each call to `key` must be followed
+    /// by a corresponding call to `value`. Otherwise this method will panic.
+    #[must_use]
     pub fn value(mut self, value: &dyn DebugPls) -> Self {
         let key = self
             .key
             .take()
-            .expect("value() method called before key() on DebugMap value");
+            .expect("attempted to format a map value before its key");
         let value = Formatter::process(value);
         let entry = syn::ExprAssign {
             attrs: vec![],
@@ -85,11 +97,13 @@ impl<'a> DebugMap<'a> {
     }
 
     /// Adds the entry to the map output.
+    #[must_use]
     pub fn entry(self, key: &dyn DebugPls, value: &dyn DebugPls) -> Self {
         self.key(key).value(value)
     }
 
     /// Adds all the entries to the map output.
+    #[must_use]
     pub fn entries<K, V, I>(self, entries: I) -> Self
     where
         K: DebugPls,

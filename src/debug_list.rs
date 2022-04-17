@@ -37,12 +37,14 @@ impl<'a> DebugList<'a> {
     }
 
     /// Adds a new entry to the list output.
+    #[must_use]
     pub fn entry(mut self, entry: &dyn DebugPls) -> Self {
         self.expr.elems.push(Formatter::process(entry));
         self
     }
 
     /// Adds all the entries to the list output.
+    #[must_use]
     pub fn entries<D, I>(mut self, entries: I) -> Self
     where
         D: DebugPls,
@@ -62,6 +64,6 @@ impl<'f, D: DebugPls> Extend<D> for DebugList<'f> {
     fn extend<T: IntoIterator<Item = D>>(&mut self, iter: T) {
         self.expr
             .elems
-            .extend(iter.into_iter().map(|entry| Formatter::process(&entry)))
+            .extend(iter.into_iter().map(|entry| Formatter::process(&entry)));
     }
 }

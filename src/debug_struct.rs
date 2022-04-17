@@ -53,6 +53,7 @@ impl<'a> DebugStruct<'a> {
     }
 
     /// Adds the field to the struct output.
+    #[must_use]
     pub fn field(mut self, name: &str, value: &dyn DebugPls) -> Self {
         self.expr.fields.push(syn::FieldValue {
             expr: Formatter::process(value),
@@ -71,6 +72,6 @@ impl<'a> DebugStruct<'a> {
     /// Closes off the struct with `..`.
     pub fn finish_non_exhaustive(mut self) {
         self.expr.dot2_token = Some(syn::token::Dot2::default());
-        self.finish()
+        self.finish();
     }
 }

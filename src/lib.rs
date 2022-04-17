@@ -1,4 +1,6 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
+#![warn(clippy::pedantic)]
+#![forbid(unsafe_code)]
 //! Syntax aware debug printing.
 //!
 //! Makes use of `syn` and `prettyplease` in order to provide the most
@@ -210,6 +212,7 @@ impl<'a> Formatter<'a> {
     ///     "Foo { bar: 10, baz: \"Hello World\" }",
     /// );
     /// ```
+    #[must_use]
     pub fn debug_struct(self, name: &str) -> DebugStruct<'a> {
         DebugStruct::new(self, name)
     }
@@ -236,6 +239,7 @@ impl<'a> Formatter<'a> {
     /// let value = Foo(10, "Hello".to_string());
     /// assert_eq!(format!("{}", debug(&value)), "(10, \"Hello\")");
     /// ```
+    #[must_use]
     pub fn debug_tuple(self) -> DebugTuple<'a> {
         DebugTuple::new(self)
     }
@@ -262,6 +266,7 @@ impl<'a> Formatter<'a> {
     /// let value = Foo(10, "Hello".to_string());
     /// assert_eq!(format!("{}", debug(&value)), "Foo(10, \"Hello\")");
     /// ```
+    #[must_use]
     pub fn debug_tuple_struct(self, name: &str) -> DebugTupleStruct<'a> {
         DebugTupleStruct::new(self, name)
     }
@@ -285,6 +290,7 @@ impl<'a> Formatter<'a> {
     /// let value = Foo(vec![10, 11]);
     /// assert_eq!(format!("{}", debug(&value)), "[10, 11]");
     /// ```
+    #[must_use]
     pub fn debug_list(self) -> DebugList<'a> {
         DebugList::new(self)
     }
@@ -317,6 +323,7 @@ impl<'a> Formatter<'a> {
     /// }",
     /// );
     /// ```
+    #[must_use]
     pub fn debug_map(self) -> DebugMap<'a> {
         DebugMap::new(self)
     }
@@ -349,6 +356,7 @@ impl<'a> Formatter<'a> {
     /// }",
     /// );
     /// ```
+    #[must_use]
     pub fn debug_set(self) -> DebugSet<'a> {
         DebugSet::new(self)
     }
@@ -376,7 +384,7 @@ impl<'a> Formatter<'a> {
             attrs: vec![],
             qself: None,
             path,
-        })
+        });
     }
 }
 

@@ -47,9 +47,9 @@ fn theme() -> &'static Theme {
 }
 
 #[repr(transparent)]
-struct ColorFill(dyn DebugPls);
+struct ColorFill<'a>(&'a dyn DebugPls);
 
-impl std::fmt::Debug for ColorFill {
+impl<'a> std::fmt::Debug for ColorFill<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use syntect::easy::HighlightLines;
         use syntect::util::{as_24_bit_terminal_escaped, LinesWithEndings};
@@ -69,7 +69,7 @@ impl std::fmt::Debug for ColorFill {
     }
 }
 
-impl std::fmt::Display for ColorFill {
+impl<'a> std::fmt::Display for ColorFill<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Debug::fmt(self, f)
     }
@@ -78,11 +78,7 @@ impl std::fmt::Display for ColorFill {
 #[cfg_attr(docsrs, doc(cfg(feature = "colors")))]
 /// Wraps a [`Debug`] type into a [`std::fmt::Debug`] type for use in regular [`format!`]
 pub fn color(value: &dyn DebugPls) -> impl std::fmt::Debug + std::fmt::Display + '_ {
-    debug_impl(value)
-}
-
-fn debug_impl(value: &dyn DebugPls) -> &ColorFill {
-    unsafe { std::mem::transmute(value) }
+    ColorFill(value)
 }
 
 #[cfg_attr(docsrs, doc(cfg(feature = "colors")))]
