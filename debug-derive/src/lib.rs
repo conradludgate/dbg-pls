@@ -24,6 +24,20 @@ pub fn derive(input: TokenStream) -> TokenStream {
     DebugImpl((path, input)).into_token_stream().into()
 }
 
+/// Derives the standard `DebugPls` implementation for a third party type.
+#[proc_macro_attribute]
+pub fn remote_dbg_pls(_attr: TokenStream, input: TokenStream) -> TokenStream {
+    let mut input = parse_macro_input!(input as DeriveInput);
+
+    let path = match get_crate(&input.attrs) {
+        Ok(path) => path,
+        Err(err) => return err.into_compile_error().into_token_stream().into(),
+    };
+
+    predicate(&mut input, path.clone());
+    DebugImpl((path, input)).into_token_stream().into()
+}
+
 fn get_crate(attrs: &[Attribute]) -> syn::Result<Path> {
     fn parse_crate(lit: syn::Lit) -> syn::Result<Path> {
         match lit {

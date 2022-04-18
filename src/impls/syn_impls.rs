@@ -1,7 +1,8 @@
+use dbg_pls_derive::remote_dbg_pls;
 use syn::{
     punctuated::{Pair, Punctuated},
-    token::{Bracket, Comma},
-    Attribute, Expr, ExprArray, ExprLit, Lit, LitInt, LitStr,
+    token::{Bracket, Comma, self},
+    Attribute, Expr, ExprArray, ExprLit, Lit, LitInt, LitStr, Token,
 };
 
 use crate::{DebugPls, Formatter};
@@ -54,23 +55,19 @@ impl DebugPls for Expr {
     }
 }
 
-impl DebugPls for ExprArray {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("ExprArray")
-            .field("attrs", &self.attrs)
-            .field("bracket_token", &self.bracket_token)
-            .field("elems", &self.elems)
-            .finish();
-    }
+#[remote_dbg_pls]
+#[dbg_pls(crate = "crate")]
+pub struct ExprArray {
+    pub attrs: Vec<Attribute>,
+    pub bracket_token: token::Bracket,
+    pub elems: Punctuated<Expr, Token![,]>,
 }
 
-impl DebugPls for ExprLit {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("ExprLit")
-            .field("attrs", &self.attrs)
-            .field("lit", &self.lit)
-            .finish();
-    }
+#[remote_dbg_pls]
+#[dbg_pls(crate = "crate")]
+pub struct ExprLit {
+    pub attrs: Vec<Attribute>,
+    pub lit: Lit,
 }
 
 impl DebugPls for Lit {
