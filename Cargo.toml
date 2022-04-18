@@ -28,7 +28,7 @@ itoa = "1"
 ryu = "1"
 
 # derive
-dbg-pls-derive = { version = "0.1.3", path = "debug-derive", optional = true }
+dbg-pls-derive = { version = "0.2.0", path = "debug-derive", optional = true }
 
 # pretty
 prettyplease = { version = "0.1", optional = true }

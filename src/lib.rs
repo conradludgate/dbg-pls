@@ -550,4 +550,37 @@ mod tests {
 }"#
         );
     }
+
+    #[derive(DebugPls)]
+    #[dbg_pls(crate = "crate")]
+    pub struct Generic<T> {
+        arg: T,
+    }
+
+    #[test]
+    fn debug_generic() {
+        let generic = Generic { arg: "string" };
+        assert_eq!(pretty(&generic).to_string(), r#"Generic { arg: "string" }"#);
+    }
+
+    #[derive(DebugPls)]
+    #[dbg_pls(crate = "crate")]
+    pub struct Generic2<T> {
+        arg: Wrapped<T>,
+    }
+
+    pub struct Wrapped<T>(T);
+    impl<T> DebugPls for Wrapped<T> {
+        fn fmt(&self, f: Formatter<'_>) {
+            f.debug_struct("Wrapped").finish_non_exhaustive();
+        }
+    }
+
+    pub struct NonDebug;
+
+    #[test]
+    fn debug_generic2() {
+        let generic = Generic { arg: Wrapped(NonDebug) };
+        assert_eq!(pretty(&generic).to_string(), r#"Generic { arg: Wrapped {} }"#);
+    }
 }
