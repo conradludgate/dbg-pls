@@ -60,11 +60,112 @@
 //!
 //! ![](https://raw.githubusercontent.com/conradludgate/dbg-pls/5dee03187a3f83693739e0288d56da5980e1d486/readme/highlighted.png)
 //!
+//! # Why
+//!
+//! For the sake of demonstration, let's take a look at the snippet from above.
+//! It provides an array of 10 `Demo` structs. You could imagine this to
+//! be representative of a complex deep struct.
+//!
+//! ```
+//! #[derive(Debug, Copy, Clone)]
+//! pub struct Demo {
+//!     foo: i32,
+//!     bar: &'static str,
+//! }
+//!
+//! let mut val = [Demo { foo: 5, bar: "hello" }; 10];
+//! val[6].bar = "Hello, world! I am a very long string";
+//!
+//! println!("{:?}", val);
+//! ```
+//!
+//! This outputs
+//!
+//! ```text
+//! [Demo { foo: 5, bar: "hello" }, Demo { foo: 5, bar: "hello" }, Demo { foo: 5, bar: "hello" }, Demo { foo: 5, bar: "hello" }, Demo { foo: 5, bar: "hello" }, Demo { foo: 5, bar: "hello" }, Demo { foo: 5, bar: "Hello, world! I am a very long string" }, Demo { foo: 5, bar: "hello" }, Demo { foo: 5, bar: "hello" }, Demo { foo: 5, bar: "hello" }]
+//! ```
+//!
+//! Switching to the alternative output format `{:#?}` you get the following
+//!
+//! ```text
+//! [
+//!    Demo {
+//!        foo: 5,
+//!        bar: "hello",
+//!    },
+//!    Demo {
+//!        foo: 5,
+//!        bar: "hello",
+//!    },
+//!    Demo {
+//!        foo: 5,
+//!        bar: "hello",
+//!    },
+//!    Demo {
+//!        foo: 5,
+//!        bar: "hello",
+//!    },
+//!    Demo {
+//!        foo: 5,
+//!        bar: "hello",
+//!    },
+//!    Demo {
+//!        foo: 5,
+//!        bar: "hello",
+//!    },
+//!    Demo {
+//!        foo: 5,
+//!        bar: "Hello, world! I am a very long string",
+//!    },
+//!    Demo {
+//!        foo: 5,
+//!        bar: "hello",
+//!    },
+//!    Demo {
+//!        foo: 5,
+//!        bar: "hello",
+//!    },
+//!    Demo {
+//!        foo: 5,
+//!        bar: "hello",
+//!    },
+//! ]
+//! ```
+//!
+//! Both of these are very unweildy to read through. Compare that to our `pretty` formatting:
+//!
+//! ```
+//! # use dbg_pls::pretty;
+//! # let val = 0;
+//! println!("{}", pretty(&val));
+//! ```
+//!
+//! And you will see
+//!
+//! ```text
+//! [
+//!     Demo { foo: 5, bar: "hello" },
+//!     Demo { foo: 5, bar: "hello" },
+//!     Demo { foo: 5, bar: "hello" },
+//!     Demo { foo: 5, bar: "hello" },
+//!     Demo { foo: 5, bar: "hello" },
+//!     Demo { foo: 5, bar: "hello" },
+//!     Demo {
+//!         foo: 5,
+//!         bar: "Hello, world! I am a very long string",
+//!     },
+//!     Demo { foo: 5, bar: "hello" },
+//!     Demo { foo: 5, bar: "hello" },
+//!     Demo { foo: 5, bar: "hello" },
+//! ]
+//! ```
+//!
 //! # How it works
 //!
 //! All [`DebugPls`] implementations are forced to output only valid
 //! [`syn::Expr`] values. These are then formatted using [`prettyplease::unparse`].
-//! Finally,
+//! Finally, it uses [`syntect`] to provide syntax highlighting, with theme provided by
+//! <https://github.com/jonschlinkert/sublime-monokai-extended>
 
 use syn::__private::{Span, TokenStream2};
 

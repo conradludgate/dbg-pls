@@ -118,7 +118,7 @@ Add to your types
 
 Add to your `Cargo.toml`
 ```toml
-dbg-pls = { version = "0.1", features = ["pretty"] }
+dbg-pls = { version = "0.2", features = ["pretty"] }
 ```
 
 And print using `pretty`, eg
@@ -200,7 +200,7 @@ pub struct Demo {
 }
 
 let foo = 5;
-let bar = "hello";
+let bar = "Hello, World! This is the color macro";
 let _ = color!(Demo { foo, bar });
 ```
 Outputs:
@@ -224,8 +224,5 @@ let _ = pretty!(Demo { foo, bar });
 Outputs:
 
 ```text
-[src/lib.rs:558] Demo { foo, bar } => Demo {
-    foo: 5,
-    bar: "Hello, World! This is the color macro",
-}
+[src/lib.rs:558] Demo { foo, bar } => Demo { foo: 5, bar: "hello" }
 ```
