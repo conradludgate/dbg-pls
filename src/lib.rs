@@ -196,6 +196,25 @@ pub use colors::color;
 
 #[cfg(feature = "derive")]
 #[cfg_attr(docsrs, doc(cfg(feature = "derive")))]
+/// Derives the standard `DebugPls` implementation.
+///
+/// Works exactly like [`Debug`]
+///
+/// ```
+/// use dbg_pls::{pretty, DebugPls};
+/// #[derive(DebugPls)]
+/// struct Point {
+///     x: i32,
+///     y: i32,
+/// }
+///
+/// let origin = Point { x: 0, y: 0 };
+///
+/// assert_eq!(
+///     format!("The origin is: {}", pretty(&origin)),
+///     "The origin is: Point { x: 0, y: 0 }",
+/// );
+/// ```
 pub use dbg_pls_derive::DebugPls;
 
 #[doc(hidden)]
@@ -666,27 +685,6 @@ mod tests {
 
     #[derive(DebugPls)]
     #[dbg_pls(crate = "crate")]
-    pub struct Generic2<T> {
-        arg: Wrapped<T>,
-    }
-
-    pub struct Wrapped<T>(T);
-    impl<T> DebugPls for Wrapped<T> {
-        fn fmt(&self, f: Formatter<'_>) {
-            f.debug_struct("Wrapped").finish_non_exhaustive();
-        }
-    }
-
-    pub struct NonDebug;
-
-    #[test]
-    fn debug_generic2() {
-        let generic = Generic { arg: Wrapped(NonDebug) };
-        assert_eq!(pretty(&generic).to_string(), r#"Generic { arg: Wrapped {} }"#);
-    }
-
-    #[derive(DebugPls)]
-    #[dbg_pls(crate = "crate")]
     pub enum Option2<T> {
         Some(T),
         None,
@@ -721,6 +719,31 @@ mod tests {
         assert_eq!(pretty(&x).to_string(), r#"LinkedList {
     value: 0,
     next: Some(LinkedList { value: 1, next: None }),
+}"#);
+    }
+
+    #[derive(DebugPls)]
+    #[dbg_pls(crate = "crate")]
+    pub struct LinkedList2<T> {
+        value: T,
+        next: Option<Box<LinkedList2<T>>>,
+    }
+
+    #[test]
+    fn debug_recursive2() {
+        let y = LinkedList2 { value: 1_i32, next: None };
+        assert_eq!(pretty(&y).to_string(), r#"LinkedList2 {
+    value: 1,
+    next: None,
+}"#);
+
+        let x = LinkedList2 { value: 0_i32, next: Some(Box::new(y)) };
+        assert_eq!(pretty(&x).to_string(), r#"LinkedList2 {
+    value: 0,
+    next: Some(LinkedList2 {
+        value: 1,
+        next: None,
+    }),
 }"#);
     }
 }

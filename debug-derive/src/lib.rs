@@ -8,9 +8,6 @@ mod debug;
 mod pat;
 mod predicate;
 
-/// Derives the standard `DebugPls` implementation.
-///
-/// Works exactly like [`Debug`]
 #[proc_macro_derive(DebugPls, attributes(dbg_pls))]
 pub fn derive(input: TokenStream) -> TokenStream {
     let mut input = parse_macro_input!(input as DeriveInput);
