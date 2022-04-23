@@ -704,4 +704,23 @@ mod tests {
         let wtf = Option2::<i32>::Wtf { foo: 42 };
         assert_eq!(pretty(&wtf).to_string(), r#"Wtf { foo: 42 }"#);
     }
+
+    #[derive(DebugPls)]
+    #[dbg_pls(crate = "crate")]
+    pub struct LinkedList {
+        value: i32,
+        next: Option<Box<LinkedList>>,
+    }
+
+    #[test]
+    fn debug_recursive() {
+        let y = LinkedList { value: 1_i32, next: None };
+        assert_eq!(pretty(&y).to_string(), r#"LinkedList { value: 1, next: None }"#);
+
+        let x = LinkedList { value: 0_i32, next: Some(Box::new(y)) };
+        assert_eq!(pretty(&x).to_string(), r#"LinkedList {
+    value: 0,
+    next: Some(LinkedList { value: 1, next: None }),
+}"#);
+    }
 }
