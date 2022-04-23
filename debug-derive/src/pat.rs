@@ -1,6 +1,6 @@
 use proc_macro2::{Delimiter, Group, Ident, TokenStream as TokenStream2, TokenTree};
 use quote::{format_ident, quote, ToTokens};
-use syn::{Fields, FieldsNamed, FieldsUnnamed};
+use syn::{spanned::Spanned, Fields, FieldsNamed, FieldsUnnamed};
 
 pub struct PatternImpl<T>(pub T);
 
@@ -16,16 +16,16 @@ impl<'a> ToTokens for PatternImpl<&'a Fields> {
 
 impl<'a> ToTokens for PatternImpl<&'a FieldsNamed> {
     fn to_tokens(&self, tokens: &mut TokenStream2) {
-        let mut inner = TokenStream2::new();
-        named_idents(self.0).for_each(|ident| inner.extend(quote! { #ident, }));
+        let idents = named_idents(self.0);
+        let inner = quote! { #(#idents),* };
         tokens.extend([TokenTree::Group(Group::new(Delimiter::Brace, inner))])
     }
 }
 
 impl<'a> ToTokens for PatternImpl<&'a FieldsUnnamed> {
     fn to_tokens(&self, tokens: &mut TokenStream2) {
-        let mut inner = TokenStream2::new();
-        unnamed_idents(self.0).for_each(|ident| inner.extend(quote! { #ident, }));
+        let idents = unnamed_idents(self.0);
+        let inner = quote! { #(#idents),* };
         tokens.extend([TokenTree::Group(Group::new(Delimiter::Parenthesis, inner))])
     }
 }
@@ -35,8 +35,9 @@ pub fn unnamed_idents(fields: &FieldsUnnamed) -> impl Iterator<Item = Ident> + '
         .unnamed
         .iter()
         .enumerate()
-        .map(|(i, _)| format_ident!("val{}", i))
+        .map(|(i, field)| format_ident!("val{}", i, span = field.span()))
 }
+
 pub fn named_idents(fields: &FieldsNamed) -> impl Iterator<Item = &Ident> + '_ {
     fields
         .named
