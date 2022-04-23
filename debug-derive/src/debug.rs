@@ -42,6 +42,10 @@ impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a Data)> {
 impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a DataStruct)> {
     fn to_tokens(&self, tokens: &mut TokenStream2) {
         let (name, data) = self.0;
+        let pat = PatternImpl(&data.fields);
+        tokens.extend(quote! {
+            let #name #pat = self;
+        });
         DebugImpl((name, &data.fields)).to_tokens(tokens)
     }
 }
@@ -68,7 +72,7 @@ impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a Variant)> {
             discriminant: _,
         } = &variant;
         let pattern = PatternImpl(fields);
-        let debug = EnumImpl((ident, fields));
+        let debug = DebugImpl((ident, fields));
 
         tokens.extend(quote! {
             #name::#ident #pattern => { #debug }
@@ -95,11 +99,9 @@ impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a Fields)> {
 impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a FieldsNamed)> {
     fn to_tokens(&self, tokens: &mut TokenStream2) {
         let (ident, fields) = self.0;
-        let pat = PatternImpl(fields).into_token_stream();
         let name = ident.to_string();
 
         tokens.extend(quote! {
-            let #ident #pat = &self;
             f.debug_struct(#name)
         });
         named_idents(fields).for_each(|ident| {
@@ -115,64 +117,6 @@ impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a FieldsNamed)> {
 }
 
 impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a FieldsUnnamed)> {
-    fn to_tokens(&self, tokens: &mut TokenStream2) {
-        let (ident, fields) = self.0;
-        let pat = PatternImpl(fields);
-        let name = ident.to_string();
-
-        tokens.extend(quote! {
-            let #ident #pat = self;
-            f.debug_tuple_struct(#name)
-        });
-        unnamed_idents(fields).for_each(|ident| {
-            tokens.extend(quote! {
-                .field(#ident)
-            })
-        });
-        tokens.extend(quote! {
-            .finish()
-        });
-    }
-}
-
-pub struct EnumImpl<T>(pub T);
-impl<'a> ToTokens for EnumImpl<(&'a Ident, &'a Fields)> {
-    fn to_tokens(&self, tokens: &mut TokenStream2) {
-        let (name, fields) = self.0;
-        match fields {
-            Fields::Named(named) => EnumImpl((name, named)).to_tokens(tokens),
-            Fields::Unnamed(unnamed) => EnumImpl((name, unnamed)).to_tokens(tokens),
-            Fields::Unit => {
-                let name = name.to_string();
-                tokens.extend(quote! {
-                    f.debug_ident(#name)
-                })
-            }
-        }
-    }
-}
-
-impl<'a> ToTokens for EnumImpl<(&'a Ident, &'a FieldsNamed)> {
-    fn to_tokens(&self, tokens: &mut TokenStream2) {
-        let (ident, fields) = self.0;
-        let name = ident.to_string();
-
-        tokens.extend(quote! {
-            f.debug_struct(#name)
-        });
-        named_idents(fields).for_each(|ident| {
-            let name = ident.to_string();
-            tokens.extend(quote! {
-                .field(#name, #ident)
-            })
-        });
-        tokens.extend(quote! {
-            .finish()
-        });
-    }
-}
-
-impl<'a> ToTokens for EnumImpl<(&'a Ident, &'a FieldsUnnamed)> {
     fn to_tokens(&self, tokens: &mut TokenStream2) {
         let (ident, fields) = self.0;
         let name = ident.to_string();
