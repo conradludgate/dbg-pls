@@ -684,4 +684,24 @@ mod tests {
         let generic = Generic { arg: Wrapped(NonDebug) };
         assert_eq!(pretty(&generic).to_string(), r#"Generic { arg: Wrapped {} }"#);
     }
+
+    #[derive(DebugPls)]
+    #[dbg_pls(crate = "crate")]
+    pub enum Option2<T> {
+        Some(T),
+        None,
+        Wtf { foo: i32 }
+    }
+
+    #[test]
+    fn debug_enum_generic() {
+        let some = Option2::Some(42);
+        assert_eq!(pretty(&some).to_string(), r#"Some(42)"#);
+
+        let none = Option2::<i32>::None;
+        assert_eq!(pretty(&none).to_string(), r#"None"#);
+
+        let wtf = Option2::<i32>::Wtf { foo: 42 };
+        assert_eq!(pretty(&wtf).to_string(), r#"Wtf { foo: 42 }"#);
+    }
 }
