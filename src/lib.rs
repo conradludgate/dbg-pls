@@ -184,6 +184,9 @@ pub use debug_struct::DebugStruct;
 pub use debug_tuple::DebugTuple;
 pub use debug_tuple_struct::DebugTupleStruct;
 
+mod polyfill;
+pub use polyfill::polyfill;
+
 #[cfg(feature = "pretty")]
 mod pretty;
 #[cfg(feature = "pretty")]

@@ -1,126 +1,91 @@
+use proc_macro2::{Literal, Span};
 use syn::{
+    parse_str,
     punctuated::{Pair, Punctuated},
-    token::{Bracket, Comma},
-    Attribute, Expr, ExprArray, ExprLit, Lit, LitInt, LitStr,
+    token::{Bracket, Colon, Colon2, Comma, Dot, Eq, Paren, Semi, Sub},
+    Attribute, BinOp, Expr, ExprArray, ExprAssign, ExprBinary, ExprCall, ExprIndex, ExprLit,
+    ExprMethodCall, ExprPath, Ident, Lit, LitInt, LitStr, MethodTurbofish, Path, PathArguments,
+    PathSegment, QSelf, Stmt, Item,
 };
 
 use crate::{DebugPls, Formatter};
 
-impl DebugPls for Expr {
+impl DebugPls for Stmt {
     fn fmt(&self, f: Formatter<'_>) {
         match self {
-            Expr::Array(val0) => f.debug_tuple_struct("Array").field(val0).finish(),
-            // Expr::Assign(val0) => f.debug_tuple_struct("Assign").field(val0).finish(),
-            // Expr::AssignOp(val0) => f.debug_tuple_struct("AssignOp").field(val0).finish(),
-            // Expr::Async(val0) => f.debug_tuple_struct("Async").field(val0).finish(),
-            // Expr::Await(val0) => f.debug_tuple_struct("Await").field(val0).finish(),
-            // Expr::Binary(val0) => f.debug_tuple_struct("Binary").field(val0).finish(),
-            // Expr::Block(val0) => f.debug_tuple_struct("Block").field(val0).finish(),
-            // Expr::Box(val0) => f.debug_tuple_struct("Box").field(val0).finish(),
-            // Expr::Break(val0) => f.debug_tuple_struct("Break").field(val0).finish(),
-            // Expr::Call(val0) => f.debug_tuple_struct("Call").field(val0).finish(),
-            // Expr::Cast(val0) => f.debug_tuple_struct("Cast").field(val0).finish(),
-            // Expr::Closure(val0) => f.debug_tuple_struct("Closure").field(val0).finish(),
-            // Expr::Continue(val0) => f.debug_tuple_struct("Continue").field(val0).finish(),
-            // Expr::Field(val0) => f.debug_tuple_struct("Field").field(val0).finish(),
-            // Expr::ForLoop(val0) => f.debug_tuple_struct("ForLoop").field(val0).finish(),
-            // Expr::Group(val0) => f.debug_tuple_struct("Group").field(val0).finish(),
-            // Expr::If(val0) => f.debug_tuple_struct("If").field(val0).finish(),
-            // Expr::Index(val0) => f.debug_tuple_struct("Index").field(val0).finish(),
-            // Expr::Let(val0) => f.debug_tuple_struct("Let").field(val0).finish(),
-            Expr::Lit(val0) => f.debug_tuple_struct("Lit").field(val0).finish(),
-            // Expr::Loop(val0) => f.debug_tuple_struct("Loop").field(val0).finish(),
-            // Expr::Macro(val0) => f.debug_tuple_struct("Macro").field(val0).finish(),
-            // Expr::Match(val0) => f.debug_tuple_struct("Match").field(val0).finish(),
-            // Expr::MethodCall(val0) => f.debug_tuple_struct("MethodCall").field(val0).finish(),
-            // Expr::Paren(val0) => f.debug_tuple_struct("Paren").field(val0).finish(),
-            // Expr::Path(val0) => f.debug_tuple_struct("Path").field(val0).finish(),
-            // Expr::Range(val0) => f.debug_tuple_struct("Range").field(val0).finish(),
-            // Expr::Reference(val0) => f.debug_tuple_struct("Reference").field(val0).finish(),
-            // Expr::Repeat(val0) => f.debug_tuple_struct("Repeat").field(val0).finish(),
-            // Expr::Return(val0) => f.debug_tuple_struct("Return").field(val0).finish(),
-            // Expr::Struct(val0) => f.debug_tuple_struct("Struct").field(val0).finish(),
-            // Expr::Try(val0) => f.debug_tuple_struct("Try").field(val0).finish(),
-            // Expr::TryBlock(val0) => f.debug_tuple_struct("TryBlock").field(val0).finish(),
-            // Expr::Tuple(val0) => f.debug_tuple_struct("Tuple").field(val0).finish(),
-            // Expr::Type(val0) => f.debug_tuple_struct("Type").field(val0).finish(),
-            // Expr::Unary(val0) => f.debug_tuple_struct("Unary").field(val0).finish(),
-            // Expr::Unsafe(val0) => f.debug_tuple_struct("Unsafe").field(val0).finish(),
-            // Expr::Verbatim(val0) => f.debug_tuple_struct("Verbatim").field(val0).finish(),
-            // Expr::While(val0) => f.debug_tuple_struct("While").field(val0).finish(),
-            // Expr::Yield(val0) => f.debug_tuple_struct("Yield").field(val0).finish(),
+            Stmt::Local(local) => f.debug_tuple_struct("Local").field(local).finish(),
+            Stmt::Item(item) => f.debug_tuple_struct("Item").field(item).finish(),
+            Stmt::Expr(expr) => f.debug_tuple_struct("Expr").field(expr).finish(),
+            Stmt::Semi(expr, semi) => f
+                .debug_tuple_struct("Semi")
+                .field(expr)
+                .field(semi)
+                .finish(),
+        }
+    }
+}
+
+
+impl DebugPls for Item {
+    fn fmt(&self, f: Formatter<'_>) {
+        match self {
+            // Item::Const(_) => todo!(),
+            // Item::Enum(_) => todo!(),
+            // Item::ExternCrate(_) => todo!(),
+            // Item::Fn(_) => todo!(),
+            // Item::ForeignMod(_) => todo!(),
+            // Item::Impl(_) => todo!(),
+            // Item::Macro(_) => todo!(),
+            // Item::Macro2(_) => todo!(),
+            // Item::Mod(_) => todo!(),
+            // Item::Static(_) => todo!(),
+            // Item::Struct(_) => todo!(),
+            // Item::Trait(_) => todo!(),
+            // Item::TraitAlias(_) => todo!(),
+            // Item::Type(_) => todo!(),
+            // Item::Union(_) => todo!(),
+            // Item::Use(_) => todo!(),
             _ => todo!(),
         }
     }
 }
 
-impl DebugPls for ExprArray {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("ExprArray")
-            .field("attrs", &self.attrs)
-            .field("bracket_token", &self.bracket_token)
-            .field("elems", &self.elems)
-            .finish();
-    }
-}
 
-impl DebugPls for ExprLit {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("ExprLit")
-            .field("attrs", &self.attrs)
-            .field("lit", &self.lit)
-            .finish();
-    }
-}
-
-impl DebugPls for Lit {
+impl DebugPls for BinOp {
     fn fmt(&self, f: Formatter<'_>) {
         match self {
-            Lit::Str(v0) => f.debug_tuple_struct("Str").field(v0).finish(),
-            // Lit::ByteStr(v0) => f.debug_tuple_struct("ByteStr").field(v0).finish(),
-            // Lit::Byte(v0) => f.debug_tuple_struct("Byte").field(v0).finish(),
-            // Lit::Char(v0) => f.debug_tuple_struct("Char").field(v0).finish(),
-            Lit::Int(v0) => f.debug_tuple_struct("Int").field(v0).finish(),
-            // Lit::Float(v0) => f.debug_tuple_struct("Float").field(v0).finish(),
-            // Lit::Bool(v0) => f.debug_tuple_struct("Bool").field(v0).finish(),
-            // Lit::Verbatim(v0) => f.debug_tuple_struct("Verbatim").field(v0).finish(),
-            _ => todo!(),
+            BinOp::Add(_) => todo!(),
+            BinOp::Sub(v0) => f.debug_tuple_struct("Sub").field(v0).finish(),
+            BinOp::Mul(_) => todo!(),
+            BinOp::Div(_) => todo!(),
+            BinOp::Rem(_) => todo!(),
+            BinOp::And(_) => todo!(),
+            BinOp::Or(_) => todo!(),
+            BinOp::BitXor(_) => todo!(),
+            BinOp::BitAnd(_) => todo!(),
+            BinOp::BitOr(_) => todo!(),
+            BinOp::Shl(_) => todo!(),
+            BinOp::Shr(_) => todo!(),
+            BinOp::Eq(_) => todo!(),
+            BinOp::Lt(_) => todo!(),
+            BinOp::Le(_) => todo!(),
+            BinOp::Ne(_) => todo!(),
+            BinOp::Ge(_) => todo!(),
+            BinOp::Gt(_) => todo!(),
+            BinOp::AddEq(_) => todo!(),
+            BinOp::SubEq(_) => todo!(),
+            BinOp::MulEq(_) => todo!(),
+            BinOp::DivEq(_) => todo!(),
+            BinOp::RemEq(_) => todo!(),
+            BinOp::BitXorEq(_) => todo!(),
+            BinOp::BitAndEq(_) => todo!(),
+            BinOp::BitOrEq(_) => todo!(),
+            BinOp::ShlEq(_) => todo!(),
+            BinOp::ShrEq(_) => todo!(),
         }
     }
 }
 
-impl DebugPls for LitStr {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("LitStr")
-            .field("value", &self.value())
-            .finish();
-    }
-}
-
-impl DebugPls for LitInt {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("LitInt")
-            .field("value", &self.base10_digits())
-            .finish();
-    }
-}
-
-impl DebugPls for Attribute {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("Attribute").finish_non_exhaustive();
-    }
-}
-
-impl<T: DebugPls, P: DebugPls> DebugPls for Punctuated<T, P> {
-    fn fmt(&self, f: Formatter<'_>) {
-        self.pairs()
-            .fold(f.debug_list(), |f, pair| match pair {
-                Pair::Punctuated(t, p) => f.entry(t).entry(p),
-                Pair::End(t) => f.entry(t),
-            })
-            .finish();
-    }
-}
 
 macro_rules! debug_units {
     ($($T:ident),*) => {$(
@@ -132,7 +97,7 @@ macro_rules! debug_units {
     )*};
 }
 
-debug_units![Comma, Bracket];
+debug_units![Comma, Bracket, Semi, Eq, Colon, Colon2, Sub, Dot, Paren];
 
 #[cfg(test)]
 mod tests {
@@ -151,5 +116,13 @@ mod tests {
         "#;
         let expr: syn::Expr = syn::parse_str(code).unwrap();
         println!("{}", color(&expr));
+    }
+
+    #[test]
+    fn large_tree() {
+        let code = r#"foo[foo.len() - 1] = 42;"#;
+        let expr: syn::Stmt = syn::parse_str(code).unwrap();
+        println!("{}", color(&expr));
+        println!("{:#?}", expr);
     }
 }

@@ -1,2 +1,2 @@
-mod syn_impls;
+mod syn;
 mod std;

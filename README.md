@@ -1,5 +1,8 @@
 # dbg-pls
 
+[![crate](https://img.shields.io/crates/v/dbg-pls?style=flat-square)](https://crates.io/crates/dbg-pls)
+[![docs](https://img.shields.io/docsrs/dbg-pls?style=flat-square)](https://docs.rs/dbg-pls/latest/dbg_pls/)
+
 A `Debug`-like trait for rust that outputs properly formatted code
 
 ## Showcase
