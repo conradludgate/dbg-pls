@@ -1,7 +1,7 @@
 use syn::{
     punctuated::{Pair, Punctuated},
     Attribute, Ident, Lit, LitInt, LitStr, MethodTurbofish, Path, PathArguments, PathSegment,
-    QSelf,
+    QSelf, Member, Index,
 };
 
 use crate::{DebugPls, Formatter};
@@ -138,6 +138,21 @@ impl<T: DebugPls, P: DebugPls> DebugPls for Punctuated<T, P> {
                 Pair::End(t) => f.entry(t),
             })
             .finish();
+    }
+}
+
+impl DebugPls for Member {
+    fn fmt(&self, f: Formatter<'_>) {
+        match self {
+            Member::Named(n) => f.debug_tuple_struct("Named").field(n).finish(),
+            Member::Unnamed(u) => f.debug_tuple_struct("Unnamed").field(u).finish(),
+        }
+    }
+}
+
+impl DebugPls for Index {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_tuple_struct("Index").field(&self.index).finish();
     }
 }
 

@@ -1,9 +1,12 @@
-use syn::token::{Bracket, Colon, Colon2, Comma, Dot, Eq, Let, Paren, Semi, Sub, Underscore};
+use syn::token::{
+    And, At, Box, Brace, Bracket, Colon, Colon2, Comma, Dot, Dot2, DotDotEq, Eq, Let, Mut, Or,
+    Paren, Ref, Semi, Sub, Underscore,
+};
 
 use crate::{DebugPls, Formatter};
 
 macro_rules! debug_units {
-    ($($T:ident),*) => {$(
+    ($($T:ident,)*) => {$(
         impl DebugPls for $T {
             fn fmt(&self, f: Formatter<'_>) {
                 f.debug_ident(stringify!($T))
@@ -12,4 +15,7 @@ macro_rules! debug_units {
     )*};
 }
 
-debug_units![Comma, Bracket, Semi, Eq, Colon, Colon2, Sub, Dot, Paren, Let, Underscore];
+debug_units![
+    And, At, Box, Brace, Bracket, Colon, Colon2, Comma, Dot, Dot2, DotDotEq, Eq, Let, Mut, Or,
+    Paren, Ref, Semi, Sub, Underscore,
+];
