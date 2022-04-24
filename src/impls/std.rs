@@ -142,6 +142,15 @@ impl<D: DebugPls, const N: usize> DebugPls for [D; N] {
     }
 }
 
+impl DebugPls for char {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.write_expr(syn::ExprLit {
+            attrs: vec![],
+            lit: syn::LitChar::new(*self, Span::call_site()).into(),
+        });
+    }
+}
+
 impl DebugPls for str {
     fn fmt(&self, f: Formatter<'_>) {
         f.write_expr(syn::ExprLit {

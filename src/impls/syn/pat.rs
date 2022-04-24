@@ -1,6 +1,6 @@
 use syn::{
-    FieldPat, Pat, PatPath, PatRange, PatReference, PatRest, PatSlice, PatStruct, PatTuple,
-    PatTupleStruct, PatType, PatWild, RangeLimits, PatOr, PatMacro, Macro, PatBox, PatIdent, PatLit,
+    FieldPat, Pat, PatBox, PatIdent, PatLit, PatMacro, PatOr, PatPath, PatRange, PatReference,
+    PatRest, PatSlice, PatStruct, PatTuple, PatTupleStruct, PatType, PatWild, RangeLimits,
 };
 
 use crate::{DebugPls, Formatter};
@@ -28,7 +28,6 @@ impl DebugPls for Pat {
         .finish();
     }
 }
-
 
 impl DebugPls for PatBox {
     fn fmt(&self, f: Formatter<'_>) {
@@ -65,12 +64,6 @@ impl DebugPls for PatMacro {
             .field("attrs", &self.attrs)
             .field("mac", &self.mac)
             .finish();
-    }
-}
-
-impl DebugPls for Macro {
-    fn fmt(&self, _f: Formatter<'_>) {
-        todo!()
     }
 }
 

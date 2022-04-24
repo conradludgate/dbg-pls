@@ -1,7 +1,7 @@
 use syn::{
     punctuated::{Pair, Punctuated},
-    Attribute, Ident, Lit, LitInt, LitStr, MethodTurbofish, Path, PathArguments, PathSegment,
-    QSelf, Member, Index,
+    Attribute, Ident, Index, Lit, LitInt, LitStr, Macro, MacroDelimiter, Member, MethodTurbofish,
+    Path, PathArguments, PathSegment, QSelf,
 };
 
 use crate::{DebugPls, Formatter};
@@ -153,6 +153,28 @@ impl DebugPls for Member {
 impl DebugPls for Index {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_tuple_struct("Index").field(&self.index).finish();
+    }
+}
+
+impl DebugPls for Macro {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("Macro")
+            .field("path", &self.path)
+            .field("bang_token", &self.bang_token)
+            .field("delimiter", &self.delimiter)
+            .field("tokens", &self.tokens)
+            .finish();
+    }
+}
+
+impl DebugPls for MacroDelimiter {
+    fn fmt(&self, f: Formatter<'_>) {
+        match self {
+            MacroDelimiter::Paren(v0) => f.debug_tuple_struct("Paren").field(v0),
+            MacroDelimiter::Brace(v0) => f.debug_tuple_struct("Brace").field(v0),
+            MacroDelimiter::Bracket(v0) => f.debug_tuple_struct("Bracket").field(v0),
+        }
+        .finish();
     }
 }
 
