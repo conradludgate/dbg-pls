@@ -8,8 +8,10 @@ use crate::{DebugPls, Formatter};
 
 mod expr;
 mod item;
+mod pat;
 mod stmt;
 mod token;
+mod ty;
 
 impl DebugPls for MethodTurbofish {
     fn fmt(&self, _f: Formatter<'_>) {

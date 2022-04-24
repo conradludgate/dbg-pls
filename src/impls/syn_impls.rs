@@ -11,7 +11,7 @@ use syn::{
 use crate::{DebugPls, Formatter};
 
 impl DebugPls for Stmt {
-    fn fmt(&self, f: Formatter<'_>) {
+    fn fmt(&self, f: &mut Formatter) {
         match self {
             Stmt::Local(local) => f.debug_tuple_struct("Local").field(local).finish(),
             Stmt::Item(item) => f.debug_tuple_struct("Item").field(item).finish(),
@@ -27,7 +27,7 @@ impl DebugPls for Stmt {
 
 
 impl DebugPls for Item {
-    fn fmt(&self, f: Formatter<'_>) {
+    fn fmt(&self, f: &mut Formatter) {
         match self {
             // Item::Const(_) => todo!(),
             // Item::Enum(_) => todo!(),
@@ -52,7 +52,7 @@ impl DebugPls for Item {
 
 
 impl DebugPls for BinOp {
-    fn fmt(&self, f: Formatter<'_>) {
+    fn fmt(&self, f: &mut Formatter) {
         match self {
             BinOp::Add(_) => todo!(),
             BinOp::Sub(v0) => f.debug_tuple_struct("Sub").field(v0).finish(),
@@ -90,7 +90,7 @@ impl DebugPls for BinOp {
 macro_rules! debug_units {
     ($($T:ident),*) => {$(
         impl DebugPls for $T {
-            fn fmt(&self, f: Formatter<'_>) {
+            fn fmt(&self, f: &mut Formatter) {
                 f.debug_ident(stringify!($T))
             }
         }

@@ -1,4 +1,4 @@
-use syn::{Local, Pat, Stmt};
+use syn::{Local, Stmt};
 
 use crate::{DebugPls, Formatter};
 
@@ -26,28 +26,5 @@ impl DebugPls for Local {
             .field("init", &self.init)
             .field("semi_token", &self.semi_token)
             .finish();
-    }
-}
-
-impl DebugPls for Pat {
-    fn fmt(&self, _f: Formatter<'_>) {
-        match self {
-            // Pat::Box(_) => todo!(),
-            // Pat::Ident(_) => todo!(),
-            // Pat::Lit(_) => todo!(),
-            // Pat::Macro(_) => todo!(),
-            // Pat::Or(_) => todo!(),
-            // Pat::Path(_) => todo!(),
-            // Pat::Range(_) => todo!(),
-            // Pat::Reference(_) => todo!(),
-            // Pat::Rest(_) => todo!(),
-            // Pat::Slice(_) => todo!(),
-            // Pat::Struct(_) => todo!(),
-            // Pat::Tuple(_) => todo!(),
-            // Pat::TupleStruct(_) => todo!(),
-            // Pat::Type(_) => todo!(),
-            // Pat::Wild(_) => todo!(),
-            _ => todo!(),
-        }
     }
 }

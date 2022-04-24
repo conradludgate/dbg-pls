@@ -1,4 +1,4 @@
-use syn::token::{Bracket, Colon, Colon2, Comma, Dot, Eq, Let, Paren, Semi, Sub};
+use syn::token::{Bracket, Colon, Colon2, Comma, Dot, Eq, Let, Paren, Semi, Sub, Underscore};
 
 use crate::{DebugPls, Formatter};
 
@@ -12,4 +12,4 @@ macro_rules! debug_units {
     )*};
 }
 
-debug_units![Comma, Bracket, Semi, Eq, Colon, Colon2, Sub, Dot, Paren, Let];
+debug_units![Comma, Bracket, Semi, Eq, Colon, Colon2, Sub, Dot, Paren, Let, Underscore];
