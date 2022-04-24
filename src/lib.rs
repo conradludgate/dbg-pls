@@ -524,7 +524,10 @@ impl<'a> Formatter<'a> {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::{BTreeMap, BTreeSet};
+    use std::{
+        collections::{BTreeMap, BTreeSet},
+        ops,
+    };
 
     use super::*;
 
@@ -745,5 +748,40 @@ mod tests {
         next: None,
     }),
 }"#);
+    }
+
+    #[derive(DebugPls)]
+    #[dbg_pls(crate = "crate")]
+    pub struct Rangeful<T> {
+        range: ops::Range<T>,
+        range_from: ops::RangeFrom<T>,
+        range_to: ops::RangeTo<T>,
+        range_full: ops::RangeFull,
+        range_inclusive: ops::RangeInclusive<T>,
+        range_inclusive_to: ops::RangeToInclusive<T>,
+    }
+
+    #[test]
+    fn ranges() {
+        let x = Rangeful {
+            range: 1..4,
+            range_from: 1..,
+            range_to: ..7,
+            range_full: ..,
+            range_inclusive: 1234..=1236,
+            range_inclusive_to: ..=70,
+        };
+
+        assert_eq!(
+            pretty(&x).to_string(),
+            r#"Rangeful {
+    range: 1..4,
+    range_from: 1..,
+    range_to: ..7,
+    range_full: ..,
+    range_inclusive: 1234..=1236,
+    range_inclusive_to: ..=70,
+}"#
+        );
     }
 }
