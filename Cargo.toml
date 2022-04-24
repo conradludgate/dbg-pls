@@ -40,6 +40,7 @@ once_cell = "1"
 
 [dev-dependencies]
 dbg-pls = { path = ".", features = ["derive", "pretty", "colors"] }
+syn = { version = "1", features = ["full", "extra-traits"] }
 
 [features]
 default = []

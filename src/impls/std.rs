@@ -1,4 +1,6 @@
 mod collections;
+mod fnptr;
+mod tuple;
 
 use std::{
     ops,
@@ -18,7 +20,35 @@ impl<T: ?Sized + DebugPls> DebugPls for Box<T> {
     }
 }
 
+impl<'a, D: DebugPls + ?Sized> DebugPls for *mut D {
+    fn fmt(&self, f: Formatter<'_>) {
+        <*const D>::fmt(&(*self as *const D), f);
+    }
+}
+
+impl<'a, D: DebugPls + ?Sized> DebugPls for *const D {
+    fn fmt(&self, f: Formatter<'_>) {
+        /// Since the formatting will be identical for all pointer types, use a non-monomorphized
+        /// implementation for the actual formatting to reduce the amount of codegen work needed
+        fn inner(ptr: *const (), f: Formatter<'_>) {
+            let output = format!("{:#x?}", ptr as usize);
+            f.write_expr(syn::ExprLit {
+                attrs: vec![],
+                lit: syn::LitFloat::new(&output, Span::call_site()).into(),
+            });
+        }
+
+        inner((*self).cast(), f);
+    }
+}
+
 impl<'a, D: DebugPls + ?Sized> DebugPls for &'a D {
+    fn fmt(&self, f: Formatter<'_>) {
+        D::fmt(self, f);
+    }
+}
+
+impl<'a, D: DebugPls + ?Sized> DebugPls for &'a mut D {
     fn fmt(&self, f: Formatter<'_>) {
         D::fmt(self, f);
     }
@@ -109,6 +139,15 @@ impl<D: DebugPls> DebugPls for [D] {
 impl<D: DebugPls, const N: usize> DebugPls for [D; N] {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_list().entries(self).finish();
+    }
+}
+
+impl DebugPls for char {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.write_expr(syn::ExprLit {
+            attrs: vec![],
+            lit: syn::LitChar::new(*self, Span::call_site()).into(),
+        });
     }
 }
 

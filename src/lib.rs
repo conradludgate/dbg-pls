@@ -219,10 +219,10 @@ pub use dbg_pls_derive::DebugPls;
 
 #[doc(hidden)]
 pub mod __private {
-    #[cfg(feature = "pretty")]
-    pub use crate::pretty::Str as PrettyStr;
     #[cfg(feature = "colors")]
     pub use crate::colors::ColorStr;
+    #[cfg(feature = "pretty")]
+    pub use crate::pretty::Str as PrettyStr;
 }
 
 /// Syntax aware pretty-printed debug formatting.
@@ -299,6 +299,7 @@ pub trait DebugPls {
 }
 
 /// Tool for formatting, used within [`DebugPls`] implementations
+#[repr(transparent)]
 pub struct Formatter<'a> {
     expr: &'a mut syn::Expr,
 }
@@ -691,7 +692,7 @@ mod tests {
     pub enum Option2<T> {
         Some(T),
         None,
-        Wtf { foo: i32 }
+        Wtf { foo: i32 },
     }
 
     #[test]
@@ -715,14 +716,26 @@ mod tests {
 
     #[test]
     fn debug_recursive() {
-        let y = LinkedList { value: 1_i32, next: None };
-        assert_eq!(pretty(&y).to_string(), r#"LinkedList { value: 1, next: None }"#);
+        let y = LinkedList {
+            value: 1_i32,
+            next: None,
+        };
+        assert_eq!(
+            pretty(&y).to_string(),
+            r#"LinkedList { value: 1, next: None }"#
+        );
 
-        let x = LinkedList { value: 0_i32, next: Some(Box::new(y)) };
-        assert_eq!(pretty(&x).to_string(), r#"LinkedList {
+        let x = LinkedList {
+            value: 0_i32,
+            next: Some(Box::new(y)),
+        };
+        assert_eq!(
+            pretty(&x).to_string(),
+            r#"LinkedList {
     value: 0,
     next: Some(LinkedList { value: 1, next: None }),
-}"#);
+}"#
+        );
     }
 
     #[derive(DebugPls)]
@@ -734,20 +747,32 @@ mod tests {
 
     #[test]
     fn debug_recursive2() {
-        let y = LinkedList2 { value: 1_i32, next: None };
-        assert_eq!(pretty(&y).to_string(), r#"LinkedList2 {
+        let y = LinkedList2 {
+            value: 1_i32,
+            next: None,
+        };
+        assert_eq!(
+            pretty(&y).to_string(),
+            r#"LinkedList2 {
     value: 1,
     next: None,
-}"#);
+}"#
+        );
 
-        let x = LinkedList2 { value: 0_i32, next: Some(Box::new(y)) };
-        assert_eq!(pretty(&x).to_string(), r#"LinkedList2 {
+        let x = LinkedList2 {
+            value: 0_i32,
+            next: Some(Box::new(y)),
+        };
+        assert_eq!(
+            pretty(&x).to_string(),
+            r#"LinkedList2 {
     value: 0,
     next: Some(LinkedList2 {
         value: 1,
         next: None,
     }),
-}"#);
+}"#
+        );
     }
 
     #[derive(DebugPls)]

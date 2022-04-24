@@ -1,20 +1,18 @@
-use syn::{
-    punctuated::{Pair, Punctuated},
-    token::{Bracket, Comma},
-    Attribute, Expr, ExprArray, ExprLit, Lit, LitInt, LitStr,
-};
+use syn::{Expr, ExprArray, ExprAssign, ExprBinary, ExprIndex, ExprLit, ExprMethodCall, ExprPath};
 
 use crate::{DebugPls, Formatter};
+
+mod binop;
 
 impl DebugPls for Expr {
     fn fmt(&self, f: Formatter<'_>) {
         match self {
             Expr::Array(val0) => f.debug_tuple_struct("Array").field(val0).finish(),
-            // Expr::Assign(val0) => f.debug_tuple_struct("Assign").field(val0).finish(),
+            Expr::Assign(val0) => f.debug_tuple_struct("Assign").field(val0).finish(),
             // Expr::AssignOp(val0) => f.debug_tuple_struct("AssignOp").field(val0).finish(),
             // Expr::Async(val0) => f.debug_tuple_struct("Async").field(val0).finish(),
             // Expr::Await(val0) => f.debug_tuple_struct("Await").field(val0).finish(),
-            // Expr::Binary(val0) => f.debug_tuple_struct("Binary").field(val0).finish(),
+            Expr::Binary(val0) => f.debug_tuple_struct("Binary").field(val0).finish(),
             // Expr::Block(val0) => f.debug_tuple_struct("Block").field(val0).finish(),
             // Expr::Box(val0) => f.debug_tuple_struct("Box").field(val0).finish(),
             // Expr::Break(val0) => f.debug_tuple_struct("Break").field(val0).finish(),
@@ -26,15 +24,15 @@ impl DebugPls for Expr {
             // Expr::ForLoop(val0) => f.debug_tuple_struct("ForLoop").field(val0).finish(),
             // Expr::Group(val0) => f.debug_tuple_struct("Group").field(val0).finish(),
             // Expr::If(val0) => f.debug_tuple_struct("If").field(val0).finish(),
-            // Expr::Index(val0) => f.debug_tuple_struct("Index").field(val0).finish(),
+            Expr::Index(val0) => f.debug_tuple_struct("Index").field(val0).finish(),
             // Expr::Let(val0) => f.debug_tuple_struct("Let").field(val0).finish(),
             Expr::Lit(val0) => f.debug_tuple_struct("Lit").field(val0).finish(),
             // Expr::Loop(val0) => f.debug_tuple_struct("Loop").field(val0).finish(),
             // Expr::Macro(val0) => f.debug_tuple_struct("Macro").field(val0).finish(),
             // Expr::Match(val0) => f.debug_tuple_struct("Match").field(val0).finish(),
-            // Expr::MethodCall(val0) => f.debug_tuple_struct("MethodCall").field(val0).finish(),
+            Expr::MethodCall(val0) => f.debug_tuple_struct("MethodCall").field(val0).finish(),
             // Expr::Paren(val0) => f.debug_tuple_struct("Paren").field(val0).finish(),
-            // Expr::Path(val0) => f.debug_tuple_struct("Path").field(val0).finish(),
+            Expr::Path(val0) => f.debug_tuple_struct("Path").field(val0).finish(),
             // Expr::Range(val0) => f.debug_tuple_struct("Range").field(val0).finish(),
             // Expr::Reference(val0) => f.debug_tuple_struct("Reference").field(val0).finish(),
             // Expr::Repeat(val0) => f.debug_tuple_struct("Repeat").field(val0).finish(),
@@ -73,83 +71,59 @@ impl DebugPls for ExprLit {
     }
 }
 
-impl DebugPls for Lit {
+impl DebugPls for ExprIndex {
     fn fmt(&self, f: Formatter<'_>) {
-        match self {
-            Lit::Str(v0) => f.debug_tuple_struct("Str").field(v0).finish(),
-            // Lit::ByteStr(v0) => f.debug_tuple_struct("ByteStr").field(v0).finish(),
-            // Lit::Byte(v0) => f.debug_tuple_struct("Byte").field(v0).finish(),
-            // Lit::Char(v0) => f.debug_tuple_struct("Char").field(v0).finish(),
-            Lit::Int(v0) => f.debug_tuple_struct("Int").field(v0).finish(),
-            // Lit::Float(v0) => f.debug_tuple_struct("Float").field(v0).finish(),
-            // Lit::Bool(v0) => f.debug_tuple_struct("Bool").field(v0).finish(),
-            // Lit::Verbatim(v0) => f.debug_tuple_struct("Verbatim").field(v0).finish(),
-            _ => todo!(),
-        }
-    }
-}
-
-impl DebugPls for LitStr {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("LitStr")
-            .field("value", &self.value())
+        f.debug_struct("ExprIndex")
+            .field("attrs", &self.attrs)
+            .field("expr", &self.expr)
+            .field("bracket_token", &self.bracket_token)
+            .field("index", &self.index)
             .finish();
     }
 }
 
-impl DebugPls for LitInt {
+impl DebugPls for ExprBinary {
     fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("LitInt")
-            .field("value", &self.base10_digits())
+        f.debug_struct("ExprBinary")
+            .field("attrs", &self.attrs)
+            .field("left", &self.left)
+            .field("op", &self.op)
+            .field("right", &self.right)
             .finish();
     }
 }
 
-impl DebugPls for Attribute {
+impl DebugPls for ExprMethodCall {
     fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("Attribute").finish_non_exhaustive();
-    }
-}
-
-impl<T: DebugPls, P: DebugPls> DebugPls for Punctuated<T, P> {
-    fn fmt(&self, f: Formatter<'_>) {
-        self.pairs()
-            .fold(f.debug_list(), |f, pair| match pair {
-                Pair::Punctuated(t, p) => f.entry(t).entry(p),
-                Pair::End(t) => f.entry(t),
-            })
+        f.debug_struct("ExprMethodCall")
+            .field("attrs", &self.attrs)
+            .field("receiver", &self.receiver)
+            .field("dot_token", &self.dot_token)
+            .field("method", &self.method)
+            .field("turbofish", &self.turbofish)
+            .field("paren_token", &self.paren_token)
+            .field("args", &self.args)
             .finish();
     }
 }
 
-macro_rules! debug_units {
-    ($($T:ident),*) => {$(
-        impl DebugPls for $T {
-            fn fmt(&self, f: Formatter<'_>) {
-                f.debug_ident(stringify!($T))
-            }
-        }
-    )*};
+impl DebugPls for ExprAssign {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("ExprAssign")
+            .field("attrs", &self.attrs)
+            .field("left", &self.left)
+            .field("eq_token", &self.eq_token)
+            .field("right", &self.right)
+            .finish();
+    }
 }
 
-debug_units![Comma, Bracket];
-
-#[cfg(test)]
-mod tests {
-    use crate::color;
-
-    #[test]
-    fn pretty_colors() {
-        let code = r#"
-            [
-                "Hello, World! I am a long string",
-                420,
-                "Wait, you can't mix and match types in arrays, is this python?",
-                69,
-                "Nice."
-            ]
-        "#;
-        let expr: syn::Expr = syn::parse_str(code).unwrap();
-        println!("{}", color(&expr));
+impl DebugPls for ExprPath {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("ExprPath")
+            .field("attrs", &self.attrs)
+            .field("qself", &self.qself)
+            .field("path", &self.path)
+            .finish();
     }
 }

@@ -62,7 +62,7 @@ impl<'a> std::fmt::Display for Pretty<'a> {
 }
 
 #[cfg_attr(docsrs, doc(cfg(feature = "pretty")))]
-/// Wraps a [`Debug`] type into a [`std::fmt::Debug`] type for use in regular [`format!`]
+/// Wraps a [`DebugPls`] type into a [`std::fmt::Debug`] type for use in regular [`format!`]
 pub fn pretty(value: &impl DebugPls) -> impl std::fmt::Debug + std::fmt::Display + '_ {
     Pretty(value)
 }

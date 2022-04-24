@@ -87,7 +87,7 @@ impl<'a> std::fmt::Display for Color<'a> {
 }
 
 #[cfg_attr(docsrs, doc(cfg(feature = "colors")))]
-/// Wraps a [`Debug`] type into a [`std::fmt::Debug`] type for use in regular [`format!`]
+/// Wraps a [`DebugPls`] type into a [`std::fmt::Debug`] type for use in regular [`format!`]
 pub fn color(value: &impl DebugPls) -> impl std::fmt::Debug + std::fmt::Display + '_ {
     Color(value)
 }
