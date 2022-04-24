@@ -2,7 +2,7 @@ use debug::DebugImpl;
 use predicate::predicate;
 use proc_macro::TokenStream;
 use quote::ToTokens;
-use syn::{parse_macro_input, DeriveInput, parse_quote, Attribute, Path};
+use syn::{parse_macro_input, parse_quote, Attribute, DeriveInput, Path};
 
 mod debug;
 mod pat;

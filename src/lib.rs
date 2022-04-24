@@ -1,5 +1,6 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![warn(clippy::pedantic)]
+#![forbid(unsafe_code)]
 //! Syntax aware debug printing.
 //!
 //! Makes use of `syn` and `prettyplease` in order to provide the most
