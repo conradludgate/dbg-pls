@@ -1,0 +1,11 @@
+---
+source: src/lib.rs
+expression: "BTreeSet::from([Demo { foo: 5, bar: \"hello\" },\n            Demo { foo: 5, bar: \"Hello, world! I am a very long string\" }])"
+---
+{
+    Demo {
+        foo: 5,
+        bar: "Hello, world! I am a very long string",
+    };
+    Demo { foo: 5, bar: "hello" }
+}

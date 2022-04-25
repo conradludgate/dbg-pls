@@ -1,0 +1,38 @@
+---
+source: src/impls/syn/mod.rs
+expression: "\n            [\n                \"Hello, World! I am a long string\",\n                420,\n                \"Wait, you can't mix and match types in arrays, is this python?\",\n                69,\n                \"Nice.\"\n            ]\n        "
+---
+Array(ExprArray {
+    attrs: [],
+    bracket_token: Bracket,
+    elems: [
+        Lit(ExprLit {
+            attrs: [],
+            lit: Str(LitStr {
+                token: "Hello, World! I am a long string",
+            }),
+        }),
+        Comma,
+        Lit(ExprLit {
+            attrs: [],
+            lit: Int(LitInt { token: 420 }),
+        }),
+        Comma,
+        Lit(ExprLit {
+            attrs: [],
+            lit: Str(LitStr {
+                token: "Wait, you can't mix and match types in arrays, is this python?",
+            }),
+        }),
+        Comma,
+        Lit(ExprLit {
+            attrs: [],
+            lit: Int(LitInt { token: 69 }),
+        }),
+        Comma,
+        Lit(ExprLit {
+            attrs: [],
+            lit: Str(LitStr { token: "Nice." }),
+        }),
+    ],
+})

@@ -1,0 +1,19 @@
+---
+source: src/lib.rs
+expression: "{\n    let mut val = [Demo { foo: 5, bar: \"hello\" }; 10];\n    val[6].bar = \"Hello, world! I am a very long string\";\n    val\n}"
+---
+[
+    Demo { foo: 5, bar: "hello" },
+    Demo { foo: 5, bar: "hello" },
+    Demo { foo: 5, bar: "hello" },
+    Demo { foo: 5, bar: "hello" },
+    Demo { foo: 5, bar: "hello" },
+    Demo { foo: 5, bar: "hello" },
+    Demo {
+        foo: 5,
+        bar: "Hello, world! I am a very long string",
+    },
+    Demo { foo: 5, bar: "hello" },
+    Demo { foo: 5, bar: "hello" },
+    Demo { foo: 5, bar: "hello" },
+]

@@ -1,0 +1,8 @@
+---
+source: src/lib.rs
+expression: "BTreeMap::from([(\"hello\", 60), (\"Hello, world! I am a very long string\", 12)])"
+---
+{
+    ["Hello, world! I am a very long string"] = 12;
+    ["hello"] = 60;
+}

@@ -1,93 +1,8 @@
-use syn::{
-    punctuated::{Pair, Punctuated},
-    Attribute, Ident, Index, Lit, LitInt, LitStr, Macro, MacroDelimiter, Member, MethodTurbofish,
-    Path, PathArguments, PathSegment, QSelf,
-};
+use syn::punctuated::{Pair, Punctuated};
+
+mod gen;
 
 use crate::{DebugPls, Formatter};
-
-mod expr;
-mod item;
-mod pat;
-mod stmt;
-mod token;
-mod ty;
-
-impl DebugPls for MethodTurbofish {
-    fn fmt(&self, _f: Formatter<'_>) {
-        todo!()
-    }
-}
-
-impl DebugPls for Path {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("Path")
-            .field("leading_colon", &self.leading_colon)
-            .field("segments", &self.segments)
-            .finish();
-    }
-}
-
-impl DebugPls for PathSegment {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("PathSegment")
-            .field("ident", &self.ident)
-            .field("arguments", &self.arguments)
-            .finish();
-    }
-}
-
-impl DebugPls for Ident {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_tuple_struct("Ident")
-            .field(&IdentSym(self.clone()))
-            .finish();
-    }
-}
-
-impl DebugPls for PathArguments {
-    fn fmt(&self, f: Formatter<'_>) {
-        match self {
-            PathArguments::None => f.debug_ident("None"),
-            // PathArguments::AngleBracketed(_) => todo!(),
-            // PathArguments::Parenthesized(_) => todo!(),
-            _ => todo!(),
-        }
-    }
-}
-
-impl DebugPls for QSelf {
-    fn fmt(&self, _f: Formatter<'_>) {
-        todo!()
-    }
-}
-
-struct IdentSym(Ident);
-impl DebugPls for IdentSym {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.write_expr(syn::ExprPath {
-            path: self.0.clone().into(),
-            attrs: vec![],
-            qself: None,
-        });
-    }
-}
-
-impl DebugPls for Lit {
-    fn fmt(&self, f: Formatter<'_>) {
-        match self {
-            Lit::Str(v0) => f.debug_tuple_struct("Str").field(v0).finish(),
-            // Lit::ByteStr(v0) => f.debug_tuple_struct("ByteStr").field(v0).finish(),
-            // Lit::Byte(v0) => f.debug_tuple_struct("Byte").field(v0).finish(),
-            // Lit::Char(v0) => f.debug_tuple_struct("Char").field(v0).finish(),
-            Lit::Int(v0) => f.debug_tuple_struct("Int").field(v0).finish(),
-            // Lit::Float(v0) => f.debug_tuple_struct("Float").field(v0).finish(),
-            // Lit::Bool(v0) => f.debug_tuple_struct("Bool").field(v0).finish(),
-            // Lit::Verbatim(v0) => f.debug_tuple_struct("Verbatim").field(v0).finish(),
-            _ => todo!(),
-        }
-    }
-}
 
 struct DebugSelf<T>(T);
 impl<T: Into<syn::Expr> + Clone> DebugPls for DebugSelf<T> {
@@ -96,37 +11,93 @@ impl<T: Into<syn::Expr> + Clone> DebugPls for DebugSelf<T> {
     }
 }
 
-impl DebugPls for LitStr {
+struct DebugLit<T>(T);
+impl<T: Into<syn::Lit> + Clone> DebugPls for DebugLit<T> {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.write_expr(syn::Expr::Lit(syn::ExprLit {
+            attrs: vec![],
+            lit: self.0.clone().into(),
+        }));
+    }
+}
+
+impl DebugPls for syn::LitStr {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("LitStr")
-            .field(
-                "token",
-                &DebugSelf(syn::Expr::Lit(syn::ExprLit {
-                    attrs: vec![],
-                    lit: Lit::Str(self.clone()),
-                })),
-            )
+            .field("token", &DebugLit(self.clone()))
             .finish();
     }
 }
 
-impl DebugPls for LitInt {
+impl DebugPls for syn::LitInt {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("LitInt")
-            .field(
-                "token",
-                &DebugSelf(syn::Expr::Lit(syn::ExprLit {
-                    attrs: vec![],
-                    lit: Lit::Int(self.clone()),
-                })),
-            )
+            .field("token", &DebugLit(self.clone()))
             .finish();
     }
 }
 
-impl DebugPls for Attribute {
+impl DebugPls for syn::LitByte {
     fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("Attribute").finish_non_exhaustive();
+        f.debug_struct("LitByte")
+            .field("token", &DebugLit(self.clone()))
+            .finish();
+    }
+}
+
+impl DebugPls for syn::LitChar {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("LitChar")
+            .field("token", &DebugLit(self.clone()))
+            .finish();
+    }
+}
+
+impl DebugPls for syn::LitBool {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("LitBool")
+            .field("token", &DebugLit(self.clone()))
+            .finish();
+    }
+}
+
+impl DebugPls for syn::LitFloat {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("LitFloat")
+            .field("token", &DebugLit(self.clone()))
+            .finish();
+    }
+}
+
+impl DebugPls for syn::LitByteStr {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("LitByteStr")
+            .field("token", &DebugLit(self.clone()))
+            .finish();
+    }
+}
+
+impl DebugPls for syn::token::Group {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("Group");
+    }
+}
+
+impl DebugPls for syn::token::Brace {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("Brace");
+    }
+}
+
+impl DebugPls for syn::token::Bracket {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("Bracket");
+    }
+}
+
+impl DebugPls for syn::token::Paren {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("Paren");
     }
 }
 
@@ -141,50 +112,21 @@ impl<T: DebugPls, P: DebugPls> DebugPls for Punctuated<T, P> {
     }
 }
 
-impl DebugPls for Member {
-    fn fmt(&self, f: Formatter<'_>) {
-        match self {
-            Member::Named(n) => f.debug_tuple_struct("Named").field(n).finish(),
-            Member::Unnamed(u) => f.debug_tuple_struct("Unnamed").field(u).finish(),
-        }
-    }
-}
-
-impl DebugPls for Index {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_tuple_struct("Index").field(&self.index).finish();
-    }
-}
-
-impl DebugPls for Macro {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("Macro")
-            .field("path", &self.path)
-            .field("bang_token", &self.bang_token)
-            .field("delimiter", &self.delimiter)
-            .field("tokens", &self.tokens)
-            .finish();
-    }
-}
-
-impl DebugPls for MacroDelimiter {
-    fn fmt(&self, f: Formatter<'_>) {
-        match self {
-            MacroDelimiter::Paren(v0) => f.debug_tuple_struct("Paren").field(v0),
-            MacroDelimiter::Brace(v0) => f.debug_tuple_struct("Brace").field(v0),
-            MacroDelimiter::Bracket(v0) => f.debug_tuple_struct("Bracket").field(v0),
-        }
-        .finish();
-    }
-}
-
 #[cfg(test)]
 mod tests {
-    use crate::color;
+    macro_rules! assert_pretty_syn_snapshot {
+        ($ty:ty => $code:literal) => {
+            insta::assert_snapshot!(
+                insta::_macro_support::AutoName,
+                &crate::pretty(&syn::parse_str::<$ty>($code).unwrap()).to_string(),
+                $code
+            );
+        };
+    }
 
     #[test]
-    fn pretty_colors() {
-        let code = r#"
+    fn expr_array() {
+        assert_pretty_syn_snapshot!(syn::Expr => r#"
             [
                 "Hello, World! I am a long string",
                 420,
@@ -192,16 +134,6 @@ mod tests {
                 69,
                 "Nice."
             ]
-        "#;
-        let expr: syn::Expr = syn::parse_str(code).unwrap();
-        println!("{}", color(&expr));
-    }
-
-    #[test]
-    fn large_tree() {
-        let code = r#"foo[foo.len() - 1] = 42;"#;
-        let expr: syn::Stmt = syn::parse_str(code).unwrap();
-        println!("{}", color(&expr));
-        println!("{:#?}", expr);
+        "#);
     }
 }

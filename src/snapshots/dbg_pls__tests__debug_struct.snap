@@ -1,0 +1,5 @@
+---
+source: src/lib.rs
+expression: "Demo { foo: 5, bar: \"hello\" }"
+---
+Demo { foo: 5, bar: "hello" }

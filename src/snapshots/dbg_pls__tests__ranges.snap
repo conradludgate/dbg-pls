@@ -1,0 +1,12 @@
+---
+source: src/lib.rs
+expression: "Rangeful {\n    range: 1..4,\n    range_from: 1..,\n    range_to: ..7,\n    range_full: ..,\n    range_inclusive: 1234..=1236,\n    range_inclusive_to: ..=70,\n}"
+---
+Rangeful {
+    range: 1..4,
+    range_from: 1..,
+    range_to: ..7,
+    range_full: ..,
+    range_inclusive: 1234..=1236,
+    range_inclusive_to: ..=70,
+}

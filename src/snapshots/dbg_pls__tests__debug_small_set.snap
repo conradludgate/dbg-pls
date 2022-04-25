@@ -1,0 +1,8 @@
+---
+source: src/lib.rs
+expression: "BTreeSet::from([420, 69])"
+---
+{
+    69;
+    420
+}

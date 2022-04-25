@@ -1,0 +1,5 @@
+---
+source: src/lib.rs
+expression: "Option2::<i32>::Wtf { foo: 42 }"
+---
+Wtf { foo: 42 }

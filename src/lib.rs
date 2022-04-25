@@ -532,6 +532,16 @@ mod tests {
 
     use super::*;
 
+    macro_rules! assert_pretty_syn_snapshot {
+        ($expr:expr) => {
+            insta::assert_snapshot!(
+                insta::_macro_support::AutoName,
+                &crate::pretty(&$expr).to_string(),
+                stringify!($expr)
+            );
+        };
+    }
+
     #[derive(DebugPls, Copy, Clone, Hash, PartialEq, Eq, PartialOrd, Ord)]
     #[dbg_pls(crate = "crate")]
     pub struct Demo {
@@ -541,72 +551,40 @@ mod tests {
 
     #[test]
     fn debug_struct() {
-        let val = Demo {
+        assert_pretty_syn_snapshot!(Demo {
             foo: 5,
             bar: "hello",
-        };
-        assert_eq!(pretty(&val).to_string(), r#"Demo { foo: 5, bar: "hello" }"#);
+        });
     }
 
     #[test]
     fn debug_struct_big() {
-        let val = Demo {
+        assert_pretty_syn_snapshot!(Demo {
             foo: 5,
             bar: "Hello, world! I am a very long string",
-        };
-        assert_eq!(
-            pretty(&val).to_string(),
-            r#"Demo {
-    foo: 5,
-    bar: "Hello, world! I am a very long string",
-}"#
-        );
+        });
     }
 
     #[test]
     fn debug_nested_struct() {
-        let mut val = [Demo {
-            foo: 5,
-            bar: "hello",
-        }; 10];
-        val[6].bar = "Hello, world! I am a very long string";
-
-        assert_eq!(
-            pretty(&val).to_string(),
-            r#"[
-    Demo { foo: 5, bar: "hello" },
-    Demo { foo: 5, bar: "hello" },
-    Demo { foo: 5, bar: "hello" },
-    Demo { foo: 5, bar: "hello" },
-    Demo { foo: 5, bar: "hello" },
-    Demo { foo: 5, bar: "hello" },
-    Demo {
-        foo: 5,
-        bar: "Hello, world! I am a very long string",
-    },
-    Demo { foo: 5, bar: "hello" },
-    Demo { foo: 5, bar: "hello" },
-    Demo { foo: 5, bar: "hello" },
-]"#
-        );
+        assert_pretty_syn_snapshot!({
+            let mut val = [Demo {
+                foo: 5,
+                bar: "hello",
+            }; 10];
+            val[6].bar = "Hello, world! I am a very long string";
+            val
+        });
     }
 
     #[test]
     fn debug_small_set() {
-        let set = BTreeSet::from([420, 69]);
-
-        assert_eq!(
-            pretty(&set).to_string(),
-            r#"{
-    69;
-    420
-}"#
-        );
+        assert_pretty_syn_snapshot!(BTreeSet::from([420, 69]));
     }
 
     #[test]
     fn debug_nested_set() {
-        let set = BTreeSet::from([
+        assert_pretty_syn_snapshot!(BTreeSet::from([
             Demo {
                 foo: 5,
                 bar: "hello",
@@ -615,36 +593,20 @@ mod tests {
                 foo: 5,
                 bar: "Hello, world! I am a very long string",
             },
-        ]);
-
-        assert_eq!(
-            pretty(&set).to_string(),
-            r#"{
-    Demo {
-        foo: 5,
-        bar: "Hello, world! I am a very long string",
-    };
-    Demo { foo: 5, bar: "hello" }
-}"#
-        );
+        ]));
     }
 
     #[test]
     fn debug_map() {
-        let map = BTreeMap::from([("hello", 60), ("Hello, world! I am a very long string", 12)]);
-
-        assert_eq!(
-            pretty(&map).to_string(),
-            r#"{
-    ["Hello, world! I am a very long string"] = 12;
-    ["hello"] = 60;
-}"#
-        );
+        assert_pretty_syn_snapshot!(BTreeMap::from([
+            ("hello", 60),
+            ("Hello, world! I am a very long string", 12)
+        ]));
     }
 
     #[test]
     fn debug_nested_map() {
-        let map = BTreeMap::from([
+        assert_pretty_syn_snapshot!(BTreeMap::from([
             (
                 Demo {
                     foo: 5,
@@ -659,20 +621,7 @@ mod tests {
                 },
                 12,
             ),
-        ]);
-
-        assert_eq!(
-            pretty(&map).to_string(),
-            r#"{
-    [
-        Demo {
-            foo: 5,
-            bar: "Hello, world! I am a very long string",
-        },
-    ] = 12;
-    [Demo { foo: 5, bar: "hello" }] = 60;
-}"#
-        );
+        ]));
     }
 
     #[derive(DebugPls)]
@@ -683,28 +632,32 @@ mod tests {
 
     #[test]
     fn debug_generic() {
-        let generic = Generic { arg: "string" };
-        assert_eq!(pretty(&generic).to_string(), r#"Generic { arg: "string" }"#);
+        assert_pretty_syn_snapshot!(Generic { arg: "string" });
     }
 
-    #[derive(DebugPls)]
-    #[dbg_pls(crate = "crate")]
-    pub enum Option2<T> {
-        Some(T),
-        None,
-        Wtf { foo: i32 },
-    }
+    mod debug_enum_generic {
+        use dbg_pls::DebugPls;
 
-    #[test]
-    fn debug_enum_generic() {
-        let some = Option2::Some(42);
-        assert_eq!(pretty(&some).to_string(), r#"Some(42)"#);
+        #[derive(DebugPls)]
+        #[dbg_pls(crate = "crate")]
+        pub enum Option2<T> {
+            Some(T),
+            None,
+            Wtf { foo: i32 },
+        }
 
-        let none = Option2::<i32>::None;
-        assert_eq!(pretty(&none).to_string(), r#"None"#);
-
-        let wtf = Option2::<i32>::Wtf { foo: 42 };
-        assert_eq!(pretty(&wtf).to_string(), r#"Wtf { foo: 42 }"#);
+        #[test]
+        fn some() {
+            assert_pretty_syn_snapshot!(Option2::Some(42));
+        }
+        #[test]
+        fn none() {
+            assert_pretty_syn_snapshot!(Option2::<i32>::None);
+        }
+        #[test]
+        fn wtf() {
+            assert_pretty_syn_snapshot!(Option2::<i32>::Wtf { foo: 42 });
+        }
     }
 
     #[derive(DebugPls)]
@@ -716,26 +669,13 @@ mod tests {
 
     #[test]
     fn debug_recursive() {
-        let y = LinkedList {
-            value: 1_i32,
-            next: None,
-        };
-        assert_eq!(
-            pretty(&y).to_string(),
-            r#"LinkedList { value: 1, next: None }"#
-        );
-
-        let x = LinkedList {
+        assert_pretty_syn_snapshot!(LinkedList {
             value: 0_i32,
-            next: Some(Box::new(y)),
-        };
-        assert_eq!(
-            pretty(&x).to_string(),
-            r#"LinkedList {
-    value: 0,
-    next: Some(LinkedList { value: 1, next: None }),
-}"#
-        );
+            next: Some(Box::new(LinkedList {
+                value: 1_i32,
+                next: None,
+            })),
+        });
     }
 
     #[derive(DebugPls)]
@@ -747,32 +687,13 @@ mod tests {
 
     #[test]
     fn debug_recursive2() {
-        let y = LinkedList2 {
-            value: 1_i32,
-            next: None,
-        };
-        assert_eq!(
-            pretty(&y).to_string(),
-            r#"LinkedList2 {
-    value: 1,
-    next: None,
-}"#
-        );
-
-        let x = LinkedList2 {
+        assert_pretty_syn_snapshot!(LinkedList2 {
             value: 0_i32,
-            next: Some(Box::new(y)),
-        };
-        assert_eq!(
-            pretty(&x).to_string(),
-            r#"LinkedList2 {
-    value: 0,
-    next: Some(LinkedList2 {
-        value: 1,
-        next: None,
-    }),
-}"#
-        );
+            next: Some(Box::new(LinkedList2 {
+                value: 1_i32,
+                next: None,
+            })),
+        });
     }
 
     #[derive(DebugPls)]
@@ -788,25 +709,13 @@ mod tests {
 
     #[test]
     fn ranges() {
-        let x = Rangeful {
+        assert_pretty_syn_snapshot!(Rangeful {
             range: 1..4,
             range_from: 1..,
             range_to: ..7,
             range_full: ..,
             range_inclusive: 1234..=1236,
             range_inclusive_to: ..=70,
-        };
-
-        assert_eq!(
-            pretty(&x).to_string(),
-            r#"Rangeful {
-    range: 1..4,
-    range_from: 1..,
-    range_to: ..7,
-    range_full: ..,
-    range_inclusive: 1234..=1236,
-    range_inclusive_to: ..=70,
-}"#
-        );
+        });
     }
 }

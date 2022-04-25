@@ -1,4 +1,4 @@
-use proc_macro2::{Delimiter, Group, Literal, Punct, Spacing, TokenStream, TokenTree};
+use proc_macro2::{Delimiter, Group, Ident, Literal, Punct, Spacing, TokenStream, TokenTree, Span};
 
 use crate::{DebugPls, Formatter};
 
@@ -17,6 +17,22 @@ impl DebugPls for TokenTree {
             TokenTree::Literal(v0) => f.debug_tuple_struct("Literal").field(v0),
         }
         .finish();
+    }
+}
+
+impl DebugPls for Span {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("Span");
+    }
+}
+
+impl DebugPls for Ident {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.write_expr(syn::ExprPath {
+            path: self.clone().into(),
+            attrs: vec![],
+            qself: None,
+        });
     }
 }
 

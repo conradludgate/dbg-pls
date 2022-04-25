@@ -1,0 +1,8 @@
+---
+source: src/lib.rs
+expression: "LinkedList {\n    value: 0_i32,\n    next: Some(Box::new(LinkedList { value: 1_i32, next: None })),\n}"
+---
+LinkedList {
+    value: 0,
+    next: Some(LinkedList { value: 1, next: None }),
+}
