@@ -116,9 +116,11 @@ impl<T: DebugPls, P: DebugPls> DebugPls for Punctuated<T, P> {
 mod tests {
     macro_rules! assert_pretty_syn_snapshot {
         ($ty:ty => $code:literal) => {
+            let parsed = &syn::parse_str::<$ty>($code).unwrap();
+            let format = format!("pretty:\n{}\n\ncolor:\n{}\n", crate::pretty(&parsed), crate::color(&parsed));
             insta::assert_snapshot!(
                 insta::_macro_support::AutoName,
-                &crate::pretty(&syn::parse_str::<$ty>($code).unwrap()).to_string(),
+                &format,
                 $code
             );
         };
@@ -134,6 +136,21 @@ mod tests {
                 69,
                 "Nice."
             ]
+        "#);
+    }
+
+    #[test]
+    fn item_macro() {
+        assert_pretty_syn_snapshot!(syn::Item => r#"
+            macro_rules! assert_pretty_syn_snapshot {
+                ($ty:ty => $code:literal) => {
+                    insta::assert_snapshot!(
+                        insta::_macro_support::AutoName,
+                        &crate::pretty(&syn::parse_str::<$ty>($code).unwrap()).to_string(),
+                        $code
+                    );
+                };
+            }
         "#);
     }
 }

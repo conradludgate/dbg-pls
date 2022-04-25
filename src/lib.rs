@@ -532,11 +532,13 @@ mod tests {
 
     use super::*;
 
-    macro_rules! assert_pretty_syn_snapshot {
+    macro_rules! assert_pretty_snapshot {
         ($expr:expr) => {
+            let expr = $expr;
+            let format = format!("pretty:\n{}\n\ncolor:\n{}\n", crate::pretty(&expr), crate::color(&expr));
             insta::assert_snapshot!(
                 insta::_macro_support::AutoName,
-                &crate::pretty(&$expr).to_string(),
+                &format,
                 stringify!($expr)
             );
         };
@@ -551,7 +553,7 @@ mod tests {
 
     #[test]
     fn debug_struct() {
-        assert_pretty_syn_snapshot!(Demo {
+        assert_pretty_snapshot!(Demo {
             foo: 5,
             bar: "hello",
         });
@@ -559,7 +561,7 @@ mod tests {
 
     #[test]
     fn debug_struct_big() {
-        assert_pretty_syn_snapshot!(Demo {
+        assert_pretty_snapshot!(Demo {
             foo: 5,
             bar: "Hello, world! I am a very long string",
         });
@@ -567,7 +569,7 @@ mod tests {
 
     #[test]
     fn debug_nested_struct() {
-        assert_pretty_syn_snapshot!({
+        assert_pretty_snapshot!({
             let mut val = [Demo {
                 foo: 5,
                 bar: "hello",
@@ -579,12 +581,12 @@ mod tests {
 
     #[test]
     fn debug_small_set() {
-        assert_pretty_syn_snapshot!(BTreeSet::from([420, 69]));
+        assert_pretty_snapshot!(BTreeSet::from([420, 69]));
     }
 
     #[test]
     fn debug_nested_set() {
-        assert_pretty_syn_snapshot!(BTreeSet::from([
+        assert_pretty_snapshot!(BTreeSet::from([
             Demo {
                 foo: 5,
                 bar: "hello",
@@ -598,7 +600,7 @@ mod tests {
 
     #[test]
     fn debug_map() {
-        assert_pretty_syn_snapshot!(BTreeMap::from([
+        assert_pretty_snapshot!(BTreeMap::from([
             ("hello", 60),
             ("Hello, world! I am a very long string", 12)
         ]));
@@ -606,7 +608,7 @@ mod tests {
 
     #[test]
     fn debug_nested_map() {
-        assert_pretty_syn_snapshot!(BTreeMap::from([
+        assert_pretty_snapshot!(BTreeMap::from([
             (
                 Demo {
                     foo: 5,
@@ -632,7 +634,7 @@ mod tests {
 
     #[test]
     fn debug_generic() {
-        assert_pretty_syn_snapshot!(Generic { arg: "string" });
+        assert_pretty_snapshot!(Generic { arg: "string" });
     }
 
     mod debug_enum_generic {
@@ -648,15 +650,15 @@ mod tests {
 
         #[test]
         fn some() {
-            assert_pretty_syn_snapshot!(Option2::Some(42));
+            assert_pretty_snapshot!(Option2::Some(42));
         }
         #[test]
         fn none() {
-            assert_pretty_syn_snapshot!(Option2::<i32>::None);
+            assert_pretty_snapshot!(Option2::<i32>::None);
         }
         #[test]
         fn wtf() {
-            assert_pretty_syn_snapshot!(Option2::<i32>::Wtf { foo: 42 });
+            assert_pretty_snapshot!(Option2::<i32>::Wtf { foo: 42 });
         }
     }
 
@@ -669,7 +671,7 @@ mod tests {
 
     #[test]
     fn debug_recursive() {
-        assert_pretty_syn_snapshot!(LinkedList {
+        assert_pretty_snapshot!(LinkedList {
             value: 0_i32,
             next: Some(Box::new(LinkedList {
                 value: 1_i32,
@@ -687,7 +689,7 @@ mod tests {
 
     #[test]
     fn debug_recursive2() {
-        assert_pretty_syn_snapshot!(LinkedList2 {
+        assert_pretty_snapshot!(LinkedList2 {
             value: 0_i32,
             next: Some(Box::new(LinkedList2 {
                 value: 1_i32,
@@ -709,7 +711,7 @@ mod tests {
 
     #[test]
     fn ranges() {
-        assert_pretty_syn_snapshot!(Rangeful {
+        assert_pretty_snapshot!(Rangeful {
             range: 1..4,
             range_from: 1..,
             range_to: ..7,

@@ -2,4 +2,9 @@
 source: src/lib.rs
 expression: "Option2::<i32>::None"
 ---
+pretty:
 None
+
+color:
+[38;2;166;226;46mNone[0m
+
