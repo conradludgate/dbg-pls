@@ -1,8 +1,8 @@
 ---
-source: src/lib.rs
+source: tests/derive.rs
 expression: "Rangeful {\n    range: 1..4,\n    range_from: 1..,\n    range_to: ..7,\n    range_full: ..,\n    range_inclusive: 1234..=1236,\n    range_inclusive_to: ..=70,\n}"
 ---
-pretty:
+>>> pretty
 Rangeful {
     range: 1..4,
     range_from: 1..,
@@ -12,7 +12,7 @@ Rangeful {
     range_inclusive_to: ..=70,
 }
 
-color:
+>>> color
 [38;2;102;217;239mRangeful[38;2;248;248;242m [38;2;248;248;242m{[38;2;248;248;242m
 [38;2;248;248;242m    range[38;2;248;248;242m:[38;2;248;248;242m [38;2;190;132;255m1[38;2;249;38;114m..[38;2;190;132;255m4[38;2;248;248;242m,[38;2;248;248;242m
 [38;2;248;248;242m    range_from[38;2;248;248;242m:[38;2;248;248;242m [38;2;190;132;255m1[38;2;249;38;114m..[38;2;248;248;242m,[38;2;248;248;242m

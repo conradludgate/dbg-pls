@@ -1,8 +1,8 @@
 ---
-source: src/lib.rs
+source: tests/derive.rs
 expression: "BTreeMap::from([(Demo { foo: 5, bar: \"hello\" }, 60),\n            (Demo { foo: 5, bar: \"Hello, world! I am a very long string\" },\n                12)])"
 ---
-pretty:
+>>> pretty
 {
     [
         Demo {
@@ -13,7 +13,7 @@ pretty:
     [Demo { foo: 5, bar: "hello" }] = 60;
 }
 
-color:
+>>> color
 [38;2;248;248;242m{[38;2;248;248;242m
 [38;2;248;248;242m    [38;2;248;248;242m[[38;2;248;248;242m
 [38;2;248;248;242m        [38;2;102;217;239mDemo[38;2;248;248;242m [38;2;248;248;242m{[38;2;248;248;242m

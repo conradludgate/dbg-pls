@@ -1,5 +1,5 @@
 ---
-source: src/impls/syn/mod.rs
+source: tests/syn.rs
 expression: "\n            macro_rules! assert_pretty_syn_snapshot {\n                ($ty:ty => $code:literal) => {\n                    insta::assert_snapshot!(\n                        insta::_macro_support::AutoName,\n                        &crate::pretty(&syn::parse_str::<$ty>($code).unwrap()).to_string(),\n                        $code\n                    );\n                };\n            }\n        "
 ---
 pretty:

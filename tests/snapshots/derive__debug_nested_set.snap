@@ -1,8 +1,8 @@
 ---
-source: src/lib.rs
+source: tests/derive.rs
 expression: "BTreeSet::from([Demo { foo: 5, bar: \"hello\" },\n            Demo { foo: 5, bar: \"Hello, world! I am a very long string\" }])"
 ---
-pretty:
+>>> pretty
 {
     Demo {
         foo: 5,
@@ -11,7 +11,7 @@ pretty:
     Demo { foo: 5, bar: "hello" }
 }
 
-color:
+>>> color
 [38;2;248;248;242m{[38;2;248;248;242m
 [38;2;248;248;242m    [38;2;102;217;239mDemo[38;2;248;248;242m [38;2;248;248;242m{[38;2;248;248;242m
 [38;2;248;248;242m        foo[38;2;248;248;242m:[38;2;248;248;242m [38;2;190;132;255m5[38;2;248;248;242m,[38;2;248;248;242m

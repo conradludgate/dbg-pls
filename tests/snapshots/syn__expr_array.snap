@@ -1,5 +1,5 @@
 ---
-source: src/impls/syn/mod.rs
+source: tests/syn.rs
 expression: "\n            [\n                \"Hello, World! I am a long string\",\n                420,\n                \"Wait, you can't mix and match types in arrays, is this python?\",\n                69,\n                \"Nice.\"\n            ]\n        "
 ---
 pretty:

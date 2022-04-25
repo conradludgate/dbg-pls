@@ -1,10 +1,10 @@
 ---
-source: src/lib.rs
+source: tests/derive.rs
 expression: "Generic { arg: \"string\" }"
 ---
-pretty:
+>>> pretty
 Generic { arg: "string" }
 
-color:
+>>> color
 [38;2;102;217;239mGeneric[38;2;248;248;242m [38;2;248;248;242m{[38;2;248;248;242m arg[38;2;248;248;242m:[38;2;248;248;242m [38;2;230;219;116m"[38;2;230;219;116mstring[38;2;230;219;116m"[38;2;248;248;242m [38;2;248;248;242m}[0m
 

@@ -1,8 +1,8 @@
 ---
-source: src/lib.rs
+source: tests/derive.rs
 expression: "LinkedList2 {\n    value: 0_i32,\n    next: Some(Box::new(LinkedList2 { value: 1_i32, next: None })),\n}"
 ---
-pretty:
+>>> pretty
 LinkedList2 {
     value: 0,
     next: Some(LinkedList2 {
@@ -11,7 +11,7 @@ LinkedList2 {
     }),
 }
 
-color:
+>>> color
 [38;2;102;217;239mLinkedList2[38;2;248;248;242m [38;2;248;248;242m{[38;2;248;248;242m
 [38;2;248;248;242m    value[38;2;248;248;242m:[38;2;248;248;242m [38;2;190;132;255m0[38;2;248;248;242m,[38;2;248;248;242m
 [38;2;248;248;242m    next[38;2;248;248;242m:[38;2;248;248;242m [38;2;166;226;46mSome[38;2;248;248;242m([38;2;102;217;239mLinkedList2[38;2;248;248;242m [38;2;248;248;242m{[38;2;248;248;242m
