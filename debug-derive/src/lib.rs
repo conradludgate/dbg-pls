@@ -3,9 +3,9 @@ use proc_macro2::Ident;
 use quote::ToTokens;
 use syn::{parse_macro_input, DeriveInput, Fields, Generics, Path};
 
-mod debug;
 mod parse;
 mod predicate;
+mod to_tokens;
 
 #[proc_macro_derive(DebugPls, attributes(dbg_pls))]
 pub fn derive(input: TokenStream) -> TokenStream {
