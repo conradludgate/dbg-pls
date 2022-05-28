@@ -1,22 +1,29 @@
 use quote::format_ident;
 use syn::{
-    punctuated::Punctuated, token, DeriveInput, Path, PredicateType, TraitBound, Type,
-    TypeParamBound, TypePath, WhereClause, WherePredicate,
+    punctuated::Punctuated, token, Generics, Path, PredicateType, TraitBound, Type, TypeParamBound,
+    TypePath, WhereClause, WherePredicate,
 };
 
-pub fn predicate(input: &mut DeriveInput, path: Path) {
-    let generics = input.generics.clone();
+pub fn predicate(generics: &mut Generics, krate: Path) {
+    let Generics {
+        params,
+        where_clause,
+        ..
+    } = generics;
 
     let mut pred = Pred {
-        wc: input.generics.make_where_clause(),
-        path,
+        wc: where_clause.get_or_insert_with(|| WhereClause {
+            where_token: <token::Where>::default(),
+            predicates: Punctuated::new(),
+        }),
+        krate,
     };
 
-    for ty in generics.params {
+    for ty in params {
         if let syn::GenericParam::Type(ty) = ty {
             let mut segments = Punctuated::new();
             segments.push(syn::PathSegment {
-                ident: ty.ident,
+                ident: ty.ident.clone(),
                 arguments: syn::PathArguments::None,
             });
             let ty = Type::Path(TypePath {
@@ -34,14 +41,14 @@ pub fn predicate(input: &mut DeriveInput, path: Path) {
 
 struct Pred<'a> {
     wc: &'a mut WhereClause,
-    path: Path,
+    krate: Path,
 }
 
 impl<'a> Pred<'a> {
     fn dbg_pls(&mut self, ty: Type) {
         let mut bounds = Punctuated::new();
 
-        let mut path = self.path.clone();
+        let mut path = self.krate.clone();
         path.segments.push(syn::PathSegment {
             ident: format_ident!("DebugPls"),
             arguments: syn::PathArguments::None,

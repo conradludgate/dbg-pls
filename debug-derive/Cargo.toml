@@ -2,7 +2,7 @@
 name = "dbg-pls-derive"
 version = "0.3.0"
 authors = ["Conrad Ludgate <conradludgate@gmail.com>"]
-edition = "2018"
+edition = "2021"
 description = "derive(Debug)"
 license = "MIT"
 repository = "https://github.com/conradludgate/dbg-pls"

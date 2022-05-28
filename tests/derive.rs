@@ -114,7 +114,6 @@ mod debug_enum_generic {
     use dbg_pls::DebugPls;
 
     #[derive(DebugPls)]
-
     pub enum Option2<T> {
         Some(T),
         None,

@@ -1,117 +1,57 @@
-use crate::pat::{named_idents, unnamed_idents, PatternImpl};
-use proc_macro2::{Ident, TokenStream as TokenStream2};
-use quote::{quote, ToTokens};
-use syn::{spanned::Spanned, Data, DataEnum, DataStruct, DeriveInput, Fields, Path, Variant};
+use crate::{DebugImpl, Var};
+use proc_macro2::{Ident, TokenStream};
+use quote::{format_ident, quote, ToTokens};
+use syn::{spanned::Spanned, Field, Fields};
 
-pub struct DebugImpl<T>(pub T);
+impl ToTokens for DebugImpl {
+    fn to_tokens(&self, tokens: &mut TokenStream) {
+        let Self {
+            krate,
+            ident,
+            generics,
+            variants,
+        } = self;
 
-impl ToTokens for DebugImpl<(Path, DeriveInput)> {
-    fn to_tokens(&self, tokens: &mut TokenStream2) {
-        let (path, input) = &self.0;
-
-        let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
-
-        let ident = &input.ident;
-        let body = DebugImpl((ident, &input.data));
+        let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
 
         tokens.extend(quote! {
-            impl #impl_generics #path::DebugPls for #ident #ty_generics #where_clause {
-                fn fmt(&self, f: #path::Formatter<'_>) {
-                    #body
+            impl #impl_generics #krate::DebugPls for #ident #ty_generics #where_clause {
+                fn fmt(&self, f: #krate::Formatter<'_>) {
+                    match *self {
+                        #( #variants )*
+                    }
                 }
             }
         })
     }
 }
 
-impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a Data)> {
-    fn to_tokens(&self, tokens: &mut TokenStream2) {
-        let (name, data) = self.0;
-        match data {
-            Data::Struct(s) => DebugImpl((name, s)).to_tokens(tokens),
-            Data::Enum(e) => DebugImpl((name, e)).to_tokens(tokens),
-            Data::Union(_) => tokens
-                .extend(syn::Error::new(self.span(), "unions not supported").into_compile_error()),
-        }
-    }
-}
-
-impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a DataStruct)> {
-    fn to_tokens(&self, tokens: &mut TokenStream2) {
-        let (name, data) = self.0;
-        let pat = PatternImpl(&data.fields);
-        tokens.extend(quote! {
-            let #name #pat = self;
-        });
-        DebugImpl((name, &data.fields)).to_tokens(tokens)
-    }
-}
-
-impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a DataEnum)> {
-    fn to_tokens(&self, tokens: &mut TokenStream2) {
-        let (name, data) = self.0;
-        let variants = data.variants.iter().map(|v| DebugImpl((name, v)));
-        tokens.extend(quote! {
-            match self {
-                #( #variants )*
-            }
-        });
-    }
-}
-
-impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a Variant)> {
-    fn to_tokens(&self, tokens: &mut TokenStream2) {
-        let (name, variant) = self.0;
-        let Variant {
-            attrs: _,
-            ident,
-            fields,
-            discriminant: _,
-        } = &variant;
-        let pattern = PatternImpl(fields);
-        let debug = DebugImpl((ident, fields));
-
-        tokens.extend(quote! {
-            #name::#ident #pattern => { #debug }
-        });
-    }
-}
-
-impl<'a> ToTokens for DebugImpl<(&'a Ident, &'a Fields)> {
-    fn to_tokens(&self, tokens: &mut TokenStream2) {
-        let (name, fields) = self.0;
-        let name = name.to_string();
+impl<'a> ToTokens for Var {
+    fn to_tokens(&self, tokens: &mut TokenStream) {
+        let Var { path, fields } = self;
+        let name = path.segments.last().unwrap().ident.to_string();
         match fields {
-            Fields::Named(named) => {
-                tokens.extend(quote! {
-                    f.debug_struct(#name)
-                });
-                named_idents(named).for_each(|ident| {
-                    let name = ident.to_string();
-                    tokens.extend(quote! {
-                        .field(#name, #ident)
-                    })
+            Fields::Named(n) => {
+                let pat_args = n.named.iter().map(|f| f.ident.as_ref().unwrap().clone());
+                let args = pat_args.clone().map(|f| {
+                    let name = f.to_string();
+                    quote! { (#name, #f) }
                 });
                 tokens.extend(quote! {
-                    .finish()
+                    #path { #( ref #pat_args ),* } => f.debug_struct(#name) #( .field #args )* .finish(),
                 });
             }
-            Fields::Unnamed(unnamed) => {
+            Fields::Unnamed(n) => {
+                pub fn ident((i, field): (usize, &Field)) -> Ident {
+                    format_ident!("__self_{}", i, span = field.span())
+                }
+                let pat_args = n.unnamed.iter().enumerate().map(ident);
+                let args = pat_args.clone();
                 tokens.extend(quote! {
-                    f.debug_tuple_struct(#name)
-                });
-                unnamed_idents(unnamed).for_each(|ident| {
-                    tokens.extend(quote! {
-                        .field(#ident)
-                    })
-                });
-                tokens.extend(quote! {
-                    .finish()
+                    #path ( #( ref #pat_args ),* ) => f.debug_tuple_struct(#name) #( .field(#args) )* .finish(),
                 });
             }
-            Fields::Unit => tokens.extend(quote! {
-                f.debug_ident(#name)
-            }),
-        }
+            Fields::Unit => tokens.extend(quote! { #path => f.debug_ident(#name), }),
+        };
     }
 }

@@ -1,17 +1,3 @@
-// use bat::PrettyPrinter;
-
-// use crate::{pretty::process, DebugPls};
-
-// /// Prints the pretty printed code to stdout
-// pub fn print_colorful(value: &dyn DebugPls) {
-//     let output = process(value);
-//     let _ = PrettyPrinter::new()
-//         .input_from_bytes(output.as_bytes())
-//         .language("rust")
-//         .line_numbers(true)
-//         .print();
-// }
-
 use std::io::Cursor;
 
 use once_cell::sync::OnceCell;
