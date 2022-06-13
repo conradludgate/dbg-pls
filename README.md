@@ -107,7 +107,7 @@ And you get
 ## Usage in libraries
 
 ```sh
-cargo add dbg-ps
+cargo add dbg-pls
 ```
 
 Add to your types
