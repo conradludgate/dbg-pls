@@ -106,9 +106,8 @@ And you get
 
 ## Usage in libraries
 
-Add to your `Cargo.toml`
-```toml
-dbg-pls = "*"
+```sh
+cargo add dbg-pls
 ```
 
 Add to your types
