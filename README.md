@@ -118,9 +118,8 @@ Add to your types
 
 ## Usage for applications
 
-Add to your `Cargo.toml`
-```toml
-dbg-pls = { version = "0.2", features = ["pretty"] }
+```sh
+cargo add dbg-pls +pretty
 ```
 
 And print using `pretty`, eg
