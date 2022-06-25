@@ -35,10 +35,10 @@ impl<'a> ToTokens for Var {
                 let pat_args = n.named.iter().map(|f| f.ident.as_ref().unwrap().clone());
                 let args = pat_args.clone().map(|f| {
                     let name = f.to_string();
-                    quote! { (#name, #f) }
+                    quote! { #name, #f }
                 });
                 tokens.extend(quote! {
-                    #path { #( ref #pat_args ),* } => f.debug_struct(#name) #( .field #args )* .finish(),
+                    #path { #( ref #pat_args ),* } => f.debug_struct(#name) #( .field(#args) )* .finish(),
                 });
             }
             Fields::Unnamed(n) => {

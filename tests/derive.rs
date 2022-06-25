@@ -189,3 +189,6 @@ fn ranges() {
         range_inclusive_to: ..=70,
     });
 }
+
+#[derive(DebugPls)]
+enum EmptyEnum {}
