@@ -5,7 +5,7 @@ use syn::{
     Attribute, Data, DeriveInput, Path, PathSegment, Token,
 };
 
-use crate::{predicate::predicate, DebugImpl, Var};
+use crate::{predicate::predicate, DebugImpl, Mode, Var};
 
 impl TryFrom<DeriveInput> for DebugImpl {
     type Error = syn::Error;
@@ -24,33 +24,24 @@ impl TryFrom<DeriveInput> for DebugImpl {
 
         predicate(&mut generics, krate.clone());
 
-        let mut variants = vec![];
-        match data {
-            Data::Struct(s) => variants.push(Var {
-                path: ident.clone().into(),
-                fields: s.fields,
-            }),
-            Data::Enum(e) => {
-                for v in e.variants {
-                    variants.push(Var {
-                        path: Path {
-                            leading_colon: None,
-                            segments: [ident.clone(), v.ident]
-                                .into_iter()
-                                .map(PathSegment::from)
-                                .collect(),
-                        },
+        let mode = match data {
+            Data::Struct(s) => Mode::Struct(crate::StructFields(s.fields)),
+            Data::Enum(e) => Mode::Enum(
+                e.variants
+                    .into_iter()
+                    .map(|v| Var {
+                        ident: v.ident,
                         fields: v.fields,
                     })
-                }
-            }
+                    .collect(),
+            ),
             Data::Union(_) => return Err(syn::Error::new(span, "unions not supported")),
-        }
+        };
         Ok(Self {
             krate,
             ident,
             generics,
-            variants,
+            mode,
         })
     }
 }

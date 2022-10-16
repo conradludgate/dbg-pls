@@ -19,11 +19,18 @@ pub fn derive(input: TokenStream) -> TokenStream {
 struct DebugImpl {
     krate: Path,
     ident: Ident,
-    variants: Vec<Var>,
+    mode: Mode,
     generics: Generics,
 }
 
+enum Mode {
+    Struct(StructFields),
+    Enum(Vec<Var>),
+}
+
 struct Var {
-    path: Path,
+    ident: Ident,
     fields: Fields,
 }
+
+struct StructFields(Fields);

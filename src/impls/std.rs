@@ -20,13 +20,13 @@ impl<T: ?Sized + DebugPls> DebugPls for Box<T> {
     }
 }
 
-impl<'a, D: DebugPls + ?Sized> DebugPls for *mut D {
+impl<D: DebugPls + ?Sized> DebugPls for *mut D {
     fn fmt(&self, f: Formatter<'_>) {
         <*const D>::fmt(&(*self as *const D), f);
     }
 }
 
-impl<'a, D: DebugPls + ?Sized> DebugPls for *const D {
+impl<D: DebugPls + ?Sized> DebugPls for *const D {
     fn fmt(&self, f: Formatter<'_>) {
         /// Since the formatting will be identical for all pointer types, use a non-monomorphized
         /// implementation for the actual formatting to reduce the amount of codegen work needed
