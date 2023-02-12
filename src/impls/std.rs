@@ -104,6 +104,25 @@ debug_integers! {
   u8 u16 u32 u64 u128 usize
 }
 
+macro_rules! debug_non_zero_integers {
+    ($($T:ident)*) => {$(
+        impl DebugPls for std::num::$T {
+            fn fmt(&self, f: Formatter<'_>) {
+                let mut buf = itoa::Buffer::new();
+                f.write_expr(syn::ExprLit {
+                    attrs: vec![],
+                    lit: syn::LitInt::new(buf.format(self.get()), Span::call_site()).into(),
+                });
+            }
+        }
+    )*};
+}
+
+debug_non_zero_integers! {
+  NonZeroI8 NonZeroI16 NonZeroI32 NonZeroI64 NonZeroI128 NonZeroIsize
+  NonZeroU8 NonZeroU16 NonZeroU32 NonZeroU64 NonZeroU128 NonZeroUsize
+}
+
 macro_rules! debug_floats {
     ($ty:ident) => {
         impl DebugPls for $ty {

@@ -19,7 +19,7 @@ impl TryFrom<DeriveInput> for DebugImpl {
             ..
         } = input;
 
-        let args = Args::parse_attrs(&*attrs)?;
+        let args = Args::parse_attrs(&attrs)?;
         let Krate(krate) = args.krate.unwrap_or_default();
 
         predicate(&mut generics, krate.clone());

@@ -1,7 +1,3 @@
-use std::iter::FromIterator;
-
-use syn::punctuated::Punctuated;
-
 use crate::{DebugPls, Formatter};
 
 /// A helper designed to assist with creation of
@@ -27,8 +23,8 @@ use crate::{DebugPls, Formatter};
 /// assert_eq!(
 ///     format!("{}", pretty(&value)),
 /// "{
-///     [\"Hello\"] = 5;
-///     [\"World\"] = 10;
+///     \"Hello\" = 5;
+///     \"World\" = 10;
 /// }",
 /// );
 /// ```
@@ -79,14 +75,7 @@ impl<'a> DebugMap<'a> {
         let value = Formatter::process(value);
         let entry = syn::ExprAssign {
             attrs: vec![],
-            left: Box::new(
-                syn::ExprArray {
-                    attrs: vec![],
-                    bracket_token: syn::token::Bracket::default(),
-                    elems: Punctuated::from_iter([key]),
-                }
-                .into(),
-            ),
+            left: Box::new(key),
             eq_token: syn::token::Eq::default(),
             right: Box::new(value),
         };

@@ -453,8 +453,8 @@ impl<'a> Formatter<'a> {
     /// assert_eq!(
     ///     format!("{}", pretty(&value)),
     /// "{
-    ///     [\"Hello\"] = 5;
-    ///     [\"World\"] = 10;
+    ///     \"Hello\" = 5;
+    ///     \"World\" = 10;
     /// }",
     /// );
     /// ```
