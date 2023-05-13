@@ -43,7 +43,7 @@ impl<'a> DebugStruct<'a> {
             formatter,
             expr: syn::ExprStruct {
                 attrs: vec![],
-                path: syn::Ident::new(name, Span::call_site()).into(),
+                path: syn::Ident::into(syn::parse_str(name).unwrap()),
                 brace_token: syn::token::Brace::default(),
                 fields: syn::punctuated::Punctuated::new(),
                 dot2_token: None,
@@ -58,7 +58,7 @@ impl<'a> DebugStruct<'a> {
         self.expr.fields.push(syn::FieldValue {
             expr: Formatter::process(value),
             attrs: vec![],
-            member: syn::Member::Named(syn::Ident::new(name, Span::call_site())),
+            member: syn::Member::Named(syn::parse_str(name).unwrap()),
             colon_token: Some(syn::token::Colon::default()),
         });
         self

@@ -514,7 +514,7 @@ impl<'a> Formatter<'a> {
     /// assert_eq!(format!("{}", pretty(&Foo)), "Foo");
     /// ```
     pub fn debug_ident(self, name: &str) {
-        let path: syn::Path = syn::Ident::new(name, Span::call_site()).into();
+        let path: syn::Path = syn::Ident::into(syn::parse_str(name).unwrap());
         self.write_expr(syn::ExprPath {
             attrs: vec![],
             qself: None,
