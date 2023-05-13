@@ -1,5 +1,6 @@
 use syn::punctuated::{Pair, Punctuated};
 
+#[allow(clippy::match_single_binding, unused_variables)]
 mod gen;
 
 use crate::{DebugPls, Formatter};

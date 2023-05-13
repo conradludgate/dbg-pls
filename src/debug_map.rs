@@ -80,9 +80,10 @@ impl<'a> DebugMap<'a> {
             eq_token: syn::token::Eq::default(),
             right: Box::new(value),
         };
-        self.set
-            .stmts
-            .push(syn::Stmt::Semi(entry.into(), syn::token::Semi::default()));
+        self.set.stmts.push(syn::Stmt::Expr(
+            entry.into(),
+            Some(syn::token::Semi::default()),
+        ));
         self
     }
 

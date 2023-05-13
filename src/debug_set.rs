@@ -50,7 +50,7 @@ impl<'a> DebugSet<'a> {
         let expr = Formatter::process(value);
         self.set
             .stmts
-            .push(syn::Stmt::Semi(expr, syn::token::Semi::default()));
+            .push(syn::Stmt::Expr(expr, Some(syn::token::Semi::default())));
         self
     }
 
@@ -67,8 +67,8 @@ impl<'a> DebugSet<'a> {
     /// Closes off the set.
     pub fn finish(mut self) {
         // remove the last semicolon
-        if let Some(syn::Stmt::Semi(entry, _)) = self.set.stmts.pop() {
-            self.set.stmts.push(syn::Stmt::Expr(entry));
+        if let Some(syn::Stmt::Expr(entry, Some(_))) = self.set.stmts.pop() {
+            self.set.stmts.push(syn::Stmt::Expr(entry, None));
         }
 
         self.formatter.write_expr(syn::ExprBlock {

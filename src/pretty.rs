@@ -27,6 +27,7 @@ pub(crate) fn pretty_string(expr: syn::Expr) -> String {
             })),
             eq_token: syn::token::Eq::default(),
             semi_token: syn::token::Semi::default(),
+            generics: syn::Generics::default(),
         })],
     };
     let output = prettyplease::unparse(&file);

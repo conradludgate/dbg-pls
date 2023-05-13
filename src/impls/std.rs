@@ -225,9 +225,9 @@ impl<T: DebugPls> DebugPls for ops::Range<T> {
     fn fmt(&self, f: Formatter<'_>) {
         f.write_expr(syn::ExprRange {
             attrs: vec![],
-            from: Some(Box::new(Formatter::process(&self.start))),
-            limits: RangeLimits::HalfOpen(syn::token::Dot2::default()),
-            to: Some(Box::new(Formatter::process(&self.end))),
+            start: Some(Box::new(Formatter::process(&self.start))),
+            limits: RangeLimits::HalfOpen(syn::token::DotDot::default()),
+            end: Some(Box::new(Formatter::process(&self.end))),
         });
     }
 }
@@ -236,9 +236,9 @@ impl<T: DebugPls> DebugPls for ops::RangeFrom<T> {
     fn fmt(&self, f: Formatter<'_>) {
         f.write_expr(syn::ExprRange {
             attrs: vec![],
-            from: Some(Box::new(Formatter::process(&self.start))),
-            limits: RangeLimits::HalfOpen(syn::token::Dot2::default()),
-            to: None,
+            start: Some(Box::new(Formatter::process(&self.start))),
+            limits: RangeLimits::HalfOpen(syn::token::DotDot::default()),
+            end: None,
         });
     }
 }
@@ -247,9 +247,9 @@ impl<T: DebugPls> DebugPls for ops::RangeTo<T> {
     fn fmt(&self, f: Formatter<'_>) {
         f.write_expr(syn::ExprRange {
             attrs: vec![],
-            from: None,
-            limits: RangeLimits::HalfOpen(syn::token::Dot2::default()),
-            to: Some(Box::new(Formatter::process(&self.end))),
+            start: None,
+            limits: RangeLimits::HalfOpen(syn::token::DotDot::default()),
+            end: Some(Box::new(Formatter::process(&self.end))),
         });
     }
 }
@@ -258,9 +258,9 @@ impl DebugPls for ops::RangeFull {
     fn fmt(&self, f: Formatter<'_>) {
         f.write_expr(syn::ExprRange {
             attrs: vec![],
-            from: None,
-            limits: RangeLimits::HalfOpen(syn::token::Dot2::default()),
-            to: None,
+            start: None,
+            limits: RangeLimits::HalfOpen(syn::token::DotDot::default()),
+            end: None,
         });
     }
 }
@@ -269,9 +269,9 @@ impl<T: DebugPls> DebugPls for ops::RangeInclusive<T> {
     fn fmt(&self, f: Formatter<'_>) {
         f.write_expr(syn::ExprRange {
             attrs: vec![],
-            from: Some(Box::new(Formatter::process(&self.start()))),
+            start: Some(Box::new(Formatter::process(&self.start()))),
             limits: RangeLimits::Closed(syn::token::DotDotEq::default()),
-            to: Some(Box::new(Formatter::process(&self.end()))),
+            end: Some(Box::new(Formatter::process(&self.end()))),
         });
     }
 }
@@ -280,9 +280,9 @@ impl<T: DebugPls> DebugPls for ops::RangeToInclusive<T> {
     fn fmt(&self, f: Formatter<'_>) {
         f.write_expr(syn::ExprRange {
             attrs: vec![],
-            from: None,
+            start: None,
             limits: RangeLimits::Closed(syn::token::DotDotEq::default()),
-            to: Some(Box::new(Formatter::process(&self.end))),
+            end: Some(Box::new(Formatter::process(&self.end))),
         });
     }
 }

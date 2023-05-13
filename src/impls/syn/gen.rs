@@ -3,7 +3,6 @@
 
 #![allow(clippy::too_many_lines)]
 use crate::{DebugPls, Formatter};
-
 impl DebugPls for syn::Abi {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("Abi")
@@ -34,6 +33,26 @@ impl DebugPls for syn::Arm {
             .finish();
     }
 }
+impl DebugPls for syn::AssocConst {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("AssocConst")
+            .field("ident", &self.ident)
+            .field("generics", &self.generics)
+            .field("eq_token", &self.eq_token)
+            .field("value", &self.value)
+            .finish();
+    }
+}
+impl DebugPls for syn::AssocType {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("AssocType")
+            .field("ident", &self.ident)
+            .field("generics", &self.generics)
+            .field("eq_token", &self.eq_token)
+            .field("ty", &self.ty)
+            .finish();
+    }
+}
 impl DebugPls for syn::AttrStyle {
     fn fmt(&self, f: Formatter<'_>) {
         match self {
@@ -50,8 +69,7 @@ impl DebugPls for syn::Attribute {
             .field("pound_token", &self.pound_token)
             .field("style", &self.style)
             .field("bracket_token", &self.bracket_token)
-            .field("path", &self.path)
-            .field("tokens", &self.tokens)
+            .field("meta", &self.meta)
             .finish();
     }
 }
@@ -61,6 +79,16 @@ impl DebugPls for syn::BareFnArg {
             .field("attrs", &self.attrs)
             .field("name", &self.name)
             .field("ty", &self.ty)
+            .finish();
+    }
+}
+impl DebugPls for syn::BareVariadic {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("BareVariadic")
+            .field("attrs", &self.attrs)
+            .field("name", &self.name)
+            .field("dots", &self.dots)
+            .field("comma", &self.comma)
             .finish();
     }
 }
@@ -121,46 +149,38 @@ impl DebugPls for syn::BinOp {
             syn::BinOp::Gt(v0) => {
                 f.debug_tuple_struct("Gt").field(v0).finish();
             }
-            syn::BinOp::AddEq(v0) => {
-                f.debug_tuple_struct("AddEq").field(v0).finish();
+            syn::BinOp::AddAssign(v0) => {
+                f.debug_tuple_struct("AddAssign").field(v0).finish();
             }
-            syn::BinOp::SubEq(v0) => {
-                f.debug_tuple_struct("SubEq").field(v0).finish();
+            syn::BinOp::SubAssign(v0) => {
+                f.debug_tuple_struct("SubAssign").field(v0).finish();
             }
-            syn::BinOp::MulEq(v0) => {
-                f.debug_tuple_struct("MulEq").field(v0).finish();
+            syn::BinOp::MulAssign(v0) => {
+                f.debug_tuple_struct("MulAssign").field(v0).finish();
             }
-            syn::BinOp::DivEq(v0) => {
-                f.debug_tuple_struct("DivEq").field(v0).finish();
+            syn::BinOp::DivAssign(v0) => {
+                f.debug_tuple_struct("DivAssign").field(v0).finish();
             }
-            syn::BinOp::RemEq(v0) => {
-                f.debug_tuple_struct("RemEq").field(v0).finish();
+            syn::BinOp::RemAssign(v0) => {
+                f.debug_tuple_struct("RemAssign").field(v0).finish();
             }
-            syn::BinOp::BitXorEq(v0) => {
-                f.debug_tuple_struct("BitXorEq").field(v0).finish();
+            syn::BinOp::BitXorAssign(v0) => {
+                f.debug_tuple_struct("BitXorAssign").field(v0).finish();
             }
-            syn::BinOp::BitAndEq(v0) => {
-                f.debug_tuple_struct("BitAndEq").field(v0).finish();
+            syn::BinOp::BitAndAssign(v0) => {
+                f.debug_tuple_struct("BitAndAssign").field(v0).finish();
             }
-            syn::BinOp::BitOrEq(v0) => {
-                f.debug_tuple_struct("BitOrEq").field(v0).finish();
+            syn::BinOp::BitOrAssign(v0) => {
+                f.debug_tuple_struct("BitOrAssign").field(v0).finish();
             }
-            syn::BinOp::ShlEq(v0) => {
-                f.debug_tuple_struct("ShlEq").field(v0).finish();
+            syn::BinOp::ShlAssign(v0) => {
+                f.debug_tuple_struct("ShlAssign").field(v0).finish();
             }
-            syn::BinOp::ShrEq(v0) => {
-                f.debug_tuple_struct("ShrEq").field(v0).finish();
+            syn::BinOp::ShrAssign(v0) => {
+                f.debug_tuple_struct("ShrAssign").field(v0).finish();
             }
+            _ => unreachable!(),
         }
-    }
-}
-impl DebugPls for syn::Binding {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("Binding")
-            .field("ident", &self.ident)
-            .field("eq_token", &self.eq_token)
-            .field("ty", &self.ty)
-            .finish();
     }
 }
 impl DebugPls for syn::Block {
@@ -198,6 +218,7 @@ impl DebugPls for syn::Constraint {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("Constraint")
             .field("ident", &self.ident)
+            .field("generics", &self.generics)
             .field("colon_token", &self.colon_token)
             .field("bounds", &self.bounds)
             .finish();
@@ -264,9 +285,6 @@ impl DebugPls for syn::Expr {
             syn::Expr::Assign(v0) => {
                 f.debug_tuple_struct("Assign").field(v0).finish();
             }
-            syn::Expr::AssignOp(v0) => {
-                f.debug_tuple_struct("AssignOp").field(v0).finish();
-            }
             syn::Expr::Async(v0) => {
                 f.debug_tuple_struct("Async").field(v0).finish();
             }
@@ -279,9 +297,6 @@ impl DebugPls for syn::Expr {
             syn::Expr::Block(v0) => {
                 f.debug_tuple_struct("Block").field(v0).finish();
             }
-            syn::Expr::Box(v0) => {
-                f.debug_tuple_struct("Box").field(v0).finish();
-            }
             syn::Expr::Break(v0) => {
                 f.debug_tuple_struct("Break").field(v0).finish();
             }
@@ -293,6 +308,9 @@ impl DebugPls for syn::Expr {
             }
             syn::Expr::Closure(v0) => {
                 f.debug_tuple_struct("Closure").field(v0).finish();
+            }
+            syn::Expr::Const(v0) => {
+                f.debug_tuple_struct("Const").field(v0).finish();
             }
             syn::Expr::Continue(v0) => {
                 f.debug_tuple_struct("Continue").field(v0).finish();
@@ -311,6 +329,9 @@ impl DebugPls for syn::Expr {
             }
             syn::Expr::Index(v0) => {
                 f.debug_tuple_struct("Index").field(v0).finish();
+            }
+            syn::Expr::Infer(v0) => {
+                f.debug_tuple_struct("Infer").field(v0).finish();
             }
             syn::Expr::Let(v0) => {
                 f.debug_tuple_struct("Let").field(v0).finish();
@@ -360,9 +381,6 @@ impl DebugPls for syn::Expr {
             syn::Expr::Tuple(v0) => {
                 f.debug_tuple_struct("Tuple").field(v0).finish();
             }
-            syn::Expr::Type(v0) => {
-                f.debug_tuple_struct("Type").field(v0).finish();
-            }
             syn::Expr::Unary(v0) => {
                 f.debug_tuple_struct("Unary").field(v0).finish();
             }
@@ -397,16 +415,6 @@ impl DebugPls for syn::ExprAssign {
             .field("attrs", &self.attrs)
             .field("left", &self.left)
             .field("eq_token", &self.eq_token)
-            .field("right", &self.right)
-            .finish();
-    }
-}
-impl DebugPls for syn::ExprAssignOp {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("ExprAssignOp")
-            .field("attrs", &self.attrs)
-            .field("left", &self.left)
-            .field("op", &self.op)
             .field("right", &self.right)
             .finish();
     }
@@ -450,15 +458,6 @@ impl DebugPls for syn::ExprBlock {
             .finish();
     }
 }
-impl DebugPls for syn::ExprBox {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("ExprBox")
-            .field("attrs", &self.attrs)
-            .field("box_token", &self.box_token)
-            .field("expr", &self.expr)
-            .finish();
-    }
-}
 impl DebugPls for syn::ExprBreak {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("ExprBreak")
@@ -493,6 +492,8 @@ impl DebugPls for syn::ExprClosure {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("ExprClosure")
             .field("attrs", &self.attrs)
+            .field("lifetimes", &self.lifetimes)
+            .field("constness", &self.constness)
             .field("movability", &self.movability)
             .field("asyncness", &self.asyncness)
             .field("capture", &self.capture)
@@ -501,6 +502,15 @@ impl DebugPls for syn::ExprClosure {
             .field("or2_token", &self.or2_token)
             .field("output", &self.output)
             .field("body", &self.body)
+            .finish();
+    }
+}
+impl DebugPls for syn::ExprConst {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("ExprConst")
+            .field("attrs", &self.attrs)
+            .field("const_token", &self.const_token)
+            .field("block", &self.block)
             .finish();
     }
 }
@@ -563,6 +573,14 @@ impl DebugPls for syn::ExprIndex {
             .field("expr", &self.expr)
             .field("bracket_token", &self.bracket_token)
             .field("index", &self.index)
+            .finish();
+    }
+}
+impl DebugPls for syn::ExprInfer {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("ExprInfer")
+            .field("attrs", &self.attrs)
+            .field("underscore_token", &self.underscore_token)
             .finish();
     }
 }
@@ -649,9 +667,9 @@ impl DebugPls for syn::ExprRange {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("ExprRange")
             .field("attrs", &self.attrs)
-            .field("from", &self.from)
+            .field("start", &self.start)
             .field("limits", &self.limits)
-            .field("to", &self.to)
+            .field("end", &self.end)
             .finish();
     }
 }
@@ -689,6 +707,7 @@ impl DebugPls for syn::ExprStruct {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("ExprStruct")
             .field("attrs", &self.attrs)
+            .field("qself", &self.qself)
             .field("path", &self.path)
             .field("brace_token", &self.brace_token)
             .field("fields", &self.fields)
@@ -721,16 +740,6 @@ impl DebugPls for syn::ExprTuple {
             .field("attrs", &self.attrs)
             .field("paren_token", &self.paren_token)
             .field("elems", &self.elems)
-            .finish();
-    }
-}
-impl DebugPls for syn::ExprType {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("ExprType")
-            .field("attrs", &self.attrs)
-            .field("expr", &self.expr)
-            .field("colon_token", &self.colon_token)
-            .field("ty", &self.ty)
             .finish();
     }
 }
@@ -777,10 +786,19 @@ impl DebugPls for syn::Field {
         f.debug_struct("Field")
             .field("attrs", &self.attrs)
             .field("vis", &self.vis)
+            .field("mutability", &self.mutability)
             .field("ident", &self.ident)
             .field("colon_token", &self.colon_token)
             .field("ty", &self.ty)
             .finish();
+    }
+}
+impl DebugPls for syn::FieldMutability {
+    fn fmt(&self, f: Formatter<'_>) {
+        match self {
+            syn::FieldMutability::None => f.debug_ident("None"),
+            _ => unreachable!(),
+        }
     }
 }
 impl DebugPls for syn::FieldPat {
@@ -915,6 +933,7 @@ impl DebugPls for syn::ForeignItemType {
             .field("vis", &self.vis)
             .field("type_token", &self.type_token)
             .field("ident", &self.ident)
+            .field("generics", &self.generics)
             .field("semi_token", &self.semi_token)
             .finish();
     }
@@ -928,38 +947,30 @@ impl DebugPls for syn::GenericArgument {
             syn::GenericArgument::Type(v0) => {
                 f.debug_tuple_struct("Type").field(v0).finish();
             }
-            syn::GenericArgument::Binding(v0) => {
-                f.debug_tuple_struct("Binding").field(v0).finish();
+            syn::GenericArgument::Const(v0) => {
+                f.debug_tuple_struct("Const").field(v0).finish();
+            }
+            syn::GenericArgument::AssocType(v0) => {
+                f.debug_tuple_struct("AssocType").field(v0).finish();
+            }
+            syn::GenericArgument::AssocConst(v0) => {
+                f.debug_tuple_struct("AssocConst").field(v0).finish();
             }
             syn::GenericArgument::Constraint(v0) => {
                 f.debug_tuple_struct("Constraint").field(v0).finish();
             }
-            syn::GenericArgument::Const(v0) => {
-                f.debug_tuple_struct("Const").field(v0).finish();
-            }
-        }
-    }
-}
-impl DebugPls for syn::GenericMethodArgument {
-    fn fmt(&self, f: Formatter<'_>) {
-        match self {
-            syn::GenericMethodArgument::Type(v0) => {
-                f.debug_tuple_struct("Type").field(v0).finish();
-            }
-            syn::GenericMethodArgument::Const(v0) => {
-                f.debug_tuple_struct("Const").field(v0).finish();
-            }
+            _ => unreachable!(),
         }
     }
 }
 impl DebugPls for syn::GenericParam {
     fn fmt(&self, f: Formatter<'_>) {
         match self {
-            syn::GenericParam::Type(v0) => {
-                f.debug_tuple_struct("Type").field(v0).finish();
-            }
             syn::GenericParam::Lifetime(v0) => {
                 f.debug_tuple_struct("Lifetime").field(v0).finish();
+            }
+            syn::GenericParam::Type(v0) => {
+                f.debug_tuple_struct("Type").field(v0).finish();
             }
             syn::GenericParam::Const(v0) => {
                 f.debug_tuple_struct("Const").field(v0).finish();
@@ -983,8 +994,8 @@ impl DebugPls for syn::ImplItem {
             syn::ImplItem::Const(v0) => {
                 f.debug_tuple_struct("Const").field(v0).finish();
             }
-            syn::ImplItem::Method(v0) => {
-                f.debug_tuple_struct("Method").field(v0).finish();
+            syn::ImplItem::Fn(v0) => {
+                f.debug_tuple_struct("Fn").field(v0).finish();
             }
             syn::ImplItem::Type(v0) => {
                 f.debug_tuple_struct("Type").field(v0).finish();
@@ -1007,11 +1018,23 @@ impl DebugPls for syn::ImplItemConst {
             .field("defaultness", &self.defaultness)
             .field("const_token", &self.const_token)
             .field("ident", &self.ident)
+            .field("generics", &self.generics)
             .field("colon_token", &self.colon_token)
             .field("ty", &self.ty)
             .field("eq_token", &self.eq_token)
             .field("expr", &self.expr)
             .field("semi_token", &self.semi_token)
+            .finish();
+    }
+}
+impl DebugPls for syn::ImplItemFn {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("ImplItemFn")
+            .field("attrs", &self.attrs)
+            .field("vis", &self.vis)
+            .field("defaultness", &self.defaultness)
+            .field("sig", &self.sig)
+            .field("block", &self.block)
             .finish();
     }
 }
@@ -1021,17 +1044,6 @@ impl DebugPls for syn::ImplItemMacro {
             .field("attrs", &self.attrs)
             .field("mac", &self.mac)
             .field("semi_token", &self.semi_token)
-            .finish();
-    }
-}
-impl DebugPls for syn::ImplItemMethod {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("ImplItemMethod")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("defaultness", &self.defaultness)
-            .field("sig", &self.sig)
-            .field("block", &self.block)
             .finish();
     }
 }
@@ -1048,6 +1060,13 @@ impl DebugPls for syn::ImplItemType {
             .field("ty", &self.ty)
             .field("semi_token", &self.semi_token)
             .finish();
+    }
+}
+impl DebugPls for syn::ImplRestriction {
+    fn fmt(&self, f: Formatter<'_>) {
+        match self {
+            _ => unreachable!(),
+        }
     }
 }
 impl DebugPls for syn::Index {
@@ -1081,9 +1100,6 @@ impl DebugPls for syn::Item {
             }
             syn::Item::Macro(v0) => {
                 f.debug_tuple_struct("Macro").field(v0).finish();
-            }
-            syn::Item::Macro2(v0) => {
-                f.debug_tuple_struct("Macro2").field(v0).finish();
             }
             syn::Item::Mod(v0) => {
                 f.debug_tuple_struct("Mod").field(v0).finish();
@@ -1123,6 +1139,7 @@ impl DebugPls for syn::ItemConst {
             .field("vis", &self.vis)
             .field("const_token", &self.const_token)
             .field("ident", &self.ident)
+            .field("generics", &self.generics)
             .field("colon_token", &self.colon_token)
             .field("ty", &self.ty)
             .field("eq_token", &self.eq_token)
@@ -1171,6 +1188,7 @@ impl DebugPls for syn::ItemForeignMod {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("ItemForeignMod")
             .field("attrs", &self.attrs)
+            .field("unsafety", &self.unsafety)
             .field("abi", &self.abi)
             .field("brace_token", &self.brace_token)
             .field("items", &self.items)
@@ -1202,22 +1220,12 @@ impl DebugPls for syn::ItemMacro {
             .finish();
     }
 }
-impl DebugPls for syn::ItemMacro2 {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("ItemMacro2")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("macro_token", &self.macro_token)
-            .field("ident", &self.ident)
-            .field("rules", &self.rules)
-            .finish();
-    }
-}
 impl DebugPls for syn::ItemMod {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("ItemMod")
             .field("attrs", &self.attrs)
             .field("vis", &self.vis)
+            .field("unsafety", &self.unsafety)
             .field("mod_token", &self.mod_token)
             .field("ident", &self.ident)
             .field("content", &self.content)
@@ -1261,6 +1269,7 @@ impl DebugPls for syn::ItemTrait {
             .field("vis", &self.vis)
             .field("unsafety", &self.unsafety)
             .field("auto_token", &self.auto_token)
+            .field("restriction", &self.restriction)
             .field("trait_token", &self.trait_token)
             .field("ident", &self.ident)
             .field("generics", &self.generics)
@@ -1339,9 +1348,9 @@ impl DebugPls for syn::Lifetime {
             .finish();
     }
 }
-impl DebugPls for syn::LifetimeDef {
+impl DebugPls for syn::LifetimeParam {
     fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("LifetimeDef")
+        f.debug_struct("LifetimeParam")
             .field("attrs", &self.attrs)
             .field("lifetime", &self.lifetime)
             .field("colon_token", &self.colon_token)
@@ -1376,6 +1385,7 @@ impl DebugPls for syn::Lit {
             syn::Lit::Verbatim(v0) => {
                 f.debug_tuple_struct("Verbatim").field(v0).finish();
             }
+            _ => unreachable!(),
         }
     }
 }
@@ -1387,6 +1397,15 @@ impl DebugPls for syn::Local {
             .field("pat", &self.pat)
             .field("init", &self.init)
             .field("semi_token", &self.semi_token)
+            .finish();
+    }
+}
+impl DebugPls for syn::LocalInit {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("LocalInit")
+            .field("eq_token", &self.eq_token)
+            .field("expr", &self.expr)
+            .field("diverge", &self.diverge)
             .finish();
     }
 }
@@ -1446,8 +1465,8 @@ impl DebugPls for syn::MetaList {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("MetaList")
             .field("path", &self.path)
-            .field("paren_token", &self.paren_token)
-            .field("nested", &self.nested)
+            .field("delimiter", &self.delimiter)
+            .field("tokens", &self.tokens)
             .finish();
     }
 }
@@ -1456,30 +1475,8 @@ impl DebugPls for syn::MetaNameValue {
         f.debug_struct("MetaNameValue")
             .field("path", &self.path)
             .field("eq_token", &self.eq_token)
-            .field("lit", &self.lit)
+            .field("value", &self.value)
             .finish();
-    }
-}
-impl DebugPls for syn::MethodTurbofish {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("MethodTurbofish")
-            .field("colon2_token", &self.colon2_token)
-            .field("lt_token", &self.lt_token)
-            .field("args", &self.args)
-            .field("gt_token", &self.gt_token)
-            .finish();
-    }
-}
-impl DebugPls for syn::NestedMeta {
-    fn fmt(&self, f: Formatter<'_>) {
-        match self {
-            syn::NestedMeta::Meta(v0) => {
-                f.debug_tuple_struct("Meta").field(v0).finish();
-            }
-            syn::NestedMeta::Lit(v0) => {
-                f.debug_tuple_struct("Lit").field(v0).finish();
-            }
-        }
     }
 }
 impl DebugPls for syn::ParenthesizedGenericArguments {
@@ -1494,8 +1491,8 @@ impl DebugPls for syn::ParenthesizedGenericArguments {
 impl DebugPls for syn::Pat {
     fn fmt(&self, f: Formatter<'_>) {
         match self {
-            syn::Pat::Box(v0) => {
-                f.debug_tuple_struct("Box").field(v0).finish();
+            syn::Pat::Const(v0) => {
+                f.debug_tuple_struct("Const").field(v0).finish();
             }
             syn::Pat::Ident(v0) => {
                 f.debug_tuple_struct("Ident").field(v0).finish();
@@ -1508,6 +1505,9 @@ impl DebugPls for syn::Pat {
             }
             syn::Pat::Or(v0) => {
                 f.debug_tuple_struct("Or").field(v0).finish();
+            }
+            syn::Pat::Paren(v0) => {
+                f.debug_tuple_struct("Paren").field(v0).finish();
             }
             syn::Pat::Path(v0) => {
                 f.debug_tuple_struct("Path").field(v0).finish();
@@ -1546,15 +1546,6 @@ impl DebugPls for syn::Pat {
         }
     }
 }
-impl DebugPls for syn::PatBox {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("PatBox")
-            .field("attrs", &self.attrs)
-            .field("box_token", &self.box_token)
-            .field("pat", &self.pat)
-            .finish();
-    }
-}
 impl DebugPls for syn::PatIdent {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("PatIdent")
@@ -1563,22 +1554,6 @@ impl DebugPls for syn::PatIdent {
             .field("mutability", &self.mutability)
             .field("ident", &self.ident)
             .field("subpat", &self.subpat)
-            .finish();
-    }
-}
-impl DebugPls for syn::PatLit {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("PatLit")
-            .field("attrs", &self.attrs)
-            .field("expr", &self.expr)
-            .finish();
-    }
-}
-impl DebugPls for syn::PatMacro {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("PatMacro")
-            .field("attrs", &self.attrs)
-            .field("mac", &self.mac)
             .finish();
     }
 }
@@ -1591,22 +1566,12 @@ impl DebugPls for syn::PatOr {
             .finish();
     }
 }
-impl DebugPls for syn::PatPath {
+impl DebugPls for syn::PatParen {
     fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("PatPath")
+        f.debug_struct("PatParen")
             .field("attrs", &self.attrs)
-            .field("qself", &self.qself)
-            .field("path", &self.path)
-            .finish();
-    }
-}
-impl DebugPls for syn::PatRange {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("PatRange")
-            .field("attrs", &self.attrs)
-            .field("lo", &self.lo)
-            .field("limits", &self.limits)
-            .field("hi", &self.hi)
+            .field("paren_token", &self.paren_token)
+            .field("pat", &self.pat)
             .finish();
     }
 }
@@ -1641,10 +1606,11 @@ impl DebugPls for syn::PatStruct {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("PatStruct")
             .field("attrs", &self.attrs)
+            .field("qself", &self.qself)
             .field("path", &self.path)
             .field("brace_token", &self.brace_token)
             .field("fields", &self.fields)
-            .field("dot2_token", &self.dot2_token)
+            .field("rest", &self.rest)
             .finish();
     }
 }
@@ -1661,8 +1627,10 @@ impl DebugPls for syn::PatTupleStruct {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("PatTupleStruct")
             .field("attrs", &self.attrs)
+            .field("qself", &self.qself)
             .field("path", &self.path)
-            .field("pat", &self.pat)
+            .field("paren_token", &self.paren_token)
+            .field("elems", &self.elems)
             .finish();
     }
 }
@@ -1710,15 +1678,6 @@ impl DebugPls for syn::PathSegment {
         f.debug_struct("PathSegment")
             .field("ident", &self.ident)
             .field("arguments", &self.arguments)
-            .finish();
-    }
-}
-impl DebugPls for syn::PredicateEq {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("PredicateEq")
-            .field("lhs_ty", &self.lhs_ty)
-            .field("eq_token", &self.eq_token)
-            .field("rhs_ty", &self.rhs_ty)
             .finish();
     }
 }
@@ -1771,6 +1730,8 @@ impl DebugPls for syn::Receiver {
             .field("reference", &self.reference)
             .field("mutability", &self.mutability)
             .field("self_token", &self.self_token)
+            .field("colon_token", &self.colon_token)
+            .field("ty", &self.ty)
             .finish();
     }
 }
@@ -1801,6 +1762,17 @@ impl DebugPls for syn::Signature {
             .finish();
     }
 }
+impl DebugPls for syn::StaticMutability {
+    fn fmt(&self, f: Formatter<'_>) {
+        match self {
+            syn::StaticMutability::Mut(v0) => {
+                f.debug_tuple_struct("Mut").field(v0).finish();
+            }
+            syn::StaticMutability::None => f.debug_ident("None"),
+            _ => unreachable!(),
+        }
+    }
+}
 impl DebugPls for syn::Stmt {
     fn fmt(&self, f: Formatter<'_>) {
         match self {
@@ -1810,13 +1782,22 @@ impl DebugPls for syn::Stmt {
             syn::Stmt::Item(v0) => {
                 f.debug_tuple_struct("Item").field(v0).finish();
             }
-            syn::Stmt::Expr(v0) => {
-                f.debug_tuple_struct("Expr").field(v0).finish();
+            syn::Stmt::Expr(v0, v1) => {
+                f.debug_tuple_struct("Expr").field(v0).field(v1).finish();
             }
-            syn::Stmt::Semi(v0, v1) => {
-                f.debug_tuple_struct("Semi").field(v0).field(v1).finish();
+            syn::Stmt::Macro(v0) => {
+                f.debug_tuple_struct("Macro").field(v0).finish();
             }
         }
+    }
+}
+impl DebugPls for syn::StmtMacro {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("StmtMacro")
+            .field("attrs", &self.attrs)
+            .field("mac", &self.mac)
+            .field("semi_token", &self.semi_token)
+            .finish();
     }
 }
 impl DebugPls for syn::TraitBound {
@@ -1845,8 +1826,8 @@ impl DebugPls for syn::TraitItem {
             syn::TraitItem::Const(v0) => {
                 f.debug_tuple_struct("Const").field(v0).finish();
             }
-            syn::TraitItem::Method(v0) => {
-                f.debug_tuple_struct("Method").field(v0).finish();
+            syn::TraitItem::Fn(v0) => {
+                f.debug_tuple_struct("Fn").field(v0).finish();
             }
             syn::TraitItem::Type(v0) => {
                 f.debug_tuple_struct("Type").field(v0).finish();
@@ -1867,8 +1848,19 @@ impl DebugPls for syn::TraitItemConst {
             .field("attrs", &self.attrs)
             .field("const_token", &self.const_token)
             .field("ident", &self.ident)
+            .field("generics", &self.generics)
             .field("colon_token", &self.colon_token)
             .field("ty", &self.ty)
+            .field("default", &self.default)
+            .field("semi_token", &self.semi_token)
+            .finish();
+    }
+}
+impl DebugPls for syn::TraitItemFn {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("TraitItemFn")
+            .field("attrs", &self.attrs)
+            .field("sig", &self.sig)
             .field("default", &self.default)
             .field("semi_token", &self.semi_token)
             .finish();
@@ -1879,16 +1871,6 @@ impl DebugPls for syn::TraitItemMacro {
         f.debug_struct("TraitItemMacro")
             .field("attrs", &self.attrs)
             .field("mac", &self.mac)
-            .field("semi_token", &self.semi_token)
-            .finish();
-    }
-}
-impl DebugPls for syn::TraitItemMethod {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("TraitItemMethod")
-            .field("attrs", &self.attrs)
-            .field("sig", &self.sig)
-            .field("default", &self.default)
             .field("semi_token", &self.semi_token)
             .finish();
     }
@@ -2039,6 +2021,10 @@ impl DebugPls for syn::TypeParamBound {
             syn::TypeParamBound::Lifetime(v0) => {
                 f.debug_tuple_struct("Lifetime").field(v0).finish();
             }
+            syn::TypeParamBound::Verbatim(v0) => {
+                f.debug_tuple_struct("Verbatim").field(v0).finish();
+            }
+            _ => unreachable!(),
         }
     }
 }
@@ -2114,6 +2100,7 @@ impl DebugPls for syn::UnOp {
             syn::UnOp::Neg(v0) => {
                 f.debug_tuple_struct("Neg").field(v0).finish();
             }
+            _ => unreachable!(),
         }
     }
 }
@@ -2182,7 +2169,9 @@ impl DebugPls for syn::Variadic {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("Variadic")
             .field("attrs", &self.attrs)
+            .field("pat", &self.pat)
             .field("dots", &self.dots)
+            .field("comma", &self.comma)
             .finish();
     }
 }
@@ -2193,20 +2182,6 @@ impl DebugPls for syn::Variant {
             .field("ident", &self.ident)
             .field("fields", &self.fields)
             .field("discriminant", &self.discriminant)
-            .finish();
-    }
-}
-impl DebugPls for syn::VisCrate {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("VisCrate")
-            .field("crate_token", &self.crate_token)
-            .finish();
-    }
-}
-impl DebugPls for syn::VisPublic {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("VisPublic")
-            .field("pub_token", &self.pub_token)
             .finish();
     }
 }
@@ -2226,9 +2201,6 @@ impl DebugPls for syn::Visibility {
             syn::Visibility::Public(v0) => {
                 f.debug_tuple_struct("Public").field(v0).finish();
             }
-            syn::Visibility::Crate(v0) => {
-                f.debug_tuple_struct("Crate").field(v0).finish();
-            }
             syn::Visibility::Restricted(v0) => {
                 f.debug_tuple_struct("Restricted").field(v0).finish();
             }
@@ -2247,31 +2219,19 @@ impl DebugPls for syn::WhereClause {
 impl DebugPls for syn::WherePredicate {
     fn fmt(&self, f: Formatter<'_>) {
         match self {
-            syn::WherePredicate::Type(v0) => {
-                f.debug_tuple_struct("Type").field(v0).finish();
-            }
             syn::WherePredicate::Lifetime(v0) => {
                 f.debug_tuple_struct("Lifetime").field(v0).finish();
             }
-            syn::WherePredicate::Eq(v0) => {
-                f.debug_tuple_struct("Eq").field(v0).finish();
+            syn::WherePredicate::Type(v0) => {
+                f.debug_tuple_struct("Type").field(v0).finish();
             }
+            _ => unreachable!(),
         }
     }
 }
 impl DebugPls for syn::token::Abstract {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_ident("Abstract");
-    }
-}
-impl DebugPls for syn::token::Add {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("Add");
-    }
-}
-impl DebugPls for syn::token::AddEq {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("AddEq");
     }
 }
 impl DebugPls for syn::token::And {
@@ -2314,11 +2274,6 @@ impl DebugPls for syn::token::Await {
         f.debug_ident("Await");
     }
 }
-impl DebugPls for syn::token::Bang {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("Bang");
-    }
-}
 impl DebugPls for syn::token::Become {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_ident("Become");
@@ -2349,11 +2304,6 @@ impl DebugPls for syn::token::Colon {
         f.debug_ident("Colon");
     }
 }
-impl DebugPls for syn::token::Colon2 {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("Colon2");
-    }
-}
 impl DebugPls for syn::token::Comma {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_ident("Comma");
@@ -2379,16 +2329,6 @@ impl DebugPls for syn::token::Default {
         f.debug_ident("Default");
     }
 }
-impl DebugPls for syn::token::Div {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("Div");
-    }
-}
-impl DebugPls for syn::token::DivEq {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("DivEq");
-    }
-}
 impl DebugPls for syn::token::Do {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_ident("Do");
@@ -2404,14 +2344,14 @@ impl DebugPls for syn::token::Dot {
         f.debug_ident("Dot");
     }
 }
-impl DebugPls for syn::token::Dot2 {
+impl DebugPls for syn::token::DotDot {
     fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("Dot2");
+        f.debug_ident("DotDot");
     }
 }
-impl DebugPls for syn::token::Dot3 {
+impl DebugPls for syn::token::DotDotDot {
     fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("Dot3");
+        f.debug_ident("DotDotDot");
     }
 }
 impl DebugPls for syn::token::DotDotEq {
@@ -2529,6 +2469,16 @@ impl DebugPls for syn::token::Match {
         f.debug_ident("Match");
     }
 }
+impl DebugPls for syn::token::Minus {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("Minus");
+    }
+}
+impl DebugPls for syn::token::MinusEq {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("MinusEq");
+    }
+}
 impl DebugPls for syn::token::Mod {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_ident("Mod");
@@ -2539,11 +2489,6 @@ impl DebugPls for syn::token::Move {
         f.debug_ident("Move");
     }
 }
-impl DebugPls for syn::token::MulEq {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("MulEq");
-    }
-}
 impl DebugPls for syn::token::Mut {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_ident("Mut");
@@ -2552,6 +2497,11 @@ impl DebugPls for syn::token::Mut {
 impl DebugPls for syn::token::Ne {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_ident("Ne");
+    }
+}
+impl DebugPls for syn::token::Not {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("Not");
     }
 }
 impl DebugPls for syn::token::Or {
@@ -2572,6 +2522,31 @@ impl DebugPls for syn::token::OrOr {
 impl DebugPls for syn::token::Override {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_ident("Override");
+    }
+}
+impl DebugPls for syn::token::PathSep {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("PathSep");
+    }
+}
+impl DebugPls for syn::token::Percent {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("Percent");
+    }
+}
+impl DebugPls for syn::token::PercentEq {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("PercentEq");
+    }
+}
+impl DebugPls for syn::token::Plus {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("Plus");
+    }
+}
+impl DebugPls for syn::token::PlusEq {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("PlusEq");
     }
 }
 impl DebugPls for syn::token::Pound {
@@ -2602,16 +2577,6 @@ impl DebugPls for syn::token::RArrow {
 impl DebugPls for syn::token::Ref {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_ident("Ref");
-    }
-}
-impl DebugPls for syn::token::Rem {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("Rem");
-    }
-}
-impl DebugPls for syn::token::RemEq {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("RemEq");
     }
 }
 impl DebugPls for syn::token::Return {
@@ -2654,9 +2619,24 @@ impl DebugPls for syn::token::ShrEq {
         f.debug_ident("ShrEq");
     }
 }
+impl DebugPls for syn::token::Slash {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("Slash");
+    }
+}
+impl DebugPls for syn::token::SlashEq {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("SlashEq");
+    }
+}
 impl DebugPls for syn::token::Star {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_ident("Star");
+    }
+}
+impl DebugPls for syn::token::StarEq {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_ident("StarEq");
     }
 }
 impl DebugPls for syn::token::Static {
@@ -2667,16 +2647,6 @@ impl DebugPls for syn::token::Static {
 impl DebugPls for syn::token::Struct {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_ident("Struct");
-    }
-}
-impl DebugPls for syn::token::Sub {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("Sub");
-    }
-}
-impl DebugPls for syn::token::SubEq {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_ident("SubEq");
     }
 }
 impl DebugPls for syn::token::Super {

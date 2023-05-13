@@ -1,6 +1,6 @@
 [package]
 name = "dbg-pls-derive"
-version = "0.3.2"
+version = "0.4.0"
 authors = ["Conrad Ludgate <conradludgate@gmail.com>"]
 edition = "2021"
 description = "derive(Debug)"
@@ -13,5 +13,5 @@ proc-macro = true
 
 [dependencies]
 quote = "1.0"
-syn = "1.0"
+syn = "2.0"
 proc-macro2 = "1.0"

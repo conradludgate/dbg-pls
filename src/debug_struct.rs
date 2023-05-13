@@ -41,6 +41,7 @@ impl<'a> DebugStruct<'a> {
             formatter,
             expr: syn::ExprStruct {
                 attrs: vec![],
+                qself: None,
                 path: syn::Ident::into(syn::parse_str(name).unwrap()),
                 brace_token: syn::token::Brace::default(),
                 fields: syn::punctuated::Punctuated::new(),
@@ -72,7 +73,7 @@ impl<'a> DebugStruct<'a> {
 
     /// Closes off the struct with `..`.
     pub fn finish_non_exhaustive(mut self) {
-        self.expr.dot2_token = Some(syn::token::Dot2::default());
+        self.expr.dot2_token = Some(syn::token::DotDot::default());
         self.finish();
     }
 }

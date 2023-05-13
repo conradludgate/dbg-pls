@@ -14,7 +14,7 @@ use proc_macro2::{Ident, Span, TokenStream};
 use quote::{format_ident, quote};
 use syn_codegen::{Data, Definitions, Node, Type};
 
-const DEBUG_SRC: &str = "../src/impls/syn/gen.rs";
+const DEBUG_SRC: &str = "src/impls/syn/gen.rs";
 
 pub fn lookup_node<'a>(defs: &'a Definitions, name: &str) -> &'a Node {
     for node in &defs.types {

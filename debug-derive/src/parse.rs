@@ -60,7 +60,7 @@ impl Args {
     fn parse_attrs(attrs: &[Attribute]) -> syn::Result<Self> {
         let mut args = Args::default();
         for attr in attrs {
-            if attr.path.get_ident().map(|x| x == ATTR) == Some(true) {
+            if attr.path().is_ident(ATTR) {
                 args = attr.parse_args_with(|input: ParseStream| args.parse(input))?;
             }
         }
