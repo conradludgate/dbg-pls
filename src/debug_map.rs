@@ -54,9 +54,10 @@ impl<'a> DebugMap<'a> {
     /// by a corresponding call to `value`. Otherwise this method will panic.
     #[must_use]
     pub fn key(mut self, key: &dyn DebugPls) -> Self {
-        if self.key.replace(Formatter::process(key)).is_some() {
-            panic!("attempted to begin a new map entry without completing the previous one");
-        }
+        assert!(
+            self.key.replace(Formatter::process(key)).is_none(),
+            "attempted to begin a new map entry without completing the previous one"
+        );
         self
     }
 

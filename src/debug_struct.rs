@@ -1,5 +1,3 @@
-use syn::__private::Span;
-
 use crate::{DebugPls, Formatter};
 
 /// A helper designed to assist with creation of
@@ -53,6 +51,9 @@ impl<'a> DebugStruct<'a> {
     }
 
     /// Adds the field to the struct output.
+    ///
+    /// # Panics
+    /// This will panic if the name is not a valid identifier
     #[must_use]
     pub fn field(mut self, name: &str, value: &dyn DebugPls) -> Self {
         self.expr.fields.push(syn::FieldValue {

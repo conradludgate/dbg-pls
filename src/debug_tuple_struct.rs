@@ -1,5 +1,3 @@
-use syn::__private::Span;
-
 use crate::{DebugPls, Formatter};
 
 /// A helper designed to assist with creation of

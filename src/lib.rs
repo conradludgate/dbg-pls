@@ -166,17 +166,13 @@
 //! [`syn::Expr`] values. These are then formatted using [`prettyplease::unparse`].
 //! Finally, it uses [`syntect`] to provide syntax highlighting, with theme provided by
 //! <https://github.com/jonschlinkert/sublime-monokai-extended>
-
-use syn::__private::{Span, TokenStream2};
-
-mod impls;
-
 mod debug_list;
 mod debug_map;
 mod debug_set;
 mod debug_struct;
 mod debug_tuple;
 mod debug_tuple_struct;
+mod impls;
 pub use debug_list::DebugList;
 pub use debug_map::DebugMap;
 pub use debug_set::DebugSet;
@@ -306,7 +302,7 @@ pub struct Formatter<'a> {
 
 impl<'a> Formatter<'a> {
     pub(crate) fn process(value: &dyn DebugPls) -> syn::Expr {
-        let mut expr = syn::Expr::Verbatim(TokenStream2::new());
+        let mut expr = syn::Expr::Verbatim(proc_macro2::TokenStream::new());
         value.fmt(Formatter { expr: &mut expr });
         expr
     }
@@ -497,6 +493,9 @@ impl<'a> Formatter<'a> {
     }
 
     /// Writes an identifier into the formatter. Useful for unit structs/variants
+    ///
+    /// # Panics
+    /// This will panic if the name is not a valid identifier
     ///
     /// # Examples
     ///

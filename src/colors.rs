@@ -42,7 +42,7 @@ fn highlight(s: &str, mut w: impl std::fmt::Write) -> std::fmt::Result {
     let mut h = HighlightLines::new(syntax, theme);
 
     for line in LinesWithEndings::from(s) {
-        let ranges = h.highlight(line, ps);
+        let ranges = h.highlight_line(line, ps).unwrap();
         write!(w, "{}", as_24_bit_terminal_escaped(&ranges[..], false))?;
     }
     write!(w, "\x1b[0m") // reset the color

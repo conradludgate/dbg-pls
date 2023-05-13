@@ -204,5 +204,5 @@ fn raw_idents() {
         r#struct { r#fn: r#type },
     }
 
-    _ = ::dbg_pls::pretty(&r#enum::r#struct { r#fn: () }).to_string();
+    assert_pretty_snapshot!(&r#enum::r#struct { r#fn: () });
 }
