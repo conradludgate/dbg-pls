@@ -1,5 +1,3 @@
-use syn::__private::Span;
-
 use crate::{DebugPls, Formatter};
 
 /// A helper designed to assist with creation of
@@ -43,7 +41,7 @@ impl<'a> DebugStruct<'a> {
             formatter,
             expr: syn::ExprStruct {
                 attrs: vec![],
-                path: syn::Ident::new(name, Span::call_site()).into(),
+                path: syn::Ident::into(syn::parse_str(name).unwrap()),
                 brace_token: syn::token::Brace::default(),
                 fields: syn::punctuated::Punctuated::new(),
                 dot2_token: None,
@@ -53,12 +51,15 @@ impl<'a> DebugStruct<'a> {
     }
 
     /// Adds the field to the struct output.
+    ///
+    /// # Panics
+    /// This will panic if the name is not a valid identifier
     #[must_use]
     pub fn field(mut self, name: &str, value: &dyn DebugPls) -> Self {
         self.expr.fields.push(syn::FieldValue {
             expr: Formatter::process(value),
             attrs: vec![],
-            member: syn::Member::Named(syn::Ident::new(name, Span::call_site())),
+            member: syn::Member::Named(syn::parse_str(name).unwrap()),
             colon_token: Some(syn::token::Colon::default()),
         });
         self

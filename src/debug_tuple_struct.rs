@@ -1,5 +1,3 @@
-use syn::__private::Span;
-
 use crate::{DebugPls, Formatter};
 
 /// A helper designed to assist with creation of
@@ -38,7 +36,7 @@ impl<'a> DebugTupleStruct<'a> {
                 func: Box::new(syn::Expr::Path(syn::ExprPath {
                     attrs: vec![],
                     qself: None,
-                    path: syn::Ident::new(name, Span::call_site()).into(),
+                    path: syn::Ident::into(syn::parse_str(name).unwrap()),
                 })),
                 paren_token: syn::token::Paren::default(),
                 args: syn::punctuated::Punctuated::new(),

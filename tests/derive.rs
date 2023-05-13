@@ -192,3 +192,17 @@ fn ranges() {
 
 #[derive(DebugPls)]
 enum EmptyEnum {}
+
+/// Test raw identifiers.
+#[test]
+fn raw_idents() {
+    #![allow(nonstandard_style)]
+    type r#type = ();
+
+    #[derive(DebugPls)]
+    pub enum r#enum {
+        r#struct { r#fn: r#type },
+    }
+
+    assert_pretty_snapshot!(&r#enum::r#struct { r#fn: () });
+}
