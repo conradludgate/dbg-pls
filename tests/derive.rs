@@ -117,7 +117,7 @@ mod debug_enum_generic {
     pub enum Option2<T> {
         Some(T),
         None,
-        Wtf { foo: i32 },
+        Wtf { foo: bool },
     }
 
     #[test]
@@ -130,7 +130,7 @@ mod debug_enum_generic {
     }
     #[test]
     fn wtf() {
-        assert_pretty_snapshot!(Option2::<i32>::Wtf { foo: 42 });
+        assert_pretty_snapshot!(Option2::<i32>::Wtf { foo: true });
     }
 }
 

@@ -142,10 +142,13 @@ debug_floats! { f64 }
 
 impl DebugPls for bool {
     fn fmt(&self, f: Formatter<'_>) {
-        match self {
-            true => f.debug_ident("true"),
-            false => f.debug_ident("false"),
-        }
+        f.write_expr(syn::ExprLit {
+            attrs: vec![],
+            lit: syn::Lit::Bool(syn::LitBool {
+                value: *self,
+                span: Span::call_site(),
+            }),
+        });
     }
 }
 

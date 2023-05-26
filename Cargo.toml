@@ -3,7 +3,7 @@ members = ["debug-derive", "syn-codegen"]
 
 [package]
 name = "dbg-pls"
-version = "0.4.0"
+version = "0.4.1"
 authors = ["Conrad Ludgate <conradludgate@gmail.com>"]
 edition = "2018"
 description = "Syntax aware pretty-printing debugging"
