@@ -1,42 +1,8 @@
-use syn::__private::Span;
-
 use crate::{DebugPls, Formatter};
 mod please;
 
-pub(crate) fn pretty_string(expr: syn::Expr) -> String {
-    // unparse requires a `syn::File`, so we are forced to wrap
-    // our expression in some junk. This is equivalent to
-    // ```rust
-    // const _: () = {
-    //     #expr
-    // };
-    // ```
-    let file = syn::File {
-        shebang: None,
-        attrs: vec![],
-        items: vec![syn::Item::Const(syn::ItemConst {
-            expr: Box::new(expr),
-            // junk...
-            attrs: vec![],
-            vis: syn::Visibility::Inherited,
-            const_token: syn::token::Const::default(),
-            ident: syn::Ident::new("_", Span::call_site()),
-            colon_token: syn::token::Colon::default(),
-            ty: Box::new(syn::Type::Tuple(syn::TypeTuple {
-                paren_token: syn::token::Paren::default(),
-                elems: syn::punctuated::Punctuated::default(),
-            })),
-            eq_token: syn::token::Eq::default(),
-            semi_token: syn::token::Semi::default(),
-            generics: syn::Generics::default(),
-        })],
-    };
-    let output = please::unparse(&file);
-
-    // strip out the junk
-    let output = &output[14..];
-    let output = &output[..output.len() - 2];
-    textwrap::dedent(output)
+pub(crate) fn pretty_string(expr: &syn::Expr) -> String {
+    please::unparse(expr)
 }
 
 /// Implementation detail for the `pretty!` macro
@@ -45,7 +11,7 @@ pub struct Str<'a>(pub &'a str);
 impl<'a> std::fmt::Display for Str<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let expr = syn::parse_str(self.0).map_err(|_| std::fmt::Error)?;
-        f.write_str(&pretty_string(expr))
+        f.write_str(&pretty_string(&expr))
     }
 }
 
@@ -53,7 +19,7 @@ struct Pretty<'a>(&'a dyn DebugPls);
 
 impl<'a> std::fmt::Debug for Pretty<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(&pretty_string(Formatter::process(self.0)))
+        f.write_str(&pretty_string(&Formatter::process(self.0)))
     }
 }
 

@@ -140,7 +140,6 @@ mod attr;
 mod convenience;
 mod data;
 mod expr;
-mod file;
 mod generics;
 mod item;
 mod iter;
@@ -155,7 +154,7 @@ mod token;
 mod ty;
 
 use crate::pretty::please::algorithm::Printer;
-use syn::File;
+use syn::Expr;
 
 // Target line width.
 const MARGIN: isize = 89;
@@ -166,8 +165,8 @@ const INDENT: isize = 4;
 // Every line is allowed at least this much space, even if highly indented.
 const MIN_SPACE: isize = 60;
 
-pub fn unparse(file: &File) -> String {
+pub fn unparse(expr: &Expr) -> String {
     let mut p = Printer::new();
-    p.file(file);
+    p.expr(expr);
     p.eof()
 }

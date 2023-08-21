@@ -44,7 +44,7 @@ pub struct ColorStr<'a>(pub &'a str);
 
 impl<'a> std::fmt::Display for ColorStr<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let expr = syn::parse_str(self.0).map_err(|_| std::fmt::Error)?;
+        let expr = &syn::parse_str(self.0).map_err(|_| std::fmt::Error)?;
         highlight(&pretty_string(expr), f)
     }
 }
@@ -53,7 +53,7 @@ struct Color<'a>(&'a dyn DebugPls);
 
 impl<'a> std::fmt::Debug for Color<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        highlight(&pretty_string(Formatter::process(self.0)), f)
+        highlight(&pretty_string(&Formatter::process(self.0)), f)
     }
 }
 
