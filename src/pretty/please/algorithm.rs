@@ -2,7 +2,6 @@
 // See "Algorithm notes" in the crate-level rustdoc.
 
 use crate::pretty::please::ring::RingBuffer;
-use crate::pretty::please::{MARGIN, MIN_SPACE};
 use std::borrow::Cow;
 use std::cmp;
 use std::collections::VecDeque;
@@ -49,6 +48,7 @@ pub const SIZE_INFINITY: isize = 0xffff;
 
 pub struct Printer {
     out: String,
+    margin: isize,
     // Number of spaces left on line
     space: isize,
     // Ring-buffer of tokens and calculated sizes
@@ -78,10 +78,11 @@ struct BufEntry {
 }
 
 impl Printer {
-    pub fn new() -> Self {
+    pub fn new(margin: isize) -> Self {
         Printer {
             out: String::new(),
-            space: MARGIN,
+            margin,
+            space: margin,
             buf: RingBuffer::new(),
             left_total: 0,
             right_total: 0,
@@ -352,7 +353,7 @@ impl Printer {
             self.out.push('\n');
             let indent = self.indent as isize + token.offset;
             self.pending_indentation = usize::try_from(indent).unwrap();
-            self.space = cmp::max(MARGIN - indent, MIN_SPACE);
+            self.space = cmp::max(self.margin - indent, self.margin / 3 * 2);
             if let Some(post_break) = token.post_break {
                 self.print_indent();
                 self.out.push(post_break);

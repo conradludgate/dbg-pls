@@ -76,10 +76,7 @@ Macro(ItemMacro {
                                     Punct(Punct { ch: '>', spacing: Alone }),
                                     Group(Group {
                                         delimiter: Parenthesis,
-                                        stream: [
-                                            Punct(Punct { ch: '$', spacing: Alone }),
-                                            Ident(code),
-                                        ],
+                                        stream: [Punct(Punct { ch: '$', spacing: Alone }), Ident(code)],
                                     }),
                                     Punct(Punct { ch: '.', spacing: Alone }),
                                     Ident(unwrap),
@@ -183,10 +180,7 @@ color:
                                     [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m>[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                                     [32mGroup[0m[31m([0m[32mGroup[0m [31m{[0m
                                         delimiter[31m:[0m [32mParenthesis[0m[31m,[0m
-                                        stream[31m:[0m [31m[[0m
-                                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m$[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
-                                            [32mIdent[0m[31m([0mcode[31m)[0m[31m,[0m
-                                        [31m][0m[31m,[0m
+                                        stream[31m:[0m [31m[[0m[32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m$[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m [32mIdent[0m[31m([0mcode[31m)[0m[31m][0m[31m,[0m
                                     [31m}[0m[31m)[0m[31m,[0m
                                     [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m.[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                                     [32mIdent[0m[31m([0munwrap[31m)[0m[31m,[0m

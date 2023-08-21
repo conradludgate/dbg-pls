@@ -2,7 +2,7 @@ use crate::{DebugPls, Formatter};
 mod please;
 
 pub(crate) fn pretty_string(expr: &syn::Expr) -> String {
-    please::unparse(expr)
+    please::unparse(expr, Some(120))
 }
 
 /// Implementation detail for the `pretty!` macro

@@ -1995,7 +1995,9 @@ impl DebugPls for syn::TypeMacro {
 }
 impl DebugPls for syn::TypeNever {
     fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("TypeNever").field("bang_token", &self.bang_token).finish();
+        f.debug_struct("TypeNever")
+            .field("bang_token", &self.bang_token)
+            .finish();
     }
 }
 impl DebugPls for syn::TypeParam {
@@ -2104,7 +2106,9 @@ impl DebugPls for syn::UnOp {
 }
 impl DebugPls for syn::UseGlob {
     fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("UseGlob").field("star_token", &self.star_token).finish();
+        f.debug_struct("UseGlob")
+            .field("star_token", &self.star_token)
+            .finish();
     }
 }
 impl DebugPls for syn::UseGroup {
@@ -2117,7 +2121,9 @@ impl DebugPls for syn::UseGroup {
 }
 impl DebugPls for syn::UseName {
     fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("UseName").field("ident", &self.ident).finish();
+        f.debug_struct("UseName")
+            .field("ident", &self.ident)
+            .finish();
     }
 }
 impl DebugPls for syn::UsePath {

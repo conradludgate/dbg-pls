@@ -156,17 +156,11 @@ mod ty;
 use crate::pretty::please::algorithm::Printer;
 use syn::Expr;
 
-// Target line width.
-const MARGIN: isize = 89;
-
 // Number of spaces increment at each level of block indentation.
 const INDENT: isize = 4;
 
-// Every line is allowed at least this much space, even if highly indented.
-const MIN_SPACE: isize = 60;
-
-pub fn unparse(expr: &Expr) -> String {
-    let mut p = Printer::new();
+pub fn unparse(expr: &Expr, max_width: Option<usize>) -> String {
+    let mut p = Printer::new(max_width.unwrap_or(89) as isize);
     p.expr(expr);
     p.eof()
 }

@@ -121,7 +121,7 @@ impl Printer {
         if tilde_const {
             self.word("~const ");
         }
-        self.trait_bound_modifier(&trait_bound.modifier);
+        self.trait_bound_modifier(trait_bound.modifier);
         if let Some(bound_lifetimes) = &trait_bound.lifetimes {
             self.bound_lifetimes(bound_lifetimes);
         }
@@ -136,7 +136,7 @@ impl Printer {
         }
     }
 
-    fn trait_bound_modifier(&mut self, trait_bound_modifier: &TraitBoundModifier) {
+    fn trait_bound_modifier(&mut self, trait_bound_modifier: TraitBoundModifier) {
         match trait_bound_modifier {
             TraitBoundModifier::None => {}
             TraitBoundModifier::Maybe(_question_mark) => self.word("?"),

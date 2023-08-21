@@ -24,6 +24,11 @@ fn expr_array() {
 }
 
 #[test]
+fn qself() {
+    assert_pretty_syn_snapshot!(syn::Expr => "<Foo as Bar::<<Baz as Qux>::Bang>>::Boo");
+}
+
+#[test]
 fn item_macro() {
     assert_pretty_syn_snapshot!(syn::Item => r#"
             macro_rules! assert_pretty_syn_snapshot {

@@ -271,7 +271,7 @@ impl Printer {
                     self.expr(&expr.body);
                     self.scan_break(BreakToken {
                         offset: -INDENT,
-                        pre_break: (okay_to_brace && stmt::add_semi(&expr.body)).then(|| ';'),
+                        pre_break: (okay_to_brace && stmt::add_semi(&expr.body)).then_some(';'),
                         post_break: Some(if okay_to_brace { '}' } else { ')' }),
                         ..BreakToken::default()
                     });
@@ -645,7 +645,7 @@ impl Printer {
 
     fn expr_unary(&mut self, expr: &ExprUnary) {
         self.outer_attrs(&expr.attrs);
-        self.unary_operator(&expr.op);
+        self.unary_operator(expr.op);
         self.expr(&expr.expr);
     }
 
@@ -876,9 +876,9 @@ impl Printer {
             self.expr_beginning_of_line(body, true);
             self.scan_break(BreakToken {
                 offset: -INDENT,
-                pre_break: stmt::add_semi(body).then(|| ';'),
+                pre_break: stmt::add_semi(body).then_some(';'),
                 post_break: Some('}'),
-                no_break: requires_terminator(body).then(|| ','),
+                no_break: requires_terminator(body).then_some(','),
                 ..BreakToken::default()
             });
             self.end();
@@ -974,7 +974,7 @@ impl Printer {
         });
     }
 
-    fn unary_operator(&mut self, op: &UnOp) {
+    fn unary_operator(&mut self, op: UnOp) {
         self.word(match op {
             UnOp::Deref(_) => "*",
             UnOp::Not(_) => "!",

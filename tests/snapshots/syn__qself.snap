@@ -1,0 +1,163 @@
+---
+source: tests/syn.rs
+expression: "<Foo as Bar::<<Baz as Qux>::Bang>>::Boo"
+---
+pretty:
+Path(ExprPath {
+    attrs: [],
+    qself: Some(QSelf {
+        lt_token: Lt,
+        ty: Path(TypePath {
+            qself: None,
+            path: Path {
+                leading_colon: None,
+                segments: [
+                    PathSegment {
+                        ident: Foo,
+                        arguments: None,
+                    },
+                ],
+            },
+        }),
+        position: 1,
+        as_token: Some(As),
+        gt_token: Gt,
+    }),
+    path: Path {
+        leading_colon: None,
+        segments: [
+            PathSegment {
+                ident: Bar,
+                arguments: AngleBracketed(AngleBracketedGenericArguments {
+                    colon2_token: Some(PathSep),
+                    lt_token: Lt,
+                    args: [
+                        Type(
+                            Path(TypePath {
+                                qself: Some(QSelf {
+                                    lt_token: Lt,
+                                    ty: Path(TypePath {
+                                        qself: None,
+                                        path: Path {
+                                            leading_colon: None,
+                                            segments: [
+                                                PathSegment {
+                                                    ident: Baz,
+                                                    arguments: None,
+                                                },
+                                            ],
+                                        },
+                                    }),
+                                    position: 1,
+                                    as_token: Some(As),
+                                    gt_token: Gt,
+                                }),
+                                path: Path {
+                                    leading_colon: None,
+                                    segments: [
+                                        PathSegment {
+                                            ident: Qux,
+                                            arguments: None,
+                                        },
+                                        PathSep,
+                                        PathSegment {
+                                            ident: Bang,
+                                            arguments: None,
+                                        },
+                                    ],
+                                },
+                            }),
+                        ),
+                    ],
+                    gt_token: Gt,
+                }),
+            },
+            PathSep,
+            PathSegment {
+                ident: Boo,
+                arguments: None,
+            },
+        ],
+    },
+})
+
+color:
+[32mPath[0m[31m([0m[32mExprPath[0m [31m{[0m
+    attrs[31m:[0m [31m[[0m[31m][0m[31m,[0m
+    qself[31m:[0m Some[31m([0m[32mQSelf[0m [31m{[0m
+        lt_token[31m:[0m [32mLt[0m[31m,[0m
+        ty[31m:[0m [32mPath[0m[31m([0m[32mTypePath[0m [31m{[0m
+            qself[31m:[0m None[31m,[0m
+            path[31m:[0m [32mPath[0m [31m{[0m
+                leading_colon[31m:[0m None[31m,[0m
+                segments[31m:[0m [31m[[0m
+                    [32mPathSegment[0m [31m{[0m
+                        ident[31m:[0m [32mFoo[0m[31m,[0m
+                        arguments[31m:[0m None[31m,[0m
+                    [31m}[0m[31m,[0m
+                [31m][0m[31m,[0m
+            [31m}[0m[31m,[0m
+        [31m}[0m[31m)[0m[31m,[0m
+        position[31m:[0m 1[31m,[0m
+        as_token[31m:[0m Some[31m([0m[32mAs[0m[31m)[0m[31m,[0m
+        gt_token[31m:[0m [32mGt[0m[31m,[0m
+    [31m}[0m[31m)[0m[31m,[0m
+    path[31m:[0m [32mPath[0m [31m{[0m
+        leading_colon[31m:[0m None[31m,[0m
+        segments[31m:[0m [31m[[0m
+            [32mPathSegment[0m [31m{[0m
+                ident[31m:[0m [32mBar[0m[31m,[0m
+                arguments[31m:[0m [32mAngleBracketed[0m[31m([0m[32mAngleBracketedGenericArguments[0m [31m{[0m
+                    colon2_token[31m:[0m Some[31m([0m[32mPathSep[0m[31m)[0m[31m,[0m
+                    lt_token[31m:[0m [32mLt[0m[31m,[0m
+                    args[31m:[0m [31m[[0m
+                        [32mType[0m[31m([0m
+                            [32mPath[0m[31m([0m[32mTypePath[0m [31m{[0m
+                                qself[31m:[0m Some[31m([0m[32mQSelf[0m [31m{[0m
+                                    lt_token[31m:[0m [32mLt[0m[31m,[0m
+                                    ty[31m:[0m [32mPath[0m[31m([0m[32mTypePath[0m [31m{[0m
+                                        qself[31m:[0m None[31m,[0m
+                                        path[31m:[0m [32mPath[0m [31m{[0m
+                                            leading_colon[31m:[0m None[31m,[0m
+                                            segments[31m:[0m [31m[[0m
+                                                [32mPathSegment[0m [31m{[0m
+                                                    ident[31m:[0m [32mBaz[0m[31m,[0m
+                                                    arguments[31m:[0m None[31m,[0m
+                                                [31m}[0m[31m,[0m
+                                            [31m][0m[31m,[0m
+                                        [31m}[0m[31m,[0m
+                                    [31m}[0m[31m)[0m[31m,[0m
+                                    position[31m:[0m 1[31m,[0m
+                                    as_token[31m:[0m Some[31m([0m[32mAs[0m[31m)[0m[31m,[0m
+                                    gt_token[31m:[0m [32mGt[0m[31m,[0m
+                                [31m}[0m[31m)[0m[31m,[0m
+                                path[31m:[0m [32mPath[0m [31m{[0m
+                                    leading_colon[31m:[0m None[31m,[0m
+                                    segments[31m:[0m [31m[[0m
+                                        [32mPathSegment[0m [31m{[0m
+                                            ident[31m:[0m [32mQux[0m[31m,[0m
+                                            arguments[31m:[0m None[31m,[0m
+                                        [31m}[0m[31m,[0m
+                                        [32mPathSep[0m[31m,[0m
+                                        [32mPathSegment[0m [31m{[0m
+                                            ident[31m:[0m [32mBang[0m[31m,[0m
+                                            arguments[31m:[0m None[31m,[0m
+                                        [31m}[0m[31m,[0m
+                                    [31m][0m[31m,[0m
+                                [31m}[0m[31m,[0m
+                            [31m}[0m[31m)[0m[31m,[0m
+                        [31m)[0m[31m,[0m
+                    [31m][0m[31m,[0m
+                    gt_token[31m:[0m [32mGt[0m[31m,[0m
+                [31m}[0m[31m)[0m[31m,[0m
+            [31m}[0m[31m,[0m
+            [32mPathSep[0m[31m,[0m
+            [32mPathSegment[0m [31m{[0m
+                ident[31m:[0m [32mBoo[0m[31m,[0m
+                arguments[31m:[0m None[31m,[0m
+            [31m}[0m[31m,[0m
+        [31m][0m[31m,[0m
+    [31m}[0m[31m,[0m
+[31m}[0m[31m)[0m
+
+
