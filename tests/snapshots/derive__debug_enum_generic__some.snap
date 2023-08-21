@@ -6,6 +6,6 @@ expression: "Option2::Some(42)"
 Some(42)
 
 >>> color
-
 Some[31m([0m42[31m)[0m
+
 

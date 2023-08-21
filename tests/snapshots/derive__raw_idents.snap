@@ -6,6 +6,6 @@ expression: "&r#enum::r#struct { r#fn: () }"
 r#struct { r#fn: () }
 
 >>> color
-
 r#struct [31m{[0m r#fn[31m:[0m [31m([0m[31m)[0m [31m}[0m
+
 

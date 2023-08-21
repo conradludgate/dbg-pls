@@ -9,9 +9,9 @@ expression: "BTreeMap::from([(\"hello\", 60), (\"Hello, world! I am a very long 
 }
 
 >>> color
-
 [31m{[0m
-    [33m[0m[31m"[0m[33mHello, world! I am a very long string[0m[31m"[0m[33m[0m [31m=[0m 12[31m;[0m
-    [33m[0m[31m"[0m[33mhello[0m[31m"[0m[33m[0m [31m=[0m 60[31m;[0m
+    [33m[31m"[33mHello, world! I am a very long string[31m"[33m[0m [31m=[0m 12[31m;[0m
+    [33m[31m"[33mhello[31m"[33m[0m [31m=[0m 60[31m;[0m
 [31m}[0m
+
 

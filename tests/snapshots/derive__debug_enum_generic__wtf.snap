@@ -6,6 +6,6 @@ expression: "Option2::<i32>::Wtf { foo: true }"
 Wtf { foo: true }
 
 >>> color
-
 [32mWtf[0m [31m{[0m foo[31m:[0m true [31m}[0m
+
 

@@ -6,6 +6,6 @@ expression: "Generic { arg: \"string\" }"
 Generic { arg: "string" }
 
 >>> color
+[32mGeneric[0m [31m{[0m arg[31m:[0m [33m[31m"[33mstring[31m"[33m[0m [31m}[0m
 
-[32mGeneric[0m [31m{[0m arg[31m:[0m [33m[0m[31m"[0m[33mstring[0m[31m"[0m[33m[0m [31m}[0m
 

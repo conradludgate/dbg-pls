@@ -6,6 +6,6 @@ expression: "Option2::<i32>::None"
 None
 
 >>> color
-
 None
+
 

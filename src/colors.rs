@@ -1,6 +1,6 @@
 use std::sync::OnceLock;
 
-use owo_colors::{colors, Style};
+use stylish::{Ansi, Foreground, Style, Write};
 use syntect::parsing::{
     BasicScopeStackOp, ParseScopeError, Scope, ScopeStack, ScopeStackOp, SyntaxDefinition,
     SyntaxReference, SyntaxSet, SyntaxSetBuilder,
@@ -36,7 +36,7 @@ fn highlight(s: &str, w: impl std::fmt::Write) -> std::fmt::Result {
 
     let parsed = RustSyntax { syntax, rust }.parse_shell(s);
 
-    theme.highlight(s, &parsed, w)
+    theme.highlight(s, &parsed, Ansi::new(w))
 }
 
 /// Implementation detail for the `color!` macro
@@ -157,17 +157,10 @@ impl Theme {
     // to use a custom theme using `ratatui::Style`.
     // This is so we don't have to care about RGB and can instead use
     // terminal colours
-    fn highlight(
-        &self,
-        h: &str,
-        parsed: &ParsedSyntax,
-        mut w: impl std::fmt::Write,
-    ) -> std::fmt::Result {
+    fn highlight(&self, h: &str, parsed: &ParsedSyntax, mut w: impl Write) -> std::fmt::Result {
         let mut stack = ScopeStack::default();
         let mut styles: Vec<(f64, Style)> = vec![];
         for (line, parsed_line) in h.lines().zip(parsed) {
-            writeln!(w)?;
-
             let mut last = 0;
             for &(index, ref op) in parsed_line {
                 let style = styles.last().copied().unwrap_or_default().1;
@@ -177,11 +170,12 @@ impl Theme {
                     })
                     .unwrap();
 
-                write!(w, "{}", style.style(&line[last..index]))?;
+                w.write_str(&line[last..index], style)?;
                 last = index;
             }
             let style = styles.last().copied().unwrap_or_default().1;
-            write!(w, "{}", style.style(&line[last..]))?;
+            w.write_str(&line[last..], style)?;
+            w.write_str("\n", style)?;
         }
         Ok(())
     }
@@ -254,26 +248,27 @@ struct ThemeRule {
 // blame syntax highlighting
 #[allow(clippy::too_many_lines)]
 fn get_theme() -> Result<Theme, ParseScopeError> {
+    use stylish::Color;
     let rules = vec![
         ThemeRule {
             scope: Scope::new("variable")?,
-            style: Style::default().fg::<colors::Blue>(),
+            style: Style::default().with(Foreground(Color::Blue)),
         },
         ThemeRule {
             scope: Scope::new("keyword")?,
-            style: Style::default().fg::<colors::Red>(),
+            style: Style::default().with(Foreground(Color::Red)),
         },
         ThemeRule {
             scope: Scope::new("punctuation")?,
-            style: Style::default().fg::<colors::Red>(),
+            style: Style::default().with(Foreground(Color::Red)),
         },
         ThemeRule {
             scope: Scope::new("storage")?,
-            style: Style::default().fg::<colors::Green>(),
+            style: Style::default().with(Foreground(Color::Green)),
         },
         ThemeRule {
             scope: Scope::new("string")?,
-            style: Style::default().fg::<colors::Yellow>(),
+            style: Style::default().with(Foreground(Color::Yellow)),
         },
     ];
     Ok(Theme { rules })

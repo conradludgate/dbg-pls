@@ -13,7 +13,6 @@ Rangeful {
 }
 
 >>> color
-
 [32mRangeful[0m [31m{[0m
     range[31m:[0m 1[31m..[0m4[31m,[0m
     range_from[31m:[0m 1[31m..[0m[31m,[0m
@@ -22,4 +21,5 @@ Rangeful {
     range_inclusive[31m:[0m 1234[31m..=[0m1236[31m,[0m
     range_inclusive_to[31m:[0m [31m..=[0m70[31m,[0m
 [31m}[0m
+
 

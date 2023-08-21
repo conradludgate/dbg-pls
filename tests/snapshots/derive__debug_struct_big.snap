@@ -9,9 +9,9 @@ Demo {
 }
 
 >>> color
-
 [32mDemo[0m [31m{[0m
     foo[31m:[0m 5[31m,[0m
-    bar[31m:[0m [33m[0m[31m"[0m[33mHello, world! I am a very long string[0m[31m"[0m[33m[0m[31m,[0m
+    bar[31m:[0m [33m[31m"[33mHello, world! I am a very long string[31m"[33m[0m[31m,[0m
 [31m}[0m
+
 

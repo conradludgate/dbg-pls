@@ -9,9 +9,9 @@ LinkedList {
 }
 
 >>> color
-
 [32mLinkedList[0m [31m{[0m
     value[31m:[0m 0[31m,[0m
     next[31m:[0m Some[31m([0m[32mLinkedList[0m [31m{[0m value[31m:[0m 1[31m,[0m next[31m:[0m None [31m}[0m[31m)[0m[31m,[0m
 [31m}[0m
+
 
