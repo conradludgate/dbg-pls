@@ -110,7 +110,6 @@ Macro(ItemMacro {
 })
 
 color:
-
 [32mMacro[0m[31m([0m[32mItemMacro[0m [31m{[0m
     attrs[31m:[0m [31m[[0m[31m][0m[31m,[0m
     ident[31m:[0m Some[31m([0massert_pretty_syn_snapshot[31m)[0m[31m,[0m
@@ -130,66 +129,66 @@ color:
             [32mGroup[0m[31m([0m[32mGroup[0m [31m{[0m
                 delimiter[31m:[0m [32mParenthesis[0m[31m,[0m
                 stream[31m:[0m [31m[[0m
-                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m$[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m$[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                     [32mIdent[0m[31m([0mty[31m)[0m[31m,[0m
-                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                     [32mIdent[0m[31m([0mty[31m)[0m[31m,[0m
-                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m=[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
-                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m>[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
-                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m$[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m=[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
+                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m>[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m$[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                     [32mIdent[0m[31m([0mcode[31m)[0m[31m,[0m
-                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                     [32mIdent[0m[31m([0mliteral[31m)[0m[31m,[0m
                 [31m][0m[31m,[0m
             [31m}[0m[31m)[0m[31m,[0m
-            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m=[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
-            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m>[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m=[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
+            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m>[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
             [32mGroup[0m[31m([0m[32mGroup[0m [31m{[0m
                 delimiter[31m:[0m [32mBrace[0m[31m,[0m
                 stream[31m:[0m [31m[[0m
                     [32mIdent[0m[31m([0minsta[31m)[0m[31m,[0m
-                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
-                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
+                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                     [32mIdent[0m[31m([0massert_snapshot[31m)[0m[31m,[0m
-                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m![0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m![0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                     [32mGroup[0m[31m([0m[32mGroup[0m [31m{[0m
                         delimiter[31m:[0m [32mParenthesis[0m[31m,[0m
                         stream[31m:[0m [31m[[0m
                             [32mIdent[0m[31m([0minsta[31m)[0m[31m,[0m
-                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
-                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
+                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                             [32mIdent[0m[31m([0m_macro_support[31m)[0m[31m,[0m
-                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
-                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
+                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                             [32mIdent[0m[31m([0m[32mAutoName[0m[31m)[0m[31m,[0m
-                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m,[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
-                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m&[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m,[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m&[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                             [32mIdent[0m[31m([0m[31mcrate[0m[31m)[0m[31m,[0m
-                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
-                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
+                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                             [32mIdent[0m[31m([0mpretty[31m)[0m[31m,[0m
                             [32mGroup[0m[31m([0m[32mGroup[0m [31m{[0m
                                 delimiter[31m:[0m [32mParenthesis[0m[31m,[0m
                                 stream[31m:[0m [31m[[0m
-                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m&[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m&[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                                     [32mIdent[0m[31m([0msyn[31m)[0m[31m,[0m
-                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
-                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
+                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                                     [32mIdent[0m[31m([0mparse_str[31m)[0m[31m,[0m
-                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
-                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m:[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
-                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m<[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
-                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m$[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
+                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m:[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
+                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m<[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mJoint[0m [31m}[0m[31m)[0m[31m,[0m
+                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m$[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                                     [32mIdent[0m[31m([0mty[31m)[0m[31m,[0m
-                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m>[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m>[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                                     [32mGroup[0m[31m([0m[32mGroup[0m [31m{[0m
                                         delimiter[31m:[0m [32mParenthesis[0m[31m,[0m
                                         stream[31m:[0m [31m[[0m
-                                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m$[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m$[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                                             [32mIdent[0m[31m([0mcode[31m)[0m[31m,[0m
                                         [31m][0m[31m,[0m
                                     [31m}[0m[31m)[0m[31m,[0m
-                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m.[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m.[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                                     [32mIdent[0m[31m([0munwrap[31m)[0m[31m,[0m
                                     [32mGroup[0m[31m([0m[32mGroup[0m [31m{[0m
                                         delimiter[31m:[0m [32mParenthesis[0m[31m,[0m
@@ -197,23 +196,24 @@ color:
                                     [31m}[0m[31m)[0m[31m,[0m
                                 [31m][0m[31m,[0m
                             [31m}[0m[31m)[0m[31m,[0m
-                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m.[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m.[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                             [32mIdent[0m[31m([0mto_string[31m)[0m[31m,[0m
                             [32mGroup[0m[31m([0m[32mGroup[0m [31m{[0m
                                 delimiter[31m:[0m [32mParenthesis[0m[31m,[0m
                                 stream[31m:[0m [31m[[0m[31m][0m[31m,[0m
                             [31m}[0m[31m)[0m[31m,[0m
-                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m,[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
-                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m$[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m,[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m$[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                             [32mIdent[0m[31m([0mcode[31m)[0m[31m,[0m
                         [31m][0m[31m,[0m
                     [31m}[0m[31m)[0m[31m,[0m
-                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m;[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+                    [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m;[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
                 [31m][0m[31m,[0m
             [31m}[0m[31m)[0m[31m,[0m
-            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[0m[31m'[0m[33m;[0m[33m[0m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
+            [32mPunct[0m[31m([0m[32mPunct[0m [31m{[0m ch[31m:[0m [33m[31m'[33m;[0m[33m[31m'[0m[31m,[0m spacing[31m:[0m [32mAlone[0m [31m}[0m[31m)[0m[31m,[0m
         [31m][0m[31m,[0m
     [31m}[0m[31m,[0m
     semi_token[31m:[0m None[31m,[0m
 [31m}[0m[31m)[0m
+
 

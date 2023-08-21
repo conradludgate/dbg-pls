@@ -5,7 +5,7 @@ members = ["debug-derive", "syn-codegen"]
 name = "dbg-pls"
 version = "0.4.3"
 authors = ["Conrad Ludgate <conradludgate@gmail.com>"]
-edition = "2018"
+edition = "2021"
 description = "Syntax aware pretty-printing debugging"
 license = "MIT"
 repository = "https://github.com/conradludgate/dbg-pls"
@@ -30,7 +30,6 @@ ryu = "1"
 dbg-pls-derive = { version = "0.4.0", path = "debug-derive", optional = true }
 
 # pretty
-prettyplease = { version = "0.2", optional = true }
 textwrap = { version = "0.16", optional = true }
 
 # colors
@@ -45,7 +44,7 @@ insta = "1.14.0"
 [features]
 default = []
 derive = ["dbg-pls-derive"]
-pretty = ["prettyplease", "textwrap"]
+pretty = ["textwrap"]
 colors = ["pretty", "syntect", "stylish"]
 
 [package.metadata.docs.rs]

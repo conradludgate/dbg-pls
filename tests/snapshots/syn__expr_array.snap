@@ -39,7 +39,6 @@ Array(ExprArray {
 })
 
 color:
-
 [32mArray[0m[31m([0m[32mExprArray[0m [31m{[0m
     attrs[31m:[0m [31m[[0m[31m][0m[31m,[0m
     bracket_token[31m:[0m [32mBracket[0m[31m,[0m
@@ -47,7 +46,7 @@ color:
         [32mLit[0m[31m([0m[32mExprLit[0m [31m{[0m
             attrs[31m:[0m [31m[[0m[31m][0m[31m,[0m
             lit[31m:[0m [32mStr[0m[31m([0m[32mLitStr[0m [31m{[0m
-                token[31m:[0m [33m[0m[31m"[0m[33mHello, World! I am a long string[0m[31m"[0m[33m[0m[31m,[0m
+                token[31m:[0m [33m[31m"[33mHello, World! I am a long string[31m"[33m[0m[31m,[0m
             [31m}[0m[31m)[0m[31m,[0m
         [31m}[0m[31m)[0m[31m,[0m
         [32mComma[0m[31m,[0m
@@ -59,7 +58,7 @@ color:
         [32mLit[0m[31m([0m[32mExprLit[0m [31m{[0m
             attrs[31m:[0m [31m[[0m[31m][0m[31m,[0m
             lit[31m:[0m [32mStr[0m[31m([0m[32mLitStr[0m [31m{[0m
-                token[31m:[0m [33m[0m[31m"[0m[33mWait, you can't mix and match types in arrays, is this python?[0m[31m"[0m[33m[0m[31m,[0m
+                token[31m:[0m [33m[31m"[33mWait, you can't mix and match types in arrays, is this python?[31m"[33m[0m[31m,[0m
             [31m}[0m[31m)[0m[31m,[0m
         [31m}[0m[31m)[0m[31m,[0m
         [32mComma[0m[31m,[0m
@@ -70,8 +69,9 @@ color:
         [32mComma[0m[31m,[0m
         [32mLit[0m[31m([0m[32mExprLit[0m [31m{[0m
             attrs[31m:[0m [31m[[0m[31m][0m[31m,[0m
-            lit[31m:[0m [32mStr[0m[31m([0m[32mLitStr[0m [31m{[0m token[31m:[0m [33m[0m[31m"[0m[33mNice.[0m[31m"[0m[33m[0m [31m}[0m[31m)[0m[31m,[0m
+            lit[31m:[0m [32mStr[0m[31m([0m[32mLitStr[0m [31m{[0m token[31m:[0m [33m[31m"[33mNice.[31m"[33m[0m [31m}[0m[31m)[0m[31m,[0m
         [31m}[0m[31m)[0m[31m,[0m
     [31m][0m[31m,[0m
 [31m}[0m[31m)[0m
+
 

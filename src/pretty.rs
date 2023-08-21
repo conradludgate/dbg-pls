@@ -1,6 +1,7 @@
 use syn::__private::Span;
 
 use crate::{DebugPls, Formatter};
+mod please;
 
 pub(crate) fn pretty_string(expr: syn::Expr) -> String {
     // unparse requires a `syn::File`, so we are forced to wrap
@@ -30,7 +31,7 @@ pub(crate) fn pretty_string(expr: syn::Expr) -> String {
             generics: syn::Generics::default(),
         })],
     };
-    let output = prettyplease::unparse(&file);
+    let output = please::unparse(&file);
 
     // strip out the junk
     let output = &output[14..];
