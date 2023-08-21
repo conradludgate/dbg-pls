@@ -1,23 +1,21 @@
-use std::io::Cursor;
+use std::sync::OnceLock;
 
-use once_cell::sync::OnceCell;
-use syntect::{
-    easy::HighlightLines,
-    highlighting::{Theme, ThemeSet},
-    parsing::{SyntaxDefinition, SyntaxSet, SyntaxSetBuilder},
-    util::{as_24_bit_terminal_escaped, LinesWithEndings},
+use owo_colors::{colors, Style};
+use syntect::parsing::{
+    BasicScopeStackOp, ParseScopeError, Scope, ScopeStack, ScopeStackOp, SyntaxDefinition,
+    SyntaxReference, SyntaxSet, SyntaxSetBuilder,
 };
 
 use crate::{pretty::pretty_string, DebugPls, Formatter};
 
 fn syntax() -> &'static SyntaxSet {
-    static INSTANCE: OnceCell<SyntaxSet> = OnceCell::new();
+    static INSTANCE: OnceLock<SyntaxSet> = OnceLock::new();
     INSTANCE.get_or_init(|| {
         let mut syntax_set = SyntaxSetBuilder::new();
         syntax_set.add(
             SyntaxDefinition::load_from_str(
                 include_str!("../assets/syntaxes/Rust/Rust.sublime-syntax"),
-                true,
+                false,
                 None,
             )
             .unwrap(),
@@ -27,25 +25,18 @@ fn syntax() -> &'static SyntaxSet {
 }
 
 fn theme() -> &'static Theme {
-    static INSTANCE: OnceCell<Theme> = OnceCell::new();
-    INSTANCE.get_or_init(|| {
-        let s = include_str!("../assets/themes/sublime-monokai-extended/Monokai Extended.tmTheme");
-        ThemeSet::load_from_reader(&mut Cursor::new(s.as_bytes())).unwrap()
-    })
+    static INSTANCE: OnceLock<Theme> = OnceLock::new();
+    INSTANCE.get_or_init(|| get_theme().unwrap())
 }
 
-fn highlight(s: &str, mut w: impl std::fmt::Write) -> std::fmt::Result {
-    let ps = syntax();
-    let syntax = ps.find_syntax_by_name("Rust").unwrap();
+fn highlight(s: &str, w: impl std::fmt::Write) -> std::fmt::Result {
+    let syntax = syntax();
+    let rust = syntax.find_syntax_by_name("Rust").unwrap();
     let theme = theme();
 
-    let mut h = HighlightLines::new(syntax, theme);
+    let parsed = RustSyntax { syntax, rust }.parse_shell(s);
 
-    for line in LinesWithEndings::from(s) {
-        let ranges = h.highlight_line(line, ps).unwrap();
-        write!(w, "{}", as_24_bit_terminal_escaped(&ranges[..], false))?;
-    }
-    write!(w, "\x1b[0m") // reset the color
+    theme.highlight(s, &parsed, w)
 }
 
 /// Implementation detail for the `color!` macro
@@ -158,4 +149,132 @@ mod tests {
         // map is moved through properly
         assert_eq!(map, HashMap::from([("hello", 1), ("world", 2),]));
     }
+}
+
+impl Theme {
+    // this is a manual/simpler implementation of
+    // syntect::highlight::HighlightIterator
+    // to use a custom theme using `ratatui::Style`.
+    // This is so we don't have to care about RGB and can instead use
+    // terminal colours
+    fn highlight(
+        &self,
+        h: &str,
+        parsed: &ParsedSyntax,
+        mut w: impl std::fmt::Write,
+    ) -> std::fmt::Result {
+        let mut stack = ScopeStack::default();
+        let mut styles: Vec<(f64, Style)> = vec![];
+        for (line, parsed_line) in h.lines().zip(parsed) {
+            writeln!(w)?;
+
+            let mut last = 0;
+            for &(index, ref op) in parsed_line {
+                let style = styles.last().copied().unwrap_or_default().1;
+                stack
+                    .apply_with_hook(op, |op, stack| {
+                        highlight_hook(&op, stack, &self.rules, &mut styles);
+                    })
+                    .unwrap();
+
+                write!(w, "{}", style.style(&line[last..index]))?;
+                last = index;
+            }
+            let style = styles.last().copied().unwrap_or_default().1;
+            write!(w, "{}", style.style(&line[last..]))?;
+        }
+        Ok(())
+    }
+}
+
+#[allow(clippy::cast_possible_truncation)]
+fn highlight_hook(
+    op: &BasicScopeStackOp,
+    stack: &[Scope],
+    rules: &[ThemeRule],
+    styles: &mut Vec<(f64, Style)>,
+) {
+    match op {
+        BasicScopeStackOp::Push(scope) => {
+            let mut scored_style = styles
+                .last()
+                .copied()
+                .unwrap_or_else(|| (-1.0, Style::default()));
+
+            for rule in rules.iter().filter(|a| a.scope.is_prefix_of(*scope)) {
+                let single_score =
+                    f64::from(rule.scope.len()) * f64::from(3 * ((stack.len() - 1) as u32)).exp2();
+
+                if single_score > scored_style.0 {
+                    scored_style.0 = single_score;
+                    scored_style.1 = rule.style;
+                }
+            }
+
+            styles.push(scored_style);
+        }
+        BasicScopeStackOp::Pop => {
+            styles.pop();
+        }
+    }
+}
+
+#[derive(Clone, Copy)]
+struct RustSyntax<'s> {
+    syntax: &'s SyntaxSet,
+    rust: &'s SyntaxReference,
+}
+type ParsedSyntax = Vec<Vec<(usize, ScopeStackOp)>>;
+
+impl RustSyntax<'_> {
+    fn parse_shell(self, h: &str) -> ParsedSyntax {
+        let mut rust = syntect::parsing::ParseState::new(self.rust);
+
+        let mut lines = vec![];
+        for line in h.lines() {
+            if let Ok(line) = rust.parse_line(line, self.syntax) {
+                lines.push(line);
+            } else {
+                lines.push(Vec::new());
+            }
+        }
+        lines
+    }
+}
+
+struct Theme {
+    rules: Vec<ThemeRule>,
+}
+
+struct ThemeRule {
+    scope: Scope,
+    style: Style,
+}
+
+// blame syntax highlighting
+#[allow(clippy::too_many_lines)]
+fn get_theme() -> Result<Theme, ParseScopeError> {
+    let rules = vec![
+        ThemeRule {
+            scope: Scope::new("variable")?,
+            style: Style::default().fg::<colors::Blue>(),
+        },
+        ThemeRule {
+            scope: Scope::new("keyword")?,
+            style: Style::default().fg::<colors::Red>(),
+        },
+        ThemeRule {
+            scope: Scope::new("punctuation")?,
+            style: Style::default().fg::<colors::Red>(),
+        },
+        ThemeRule {
+            scope: Scope::new("storage")?,
+            style: Style::default().fg::<colors::Green>(),
+        },
+        ThemeRule {
+            scope: Scope::new("string")?,
+            style: Style::default().fg::<colors::Yellow>(),
+        },
+    ];
+    Ok(Theme { rules })
 }
