@@ -657,14 +657,6 @@ impl Printer {
         self.end();
     }
 
-    #[cfg(not(feature = "verbatim"))]
-    fn expr_verbatim(&mut self, expr: &TokenStream) {
-        if !expr.is_empty() {
-            unimplemented!("Expr::Verbatim `{}`", expr);
-        }
-    }
-
-    #[cfg(feature = "verbatim")]
     fn expr_verbatim(&mut self, tokens: &TokenStream) {
         use syn::parse::discouraged::Speculative;
         use syn::parse::{Parse, ParseStream, Result};
@@ -910,6 +902,7 @@ impl Printer {
         if attr::has_inner(attrs) || !block.stmts.is_empty() {
             self.space();
             self.inner_attrs(attrs);
+            #[allow(clippy::get_first)]
             match (block.stmts.get(0), block.stmts.get(1)) {
                 (Some(Stmt::Expr(expr, None)), None) if stmt::break_after(expr) => {
                     self.ibox(0);

@@ -76,6 +76,19 @@ impl Printer {
         }
     }
 
+    // pub fn trailing_brace_or_space(&mut self, is_last: bool) {
+    //     if is_last {
+    //         self.scan_break(BreakToken {
+    //             blank_space: 1,
+    //             pre_break: Some('}'),
+    //             ..BreakToken::default()
+    //         });
+    //     } else {
+    //         self.word("}");
+    //         self.space();
+    //     }
+    // }
+
     pub fn trailing_comma_or_space(&mut self, is_last: bool) {
         if is_last {
             self.scan_break(BreakToken {

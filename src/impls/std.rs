@@ -22,7 +22,7 @@ impl<T: ?Sized + DebugPls> DebugPls for Box<T> {
 
 impl<D: DebugPls + ?Sized> DebugPls for *mut D {
     fn fmt(&self, f: Formatter<'_>) {
-        <*const D>::fmt(&(*self as *const D), f);
+        <*const D>::fmt(&(*self).cast_const(), f);
     }
 }
 

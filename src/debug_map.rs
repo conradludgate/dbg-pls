@@ -23,8 +23,8 @@ use crate::{DebugPls, Formatter};
 /// assert_eq!(
 ///     format!("{}", pretty(&value)),
 /// "{
-///     \"Hello\" = 5;
-///     \"World\" = 10;
+///     [\"Hello\"] = 5;
+///     [\"World\"] = 10;
 /// }",
 /// );
 /// ```
@@ -76,7 +76,11 @@ impl<'a> DebugMap<'a> {
         let value = Formatter::process(value);
         let entry = syn::ExprAssign {
             attrs: vec![],
-            left: Box::new(key),
+            left: Box::new(syn::Expr::Array(syn::ExprArray {
+                attrs: vec![],
+                bracket_token: syn::token::Bracket::default(),
+                elems: [key].into_iter().collect(),
+            })),
             eq_token: syn::token::Eq::default(),
             right: Box::new(value),
         };
