@@ -6,12 +6,13 @@ use syn::{
 
 const TRAIT_WITH: &str = "DebugWith";
 
-pub fn predicate_with(generics: &mut Generics, mut krate: Path, with_ident: Ident) {
-    let Generics {
-        params,
-        where_clause,
-        ..
-    } = generics;
+pub fn predicate_with(
+    generics: &mut Generics,
+    mut krate: Path,
+    with_ident: Ident,
+    types: impl Iterator<Item = Type>,
+) {
+    let Generics { where_clause, .. } = generics;
 
     let mut bounds = Punctuated::new();
     // `#krate::DebugWith<#with_ident>`
@@ -45,17 +46,12 @@ pub fn predicate_with(generics: &mut Generics, mut krate: Path, with_ident: Iden
         predicates: Punctuated::new(),
     });
 
-    for ty in params {
-        if let syn::GenericParam::Type(ty) = ty {
-            wc.predicates.push(WherePredicate::Type(PredicateType {
-                lifetimes: None,
-                bounded_ty: Type::Path(TypePath {
-                    qself: None,
-                    path: ty.ident.clone().into(),
-                }),
-                colon_token: token::Colon::default(),
-                bounds: bounds.clone(),
-            }))
-        }
+    for ty in types {
+        wc.predicates.push(WherePredicate::Type(PredicateType {
+            lifetimes: None,
+            bounded_ty: ty,
+            colon_token: token::Colon::default(),
+            bounds: bounds.clone(),
+        }))
     }
 }

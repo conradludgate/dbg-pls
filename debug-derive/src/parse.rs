@@ -1,6 +1,12 @@
+use std::collections::HashSet;
+
 use proc_macro2::{Ident, Span};
 use quote::format_ident;
-use syn::{spanned::Spanned, Attribute, Data, DeriveInput, Path, PathSegment};
+use syn::{
+    spanned::Spanned,
+    visit::{visit_type_path, Visit},
+    Attribute, Data, DeriveInput, Path, PathSegment,
+};
 
 use crate::{predicate::predicate_with, DebugImpl, Mode, Var};
 
@@ -19,22 +25,49 @@ impl TryFrom<DeriveInput> for DebugImpl {
         let args = Args::parse_attrs(&attrs)?;
         let Krate(krate) = args.krate.unwrap_or_default();
 
-        let with_ident = format_ident!("__DebugWith");
-        predicate_with(&mut generics, krate.clone(), with_ident.clone());
+        let mut types = HashSet::new();
 
         let mode = match data {
-            Data::Struct(s) => Mode::Struct(crate::StructFields(s.fields)),
-            Data::Enum(e) => Mode::Enum(
-                e.variants
-                    .into_iter()
-                    .map(|v| Var {
-                        ident: v.ident,
-                        fields: v.fields,
-                    })
-                    .collect(),
-            ),
+            Data::Struct(s) => {
+                for field in s.fields.iter() {
+                    types.insert(field.ty.clone());
+                }
+                Mode::Struct(crate::StructFields(s.fields))
+            }
+            Data::Enum(e) => {
+                for var in e.variants.iter() {
+                    for field in var.fields.iter() {
+                        types.insert(field.ty.clone());
+                    }
+                }
+                Mode::Enum(
+                    e.variants
+                        .into_iter()
+                        .map(|v| Var {
+                            ident: v.ident,
+                            fields: v.fields,
+                        })
+                        .collect(),
+                )
+            }
             Data::Union(_) => return Err(syn::Error::new(span, "unions not supported")),
         };
+
+        let with_ident = format_ident!("__DebugWith");
+        predicate_with(
+            &mut generics,
+            krate.clone(),
+            with_ident.clone(),
+            types.into_iter().filter(|ty| {
+                let mut contains = ContainsIdent {
+                    ident: ident.clone(),
+                    contains: false,
+                };
+                contains.visit_type(ty);
+                !contains.contains
+            }),
+        );
+
         Ok(Self {
             krate,
             ident,
@@ -68,11 +101,6 @@ impl Args {
                                 return Err(meta.error("duplicate `dbg_pls(crate)` arg"));
                             }
                         }
-                        // () if meta.path.is_ident("with") => {
-                        //     if args.with.replace(meta.value()?.parse()?).is_some() {
-                        //         return Err(meta.error("duplicate `dbg_pls(with)` attr"));
-                        //     }
-                        // }
                         () => return Err(meta.error("unknown argument found")),
                     }
 
@@ -95,5 +123,22 @@ impl Default for Krate {
                 .into_iter()
                 .collect(),
         })
+    }
+}
+
+#[derive(Debug)]
+struct ContainsIdent {
+    ident: Ident,
+    contains: bool,
+}
+
+impl<'ast> Visit<'ast> for ContainsIdent {
+    fn visit_type_path(&mut self, i: &'ast syn::TypePath) {
+        self.contains |= i.path.leading_colon.is_none()
+            && i.path.segments.len() == 1
+            && i.path.segments[0].ident == self.ident;
+
+        self.contains |= i.path.is_ident(&self.ident);
+        visit_type_path(self, i)
     }
 }
