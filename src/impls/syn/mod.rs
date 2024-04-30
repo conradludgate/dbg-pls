@@ -12,8 +12,8 @@ impl<T: Into<syn::Expr> + Clone> DebugPls for DebugSelf<T> {
     }
 }
 
-struct DebugLit<T>(T);
-impl<T: Into<syn::Lit> + Clone> DebugPls for DebugLit<T> {
+struct DebugLit<'a, T>(&'a T);
+impl<T: Into<syn::Lit> + Clone> DebugPls for DebugLit<'_, T> {
     fn fmt(&self, f: Formatter<'_>) {
         f.write_expr(syn::Expr::Lit(syn::ExprLit {
             attrs: vec![],
@@ -25,7 +25,15 @@ impl<T: Into<syn::Lit> + Clone> DebugPls for DebugLit<T> {
 impl DebugPls for syn::LitStr {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("LitStr")
-            .field("token", &DebugLit(self.clone()))
+            .field("token", &DebugLit(self))
+            .finish();
+    }
+}
+
+impl DebugPls for syn::LitCStr {
+    fn fmt(&self, f: Formatter<'_>) {
+        f.debug_struct("LitCStr")
+            .field("token", &DebugLit(self))
             .finish();
     }
 }
@@ -33,7 +41,7 @@ impl DebugPls for syn::LitStr {
 impl DebugPls for syn::LitInt {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("LitInt")
-            .field("token", &DebugLit(self.clone()))
+            .field("token", &DebugLit(self))
             .finish();
     }
 }
@@ -41,7 +49,7 @@ impl DebugPls for syn::LitInt {
 impl DebugPls for syn::LitByte {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("LitByte")
-            .field("token", &DebugLit(self.clone()))
+            .field("token", &DebugLit(self))
             .finish();
     }
 }
@@ -49,7 +57,7 @@ impl DebugPls for syn::LitByte {
 impl DebugPls for syn::LitChar {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("LitChar")
-            .field("token", &DebugLit(self.clone()))
+            .field("token", &DebugLit(self))
             .finish();
     }
 }
@@ -57,7 +65,7 @@ impl DebugPls for syn::LitChar {
 impl DebugPls for syn::LitBool {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("LitBool")
-            .field("token", &DebugLit(self.clone()))
+            .field("token", &DebugLit(self))
             .finish();
     }
 }
@@ -65,7 +73,7 @@ impl DebugPls for syn::LitBool {
 impl DebugPls for syn::LitFloat {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("LitFloat")
-            .field("token", &DebugLit(self.clone()))
+            .field("token", &DebugLit(self))
             .finish();
     }
 }
@@ -73,7 +81,7 @@ impl DebugPls for syn::LitFloat {
 impl DebugPls for syn::LitByteStr {
     fn fmt(&self, f: Formatter<'_>) {
         f.debug_struct("LitByteStr")
-            .field("token", &DebugLit(self.clone()))
+            .field("token", &DebugLit(self))
             .finish();
     }
 }
