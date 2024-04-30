@@ -64,7 +64,7 @@ fn expand_impl_body(node: &Node) -> TokenStream {
                         .collect::<Vec<_>>();
                     quote! {
                         syn::#ident::#variant(#(#pats),*) => {
-                            f.debug_tuple_struct(#variant_name)#(.field(#pats))*.finish();
+                            f.debug_tuple_struct(#variant_name)#(.field_with(#pats as &dyn DebugWith<__With>, __with_associated_data))*.finish();
                         }
                     }
                 }
@@ -93,7 +93,7 @@ fn expand_impl_body(node: &Node) -> TokenStream {
                     }
                 }
                 quote! {
-                    .field(#f, &self.#ident)
+                    .field_with(#f, &self.#ident as &dyn DebugWith<__With>, __with_associated_data)
                 }
             });
             quote! {
@@ -116,8 +116,8 @@ fn expand_impl(node: &Node) -> TokenStream {
     let body = expand_impl_body(node);
 
     quote! {
-        impl DebugPls for syn::#ident {
-            fn fmt(&self, f: Formatter<'_>) {
+        impl<__With> DebugWith<__With> for syn::#ident {
+            fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
                 #body
             }
         }
@@ -127,7 +127,7 @@ fn expand_impl(node: &Node) -> TokenStream {
 pub fn generate(defs: &Definitions) -> Result<()> {
     let mut impls = quote! {
         #![allow(clippy::too_many_lines)]
-        use crate::{DebugPls, Formatter};
+        use crate::{DebugWith, Formatter};
 
     };
     for node in &defs.types {
@@ -136,8 +136,8 @@ pub fn generate(defs: &Definitions) -> Result<()> {
     for token in defs.tokens.keys() {
         let ident = Ident::new(token, Span::call_site());
         impls.extend(quote! {
-            impl DebugPls for syn::token::#ident {
-                fn fmt(&self, f: Formatter<'_>) {
+            impl<W> DebugWith<W> for syn::token::#ident {
+                fn fmt(&self, _with: &W, f: Formatter<'_>) {
                     f.debug_ident(#token);
                 }
             }

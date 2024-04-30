@@ -21,6 +21,7 @@ struct DebugImpl {
     ident: Ident,
     mode: Mode,
     generics: Generics,
+    with_ident: Ident,
 }
 
 enum Mode {

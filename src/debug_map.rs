@@ -1,4 +1,4 @@
-use crate::{DebugPls, Formatter};
+use crate::{DebugPls, DebugWith, Formatter};
 
 /// A helper designed to assist with creation of
 /// [`DebugPls`] implementations for maps.
@@ -91,6 +91,53 @@ impl<'a> DebugMap<'a> {
         self
     }
 
+    /// Adds the key part to the map output.
+    ///
+    /// # Panics
+    ///
+    /// `key` must be called before `value` and each call to `key` must be followed
+    /// by a corresponding call to `value`. Otherwise this method will panic.
+    #[must_use]
+    pub fn key_with<T>(mut self, key: &dyn DebugWith<T>, with: &T) -> Self {
+        assert!(
+            self.key
+                .replace(Formatter::process_with(key, with))
+                .is_none(),
+            "attempted to begin a new map entry without completing the previous one"
+        );
+        self
+    }
+
+    /// Adds the value part to the map output.
+    ///
+    /// # Panics
+    ///
+    /// `key` must be called before `value` and each call to `key` must be followed
+    /// by a corresponding call to `value`. Otherwise this method will panic.
+    #[must_use]
+    pub fn value_with<T>(mut self, value: &dyn DebugWith<T>, with: &T) -> Self {
+        let key = self
+            .key
+            .take()
+            .expect("attempted to format a map value before its key");
+        let value = Formatter::process_with(value, with);
+        let entry = syn::ExprAssign {
+            attrs: vec![],
+            left: Box::new(syn::Expr::Array(syn::ExprArray {
+                attrs: vec![],
+                bracket_token: syn::token::Bracket::default(),
+                elems: [key].into_iter().collect(),
+            })),
+            eq_token: syn::token::Eq::default(),
+            right: Box::new(value),
+        };
+        self.set.stmts.push(syn::Stmt::Expr(
+            entry.into(),
+            Some(syn::token::Semi::default()),
+        ));
+        self
+    }
+
     /// Adds the entry to the map output.
     #[must_use]
     pub fn entry(self, key: &dyn DebugPls, value: &dyn DebugPls) -> Self {
@@ -108,6 +155,25 @@ impl<'a> DebugMap<'a> {
         entries
             .into_iter()
             .fold(self, |f, (key, value)| f.entry(&key, &value))
+    }
+
+    /// Adds the entry to the set output.
+    #[must_use]
+    pub fn entry_with<T>(self, key: &dyn DebugWith<T>, value: &dyn DebugWith<T>, with: &T) -> Self {
+        self.key_with(key, with).value_with(value, with)
+    }
+
+    /// Adds all the entries to the set output.
+    #[must_use]
+    pub fn entries_with<T, K, V, I>(self, entries: I, with: &T) -> Self
+    where
+        K: DebugWith<T>,
+        V: DebugWith<T>,
+        I: IntoIterator<Item = (K, V)>,
+    {
+        entries
+            .into_iter()
+            .fold(self, |f, (key, value)| f.entry_with(&key, &value, with))
     }
 
     /// Closes off the map.

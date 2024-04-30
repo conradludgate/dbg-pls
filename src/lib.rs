@@ -294,6 +294,16 @@ pub trait DebugPls {
     fn fmt(&self, f: Formatter<'_>);
 }
 
+pub trait DebugWith<T> {
+    fn fmt(&self, with: &T, f: Formatter<'_>);
+}
+
+impl<D: DebugWith<()>> DebugPls for D {
+    fn fmt(&self, f: Formatter<'_>) {
+        DebugWith::fmt(self, &(), f);
+    }
+}
+
 /// Tool for formatting, used within [`DebugPls`] implementations
 #[repr(transparent)]
 pub struct Formatter<'a> {
@@ -304,6 +314,12 @@ impl<'a> Formatter<'a> {
     pub(crate) fn process(value: &dyn DebugPls) -> syn::Expr {
         let mut expr = syn::Expr::Verbatim(proc_macro2::TokenStream::new());
         value.fmt(Formatter { expr: &mut expr });
+        expr
+    }
+
+    pub(crate) fn process_with<T>(value: &dyn DebugWith<T>, with: &T) -> syn::Expr {
+        let mut expr = syn::Expr::Verbatim(proc_macro2::TokenStream::new());
+        value.fmt(with, Formatter { expr: &mut expr });
         expr
     }
 

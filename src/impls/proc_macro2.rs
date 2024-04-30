@@ -1,15 +1,15 @@
 use proc_macro2::{Delimiter, Group, Ident, Literal, Punct, Spacing, Span, TokenStream, TokenTree};
 
-use crate::{DebugPls, Formatter};
+use crate::{DebugWith, Formatter};
 
-impl DebugPls for TokenStream {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for TokenStream {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_list().entries(self.clone()).finish();
     }
 }
 
-impl DebugPls for TokenTree {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for TokenTree {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         match self {
             TokenTree::Group(v0) => f.debug_tuple_struct("Group").field(v0),
             TokenTree::Ident(v0) => f.debug_tuple_struct("Ident").field(v0),
@@ -20,14 +20,14 @@ impl DebugPls for TokenTree {
     }
 }
 
-impl DebugPls for Span {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for Span {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Span");
     }
 }
 
-impl DebugPls for Ident {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for Ident {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.write_expr(syn::ExprPath {
             path: self.clone().into(),
             attrs: vec![],
@@ -36,8 +36,8 @@ impl DebugPls for Ident {
     }
 }
 
-impl DebugPls for Group {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for Group {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_struct("Group")
             .field("delimiter", &self.delimiter())
             .field("stream", &self.stream())
@@ -45,8 +45,8 @@ impl DebugPls for Group {
     }
 }
 
-impl DebugPls for Punct {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for Punct {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_struct("Punct")
             .field("ch", &self.as_char())
             .field("spacing", &self.spacing())
@@ -54,14 +54,14 @@ impl DebugPls for Punct {
     }
 }
 
-impl DebugPls for Literal {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for Literal {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_struct("Literal").finish_non_exhaustive();
     }
 }
 
-impl DebugPls for Spacing {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for Spacing {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         match self {
             Spacing::Alone => f.debug_ident("Alone"),
             Spacing::Joint => f.debug_ident("Joint"),
@@ -69,8 +69,8 @@ impl DebugPls for Spacing {
     }
 }
 
-impl DebugPls for Delimiter {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for Delimiter {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         match self {
             Delimiter::Parenthesis => f.debug_ident("Parenthesis"),
             Delimiter::Brace => f.debug_ident("Brace"),

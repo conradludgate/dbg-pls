@@ -1,4 +1,4 @@
-use crate::{DebugPls, Formatter};
+use crate::{DebugPls, DebugWith, Formatter};
 
 /// A helper designed to assist with creation of
 /// [`DebugPls`] implementations for list-like structures.
@@ -43,6 +43,13 @@ impl<'a> DebugList<'a> {
         self
     }
 
+    /// Adds a new entry to the list output.
+    #[must_use]
+    pub fn entry_with<T>(mut self, value: &dyn DebugWith<T>, with: &T) -> Self {
+        self.expr.elems.push(Formatter::process_with(value, with));
+        self
+    }
+
     /// Adds all the entries to the list output.
     #[must_use]
     pub fn entries<D, I>(mut self, entries: I) -> Self
@@ -51,6 +58,21 @@ impl<'a> DebugList<'a> {
         I: IntoIterator<Item = D>,
     {
         self.extend(entries);
+        self
+    }
+
+    /// Adds all the entries to the list output.
+    #[must_use]
+    pub fn entries_with<T, D, I>(mut self, entries: I, with: &T) -> Self
+    where
+        D: DebugWith<T>,
+        I: IntoIterator<Item = D>,
+    {
+        self.expr.elems.extend(
+            entries
+                .into_iter()
+                .map(|entry| Formatter::process_with(&entry, with)),
+        );
         self
     }
 

@@ -1,4 +1,4 @@
-use crate::{DebugPls, Formatter};
+use crate::{DebugPls, DebugWith, Formatter};
 
 /// A helper designed to assist with creation of
 /// [`DebugPls`] implementations for sets.
@@ -62,6 +62,28 @@ impl<'a> DebugSet<'a> {
         I: IntoIterator<Item = V>,
     {
         entries.into_iter().fold(self, |f, entry| f.entry(&entry))
+    }
+
+    /// Adds the entry to the set output.
+    #[must_use]
+    pub fn entry_with<T>(mut self, value: &dyn DebugWith<T>, with: &T) -> Self {
+        let expr = Formatter::process_with(value, with);
+        self.set
+            .stmts
+            .push(syn::Stmt::Expr(expr, Some(syn::token::Semi::default())));
+        self
+    }
+
+    /// Adds all the entries to the set output.
+    #[must_use]
+    pub fn entries_with<T, V, I>(self, entries: I, with: &T) -> Self
+    where
+        V: DebugWith<T>,
+        I: IntoIterator<Item = V>,
+    {
+        entries
+            .into_iter()
+            .fold(self, |f, entry| f.entry_with(&entry, with))
     }
 
     /// Closes off the set.

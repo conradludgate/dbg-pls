@@ -2,2722 +2,5508 @@
 // It is not intended for manual editing.
 
 #![allow(clippy::too_many_lines)]
-use crate::{DebugPls, Formatter};
-impl DebugPls for syn::Abi {
-    fn fmt(&self, f: Formatter<'_>) {
+use crate::{DebugWith, Formatter};
+impl<__With> DebugWith<__With> for syn::Abi {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Abi")
-            .field("extern_token", &self.extern_token)
-            .field("name", &self.name)
+            .field_with(
+                "extern_token",
+                &self.extern_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "name",
+                &self.name as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::AngleBracketedGenericArguments {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::AngleBracketedGenericArguments {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("AngleBracketedGenericArguments")
-            .field("colon2_token", &self.colon2_token)
-            .field("lt_token", &self.lt_token)
-            .field("args", &self.args)
-            .field("gt_token", &self.gt_token)
+            .field_with(
+                "colon2_token",
+                &self.colon2_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "lt_token",
+                &self.lt_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "args",
+                &self.args as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "gt_token",
+                &self.gt_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Arm {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Arm {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Arm")
-            .field("attrs", &self.attrs)
-            .field("pat", &self.pat)
-            .field("guard", &self.guard)
-            .field("fat_arrow_token", &self.fat_arrow_token)
-            .field("body", &self.body)
-            .field("comma", &self.comma)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "pat",
+                &self.pat as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "guard",
+                &self.guard as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "fat_arrow_token",
+                &self.fat_arrow_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "body",
+                &self.body as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "comma",
+                &self.comma as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::AssocConst {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::AssocConst {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("AssocConst")
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("eq_token", &self.eq_token)
-            .field("value", &self.value)
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "value",
+                &self.value as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::AssocType {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::AssocType {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("AssocType")
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("eq_token", &self.eq_token)
-            .field("ty", &self.ty)
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::AttrStyle {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::AttrStyle {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::AttrStyle::Outer => f.debug_ident("Outer"),
             syn::AttrStyle::Inner(v0) => {
-                f.debug_tuple_struct("Inner").field(v0).finish();
+                f.debug_tuple_struct("Inner")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::Attribute {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Attribute {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Attribute")
-            .field("pound_token", &self.pound_token)
-            .field("style", &self.style)
-            .field("bracket_token", &self.bracket_token)
-            .field("meta", &self.meta)
+            .field_with(
+                "pound_token",
+                &self.pound_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "style",
+                &self.style as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bracket_token",
+                &self.bracket_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "meta",
+                &self.meta as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::BareFnArg {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::BareFnArg {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("BareFnArg")
-            .field("attrs", &self.attrs)
-            .field("name", &self.name)
-            .field("ty", &self.ty)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "name",
+                &self.name as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::BareVariadic {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::BareVariadic {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("BareVariadic")
-            .field("attrs", &self.attrs)
-            .field("name", &self.name)
-            .field("dots", &self.dots)
-            .field("comma", &self.comma)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "name",
+                &self.name as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "dots",
+                &self.dots as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "comma",
+                &self.comma as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::BinOp {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::BinOp {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::BinOp::Add(v0) => {
-                f.debug_tuple_struct("Add").field(v0).finish();
+                f.debug_tuple_struct("Add")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Sub(v0) => {
-                f.debug_tuple_struct("Sub").field(v0).finish();
+                f.debug_tuple_struct("Sub")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Mul(v0) => {
-                f.debug_tuple_struct("Mul").field(v0).finish();
+                f.debug_tuple_struct("Mul")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Div(v0) => {
-                f.debug_tuple_struct("Div").field(v0).finish();
+                f.debug_tuple_struct("Div")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Rem(v0) => {
-                f.debug_tuple_struct("Rem").field(v0).finish();
+                f.debug_tuple_struct("Rem")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::And(v0) => {
-                f.debug_tuple_struct("And").field(v0).finish();
+                f.debug_tuple_struct("And")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Or(v0) => {
-                f.debug_tuple_struct("Or").field(v0).finish();
+                f.debug_tuple_struct("Or")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::BitXor(v0) => {
-                f.debug_tuple_struct("BitXor").field(v0).finish();
+                f.debug_tuple_struct("BitXor")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::BitAnd(v0) => {
-                f.debug_tuple_struct("BitAnd").field(v0).finish();
+                f.debug_tuple_struct("BitAnd")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::BitOr(v0) => {
-                f.debug_tuple_struct("BitOr").field(v0).finish();
+                f.debug_tuple_struct("BitOr")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Shl(v0) => {
-                f.debug_tuple_struct("Shl").field(v0).finish();
+                f.debug_tuple_struct("Shl")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Shr(v0) => {
-                f.debug_tuple_struct("Shr").field(v0).finish();
+                f.debug_tuple_struct("Shr")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Eq(v0) => {
-                f.debug_tuple_struct("Eq").field(v0).finish();
+                f.debug_tuple_struct("Eq")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Lt(v0) => {
-                f.debug_tuple_struct("Lt").field(v0).finish();
+                f.debug_tuple_struct("Lt")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Le(v0) => {
-                f.debug_tuple_struct("Le").field(v0).finish();
+                f.debug_tuple_struct("Le")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Ne(v0) => {
-                f.debug_tuple_struct("Ne").field(v0).finish();
+                f.debug_tuple_struct("Ne")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Ge(v0) => {
-                f.debug_tuple_struct("Ge").field(v0).finish();
+                f.debug_tuple_struct("Ge")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::Gt(v0) => {
-                f.debug_tuple_struct("Gt").field(v0).finish();
+                f.debug_tuple_struct("Gt")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::AddAssign(v0) => {
-                f.debug_tuple_struct("AddAssign").field(v0).finish();
+                f.debug_tuple_struct("AddAssign")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::SubAssign(v0) => {
-                f.debug_tuple_struct("SubAssign").field(v0).finish();
+                f.debug_tuple_struct("SubAssign")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::MulAssign(v0) => {
-                f.debug_tuple_struct("MulAssign").field(v0).finish();
+                f.debug_tuple_struct("MulAssign")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::DivAssign(v0) => {
-                f.debug_tuple_struct("DivAssign").field(v0).finish();
+                f.debug_tuple_struct("DivAssign")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::RemAssign(v0) => {
-                f.debug_tuple_struct("RemAssign").field(v0).finish();
+                f.debug_tuple_struct("RemAssign")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::BitXorAssign(v0) => {
-                f.debug_tuple_struct("BitXorAssign").field(v0).finish();
+                f.debug_tuple_struct("BitXorAssign")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::BitAndAssign(v0) => {
-                f.debug_tuple_struct("BitAndAssign").field(v0).finish();
+                f.debug_tuple_struct("BitAndAssign")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::BitOrAssign(v0) => {
-                f.debug_tuple_struct("BitOrAssign").field(v0).finish();
+                f.debug_tuple_struct("BitOrAssign")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::ShlAssign(v0) => {
-                f.debug_tuple_struct("ShlAssign").field(v0).finish();
+                f.debug_tuple_struct("ShlAssign")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::BinOp::ShrAssign(v0) => {
-                f.debug_tuple_struct("ShrAssign").field(v0).finish();
+                f.debug_tuple_struct("ShrAssign")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::Block {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Block {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Block")
-            .field("brace_token", &self.brace_token)
-            .field("stmts", &self.stmts)
+            .field_with(
+                "brace_token",
+                &self.brace_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "stmts",
+                &self.stmts as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::BoundLifetimes {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::BoundLifetimes {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("BoundLifetimes")
-            .field("for_token", &self.for_token)
-            .field("lt_token", &self.lt_token)
-            .field("lifetimes", &self.lifetimes)
-            .field("gt_token", &self.gt_token)
+            .field_with(
+                "for_token",
+                &self.for_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "lt_token",
+                &self.lt_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "lifetimes",
+                &self.lifetimes as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "gt_token",
+                &self.gt_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ConstParam {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ConstParam {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ConstParam")
-            .field("attrs", &self.attrs)
-            .field("const_token", &self.const_token)
-            .field("ident", &self.ident)
-            .field("colon_token", &self.colon_token)
-            .field("ty", &self.ty)
-            .field("eq_token", &self.eq_token)
-            .field("default", &self.default)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "const_token",
+                &self.const_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "default",
+                &self.default as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Constraint {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Constraint {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Constraint")
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("colon_token", &self.colon_token)
-            .field("bounds", &self.bounds)
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bounds",
+                &self.bounds as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Data {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Data {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::Data::Struct(v0) => {
-                f.debug_tuple_struct("Struct").field(v0).finish();
+                f.debug_tuple_struct("Struct")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Data::Enum(v0) => {
-                f.debug_tuple_struct("Enum").field(v0).finish();
+                f.debug_tuple_struct("Enum")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Data::Union(v0) => {
-                f.debug_tuple_struct("Union").field(v0).finish();
+                f.debug_tuple_struct("Union")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::DataEnum {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::DataEnum {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("DataEnum")
-            .field("enum_token", &self.enum_token)
-            .field("brace_token", &self.brace_token)
-            .field("variants", &self.variants)
+            .field_with(
+                "enum_token",
+                &self.enum_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "brace_token",
+                &self.brace_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "variants",
+                &self.variants as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::DataStruct {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::DataStruct {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("DataStruct")
-            .field("struct_token", &self.struct_token)
-            .field("fields", &self.fields)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "struct_token",
+                &self.struct_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "fields",
+                &self.fields as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::DataUnion {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::DataUnion {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("DataUnion")
-            .field("union_token", &self.union_token)
-            .field("fields", &self.fields)
+            .field_with(
+                "union_token",
+                &self.union_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "fields",
+                &self.fields as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::DeriveInput {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::DeriveInput {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("DeriveInput")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("data", &self.data)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "data",
+                &self.data as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Expr {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Expr {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::Expr::Array(v0) => {
-                f.debug_tuple_struct("Array").field(v0).finish();
+                f.debug_tuple_struct("Array")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Assign(v0) => {
-                f.debug_tuple_struct("Assign").field(v0).finish();
+                f.debug_tuple_struct("Assign")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Async(v0) => {
-                f.debug_tuple_struct("Async").field(v0).finish();
+                f.debug_tuple_struct("Async")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Await(v0) => {
-                f.debug_tuple_struct("Await").field(v0).finish();
+                f.debug_tuple_struct("Await")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Binary(v0) => {
-                f.debug_tuple_struct("Binary").field(v0).finish();
+                f.debug_tuple_struct("Binary")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Block(v0) => {
-                f.debug_tuple_struct("Block").field(v0).finish();
+                f.debug_tuple_struct("Block")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Break(v0) => {
-                f.debug_tuple_struct("Break").field(v0).finish();
+                f.debug_tuple_struct("Break")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Call(v0) => {
-                f.debug_tuple_struct("Call").field(v0).finish();
+                f.debug_tuple_struct("Call")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Cast(v0) => {
-                f.debug_tuple_struct("Cast").field(v0).finish();
+                f.debug_tuple_struct("Cast")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Closure(v0) => {
-                f.debug_tuple_struct("Closure").field(v0).finish();
+                f.debug_tuple_struct("Closure")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Const(v0) => {
-                f.debug_tuple_struct("Const").field(v0).finish();
+                f.debug_tuple_struct("Const")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Continue(v0) => {
-                f.debug_tuple_struct("Continue").field(v0).finish();
+                f.debug_tuple_struct("Continue")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Field(v0) => {
-                f.debug_tuple_struct("Field").field(v0).finish();
+                f.debug_tuple_struct("Field")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::ForLoop(v0) => {
-                f.debug_tuple_struct("ForLoop").field(v0).finish();
+                f.debug_tuple_struct("ForLoop")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Group(v0) => {
-                f.debug_tuple_struct("Group").field(v0).finish();
+                f.debug_tuple_struct("Group")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::If(v0) => {
-                f.debug_tuple_struct("If").field(v0).finish();
+                f.debug_tuple_struct("If")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Index(v0) => {
-                f.debug_tuple_struct("Index").field(v0).finish();
+                f.debug_tuple_struct("Index")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Infer(v0) => {
-                f.debug_tuple_struct("Infer").field(v0).finish();
+                f.debug_tuple_struct("Infer")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Let(v0) => {
-                f.debug_tuple_struct("Let").field(v0).finish();
+                f.debug_tuple_struct("Let")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Lit(v0) => {
-                f.debug_tuple_struct("Lit").field(v0).finish();
+                f.debug_tuple_struct("Lit")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Loop(v0) => {
-                f.debug_tuple_struct("Loop").field(v0).finish();
+                f.debug_tuple_struct("Loop")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Macro(v0) => {
-                f.debug_tuple_struct("Macro").field(v0).finish();
+                f.debug_tuple_struct("Macro")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Match(v0) => {
-                f.debug_tuple_struct("Match").field(v0).finish();
+                f.debug_tuple_struct("Match")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::MethodCall(v0) => {
-                f.debug_tuple_struct("MethodCall").field(v0).finish();
+                f.debug_tuple_struct("MethodCall")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Paren(v0) => {
-                f.debug_tuple_struct("Paren").field(v0).finish();
+                f.debug_tuple_struct("Paren")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Path(v0) => {
-                f.debug_tuple_struct("Path").field(v0).finish();
+                f.debug_tuple_struct("Path")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Range(v0) => {
-                f.debug_tuple_struct("Range").field(v0).finish();
+                f.debug_tuple_struct("Range")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Reference(v0) => {
-                f.debug_tuple_struct("Reference").field(v0).finish();
+                f.debug_tuple_struct("Reference")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Repeat(v0) => {
-                f.debug_tuple_struct("Repeat").field(v0).finish();
+                f.debug_tuple_struct("Repeat")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Return(v0) => {
-                f.debug_tuple_struct("Return").field(v0).finish();
+                f.debug_tuple_struct("Return")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Struct(v0) => {
-                f.debug_tuple_struct("Struct").field(v0).finish();
+                f.debug_tuple_struct("Struct")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Try(v0) => {
-                f.debug_tuple_struct("Try").field(v0).finish();
+                f.debug_tuple_struct("Try")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::TryBlock(v0) => {
-                f.debug_tuple_struct("TryBlock").field(v0).finish();
+                f.debug_tuple_struct("TryBlock")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Tuple(v0) => {
-                f.debug_tuple_struct("Tuple").field(v0).finish();
+                f.debug_tuple_struct("Tuple")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Unary(v0) => {
-                f.debug_tuple_struct("Unary").field(v0).finish();
+                f.debug_tuple_struct("Unary")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Unsafe(v0) => {
-                f.debug_tuple_struct("Unsafe").field(v0).finish();
+                f.debug_tuple_struct("Unsafe")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Verbatim(v0) => {
-                f.debug_tuple_struct("Verbatim").field(v0).finish();
+                f.debug_tuple_struct("Verbatim")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::While(v0) => {
-                f.debug_tuple_struct("While").field(v0).finish();
+                f.debug_tuple_struct("While")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Expr::Yield(v0) => {
-                f.debug_tuple_struct("Yield").field(v0).finish();
+                f.debug_tuple_struct("Yield")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::ExprArray {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprArray {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprArray")
-            .field("attrs", &self.attrs)
-            .field("bracket_token", &self.bracket_token)
-            .field("elems", &self.elems)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bracket_token",
+                &self.bracket_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "elems",
+                &self.elems as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprAssign {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprAssign {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprAssign")
-            .field("attrs", &self.attrs)
-            .field("left", &self.left)
-            .field("eq_token", &self.eq_token)
-            .field("right", &self.right)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "left",
+                &self.left as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "right",
+                &self.right as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprAsync {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprAsync {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprAsync")
-            .field("attrs", &self.attrs)
-            .field("async_token", &self.async_token)
-            .field("capture", &self.capture)
-            .field("block", &self.block)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "async_token",
+                &self.async_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "capture",
+                &self.capture as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "block",
+                &self.block as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprAwait {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprAwait {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprAwait")
-            .field("attrs", &self.attrs)
-            .field("base", &self.base)
-            .field("dot_token", &self.dot_token)
-            .field("await_token", &self.await_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "base",
+                &self.base as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "dot_token",
+                &self.dot_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "await_token",
+                &self.await_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprBinary {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprBinary {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprBinary")
-            .field("attrs", &self.attrs)
-            .field("left", &self.left)
-            .field("op", &self.op)
-            .field("right", &self.right)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "left",
+                &self.left as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "op",
+                &self.op as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "right",
+                &self.right as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprBlock {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprBlock {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprBlock")
-            .field("attrs", &self.attrs)
-            .field("label", &self.label)
-            .field("block", &self.block)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "label",
+                &self.label as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "block",
+                &self.block as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprBreak {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprBreak {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprBreak")
-            .field("attrs", &self.attrs)
-            .field("break_token", &self.break_token)
-            .field("label", &self.label)
-            .field("expr", &self.expr)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "break_token",
+                &self.break_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "label",
+                &self.label as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprCall {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprCall {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprCall")
-            .field("attrs", &self.attrs)
-            .field("func", &self.func)
-            .field("paren_token", &self.paren_token)
-            .field("args", &self.args)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "func",
+                &self.func as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "args",
+                &self.args as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprCast {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprCast {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprCast")
-            .field("attrs", &self.attrs)
-            .field("expr", &self.expr)
-            .field("as_token", &self.as_token)
-            .field("ty", &self.ty)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "as_token",
+                &self.as_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprClosure {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprClosure {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprClosure")
-            .field("attrs", &self.attrs)
-            .field("lifetimes", &self.lifetimes)
-            .field("constness", &self.constness)
-            .field("movability", &self.movability)
-            .field("asyncness", &self.asyncness)
-            .field("capture", &self.capture)
-            .field("or1_token", &self.or1_token)
-            .field("inputs", &self.inputs)
-            .field("or2_token", &self.or2_token)
-            .field("output", &self.output)
-            .field("body", &self.body)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "lifetimes",
+                &self.lifetimes as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "constness",
+                &self.constness as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "movability",
+                &self.movability as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "asyncness",
+                &self.asyncness as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "capture",
+                &self.capture as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "or1_token",
+                &self.or1_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "inputs",
+                &self.inputs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "or2_token",
+                &self.or2_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "output",
+                &self.output as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "body",
+                &self.body as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprConst {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprConst {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprConst")
-            .field("attrs", &self.attrs)
-            .field("const_token", &self.const_token)
-            .field("block", &self.block)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "const_token",
+                &self.const_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "block",
+                &self.block as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprContinue {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprContinue {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprContinue")
-            .field("attrs", &self.attrs)
-            .field("continue_token", &self.continue_token)
-            .field("label", &self.label)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "continue_token",
+                &self.continue_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "label",
+                &self.label as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprField {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprField {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprField")
-            .field("attrs", &self.attrs)
-            .field("base", &self.base)
-            .field("dot_token", &self.dot_token)
-            .field("member", &self.member)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "base",
+                &self.base as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "dot_token",
+                &self.dot_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "member",
+                &self.member as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprForLoop {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprForLoop {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprForLoop")
-            .field("attrs", &self.attrs)
-            .field("label", &self.label)
-            .field("for_token", &self.for_token)
-            .field("pat", &self.pat)
-            .field("in_token", &self.in_token)
-            .field("expr", &self.expr)
-            .field("body", &self.body)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "label",
+                &self.label as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "for_token",
+                &self.for_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "pat",
+                &self.pat as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "in_token",
+                &self.in_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "body",
+                &self.body as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprGroup {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprGroup {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprGroup")
-            .field("attrs", &self.attrs)
-            .field("group_token", &self.group_token)
-            .field("expr", &self.expr)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "group_token",
+                &self.group_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprIf {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprIf {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprIf")
-            .field("attrs", &self.attrs)
-            .field("if_token", &self.if_token)
-            .field("cond", &self.cond)
-            .field("then_branch", &self.then_branch)
-            .field("else_branch", &self.else_branch)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "if_token",
+                &self.if_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "cond",
+                &self.cond as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "then_branch",
+                &self.then_branch as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "else_branch",
+                &self.else_branch as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprIndex {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprIndex {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprIndex")
-            .field("attrs", &self.attrs)
-            .field("expr", &self.expr)
-            .field("bracket_token", &self.bracket_token)
-            .field("index", &self.index)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bracket_token",
+                &self.bracket_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "index",
+                &self.index as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprInfer {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprInfer {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprInfer")
-            .field("attrs", &self.attrs)
-            .field("underscore_token", &self.underscore_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "underscore_token",
+                &self.underscore_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprLet {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprLet {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprLet")
-            .field("attrs", &self.attrs)
-            .field("let_token", &self.let_token)
-            .field("pat", &self.pat)
-            .field("eq_token", &self.eq_token)
-            .field("expr", &self.expr)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "let_token",
+                &self.let_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "pat",
+                &self.pat as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprLit {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprLit {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprLit")
-            .field("attrs", &self.attrs)
-            .field("lit", &self.lit)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "lit",
+                &self.lit as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprLoop {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprLoop {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprLoop")
-            .field("attrs", &self.attrs)
-            .field("label", &self.label)
-            .field("loop_token", &self.loop_token)
-            .field("body", &self.body)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "label",
+                &self.label as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "loop_token",
+                &self.loop_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "body",
+                &self.body as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprMacro {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprMacro {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprMacro")
-            .field("attrs", &self.attrs)
-            .field("mac", &self.mac)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mac",
+                &self.mac as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprMatch {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprMatch {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprMatch")
-            .field("attrs", &self.attrs)
-            .field("match_token", &self.match_token)
-            .field("expr", &self.expr)
-            .field("brace_token", &self.brace_token)
-            .field("arms", &self.arms)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "match_token",
+                &self.match_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "brace_token",
+                &self.brace_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "arms",
+                &self.arms as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprMethodCall {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprMethodCall {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprMethodCall")
-            .field("attrs", &self.attrs)
-            .field("receiver", &self.receiver)
-            .field("dot_token", &self.dot_token)
-            .field("method", &self.method)
-            .field("turbofish", &self.turbofish)
-            .field("paren_token", &self.paren_token)
-            .field("args", &self.args)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "receiver",
+                &self.receiver as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "dot_token",
+                &self.dot_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "method",
+                &self.method as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "turbofish",
+                &self.turbofish as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "args",
+                &self.args as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprParen {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprParen {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprParen")
-            .field("attrs", &self.attrs)
-            .field("paren_token", &self.paren_token)
-            .field("expr", &self.expr)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprPath {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprPath {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprPath")
-            .field("attrs", &self.attrs)
-            .field("qself", &self.qself)
-            .field("path", &self.path)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "qself",
+                &self.qself as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "path",
+                &self.path as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprRange {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprRange {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprRange")
-            .field("attrs", &self.attrs)
-            .field("start", &self.start)
-            .field("limits", &self.limits)
-            .field("end", &self.end)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "start",
+                &self.start as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "limits",
+                &self.limits as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "end",
+                &self.end as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprReference {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprReference {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprReference")
-            .field("attrs", &self.attrs)
-            .field("and_token", &self.and_token)
-            .field("mutability", &self.mutability)
-            .field("expr", &self.expr)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "and_token",
+                &self.and_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mutability",
+                &self.mutability as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprRepeat {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprRepeat {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprRepeat")
-            .field("attrs", &self.attrs)
-            .field("bracket_token", &self.bracket_token)
-            .field("expr", &self.expr)
-            .field("semi_token", &self.semi_token)
-            .field("len", &self.len)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bracket_token",
+                &self.bracket_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "len",
+                &self.len as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprReturn {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprReturn {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprReturn")
-            .field("attrs", &self.attrs)
-            .field("return_token", &self.return_token)
-            .field("expr", &self.expr)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "return_token",
+                &self.return_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprStruct {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprStruct {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprStruct")
-            .field("attrs", &self.attrs)
-            .field("qself", &self.qself)
-            .field("path", &self.path)
-            .field("brace_token", &self.brace_token)
-            .field("fields", &self.fields)
-            .field("dot2_token", &self.dot2_token)
-            .field("rest", &self.rest)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "qself",
+                &self.qself as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "path",
+                &self.path as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "brace_token",
+                &self.brace_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "fields",
+                &self.fields as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "dot2_token",
+                &self.dot2_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "rest",
+                &self.rest as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprTry {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprTry {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprTry")
-            .field("attrs", &self.attrs)
-            .field("expr", &self.expr)
-            .field("question_token", &self.question_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "question_token",
+                &self.question_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprTryBlock {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprTryBlock {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprTryBlock")
-            .field("attrs", &self.attrs)
-            .field("try_token", &self.try_token)
-            .field("block", &self.block)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "try_token",
+                &self.try_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "block",
+                &self.block as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprTuple {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprTuple {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprTuple")
-            .field("attrs", &self.attrs)
-            .field("paren_token", &self.paren_token)
-            .field("elems", &self.elems)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "elems",
+                &self.elems as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprUnary {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprUnary {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprUnary")
-            .field("attrs", &self.attrs)
-            .field("op", &self.op)
-            .field("expr", &self.expr)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "op",
+                &self.op as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprUnsafe {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprUnsafe {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprUnsafe")
-            .field("attrs", &self.attrs)
-            .field("unsafe_token", &self.unsafe_token)
-            .field("block", &self.block)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "unsafe_token",
+                &self.unsafe_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "block",
+                &self.block as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprWhile {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprWhile {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprWhile")
-            .field("attrs", &self.attrs)
-            .field("label", &self.label)
-            .field("while_token", &self.while_token)
-            .field("cond", &self.cond)
-            .field("body", &self.body)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "label",
+                &self.label as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "while_token",
+                &self.while_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "cond",
+                &self.cond as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "body",
+                &self.body as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ExprYield {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ExprYield {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ExprYield")
-            .field("attrs", &self.attrs)
-            .field("yield_token", &self.yield_token)
-            .field("expr", &self.expr)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "yield_token",
+                &self.yield_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Field {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Field {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Field")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("mutability", &self.mutability)
-            .field("ident", &self.ident)
-            .field("colon_token", &self.colon_token)
-            .field("ty", &self.ty)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mutability",
+                &self.mutability as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::FieldMutability {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::FieldMutability {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::FieldMutability::None => f.debug_ident("None"),
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::FieldPat {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::FieldPat {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("FieldPat")
-            .field("attrs", &self.attrs)
-            .field("member", &self.member)
-            .field("colon_token", &self.colon_token)
-            .field("pat", &self.pat)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "member",
+                &self.member as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "pat",
+                &self.pat as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::FieldValue {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::FieldValue {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("FieldValue")
-            .field("attrs", &self.attrs)
-            .field("member", &self.member)
-            .field("colon_token", &self.colon_token)
-            .field("expr", &self.expr)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "member",
+                &self.member as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Fields {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Fields {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::Fields::Named(v0) => {
-                f.debug_tuple_struct("Named").field(v0).finish();
+                f.debug_tuple_struct("Named")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Fields::Unnamed(v0) => {
-                f.debug_tuple_struct("Unnamed").field(v0).finish();
+                f.debug_tuple_struct("Unnamed")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Fields::Unit => f.debug_ident("Unit"),
         }
     }
 }
-impl DebugPls for syn::FieldsNamed {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::FieldsNamed {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("FieldsNamed")
-            .field("brace_token", &self.brace_token)
-            .field("named", &self.named)
+            .field_with(
+                "brace_token",
+                &self.brace_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "named",
+                &self.named as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::FieldsUnnamed {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::FieldsUnnamed {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("FieldsUnnamed")
-            .field("paren_token", &self.paren_token)
-            .field("unnamed", &self.unnamed)
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "unnamed",
+                &self.unnamed as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::File {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::File {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("File")
-            .field("shebang", &self.shebang)
-            .field("attrs", &self.attrs)
-            .field("items", &self.items)
+            .field_with(
+                "shebang",
+                &self.shebang as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "items",
+                &self.items as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::FnArg {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::FnArg {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::FnArg::Receiver(v0) => {
-                f.debug_tuple_struct("Receiver").field(v0).finish();
+                f.debug_tuple_struct("Receiver")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::FnArg::Typed(v0) => {
-                f.debug_tuple_struct("Typed").field(v0).finish();
+                f.debug_tuple_struct("Typed")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::ForeignItem {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ForeignItem {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::ForeignItem::Fn(v0) => {
-                f.debug_tuple_struct("Fn").field(v0).finish();
+                f.debug_tuple_struct("Fn")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::ForeignItem::Static(v0) => {
-                f.debug_tuple_struct("Static").field(v0).finish();
+                f.debug_tuple_struct("Static")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::ForeignItem::Type(v0) => {
-                f.debug_tuple_struct("Type").field(v0).finish();
+                f.debug_tuple_struct("Type")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::ForeignItem::Macro(v0) => {
-                f.debug_tuple_struct("Macro").field(v0).finish();
+                f.debug_tuple_struct("Macro")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::ForeignItem::Verbatim(v0) => {
-                f.debug_tuple_struct("Verbatim").field(v0).finish();
+                f.debug_tuple_struct("Verbatim")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::ForeignItemFn {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ForeignItemFn {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ForeignItemFn")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("sig", &self.sig)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "sig",
+                &self.sig as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ForeignItemMacro {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ForeignItemMacro {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ForeignItemMacro")
-            .field("attrs", &self.attrs)
-            .field("mac", &self.mac)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mac",
+                &self.mac as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ForeignItemStatic {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ForeignItemStatic {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ForeignItemStatic")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("static_token", &self.static_token)
-            .field("mutability", &self.mutability)
-            .field("ident", &self.ident)
-            .field("colon_token", &self.colon_token)
-            .field("ty", &self.ty)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "static_token",
+                &self.static_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mutability",
+                &self.mutability as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ForeignItemType {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ForeignItemType {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ForeignItemType")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("type_token", &self.type_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "type_token",
+                &self.type_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::GenericArgument {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::GenericArgument {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::GenericArgument::Lifetime(v0) => {
-                f.debug_tuple_struct("Lifetime").field(v0).finish();
+                f.debug_tuple_struct("Lifetime")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::GenericArgument::Type(v0) => {
-                f.debug_tuple_struct("Type").field(v0).finish();
+                f.debug_tuple_struct("Type")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::GenericArgument::Const(v0) => {
-                f.debug_tuple_struct("Const").field(v0).finish();
+                f.debug_tuple_struct("Const")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::GenericArgument::AssocType(v0) => {
-                f.debug_tuple_struct("AssocType").field(v0).finish();
+                f.debug_tuple_struct("AssocType")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::GenericArgument::AssocConst(v0) => {
-                f.debug_tuple_struct("AssocConst").field(v0).finish();
+                f.debug_tuple_struct("AssocConst")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::GenericArgument::Constraint(v0) => {
-                f.debug_tuple_struct("Constraint").field(v0).finish();
+                f.debug_tuple_struct("Constraint")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::GenericParam {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::GenericParam {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::GenericParam::Lifetime(v0) => {
-                f.debug_tuple_struct("Lifetime").field(v0).finish();
+                f.debug_tuple_struct("Lifetime")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::GenericParam::Type(v0) => {
-                f.debug_tuple_struct("Type").field(v0).finish();
+                f.debug_tuple_struct("Type")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::GenericParam::Const(v0) => {
-                f.debug_tuple_struct("Const").field(v0).finish();
+                f.debug_tuple_struct("Const")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::Generics {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Generics {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Generics")
-            .field("lt_token", &self.lt_token)
-            .field("params", &self.params)
-            .field("gt_token", &self.gt_token)
-            .field("where_clause", &self.where_clause)
+            .field_with(
+                "lt_token",
+                &self.lt_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "params",
+                &self.params as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "gt_token",
+                &self.gt_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "where_clause",
+                &self.where_clause as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ImplItem {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ImplItem {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::ImplItem::Const(v0) => {
-                f.debug_tuple_struct("Const").field(v0).finish();
+                f.debug_tuple_struct("Const")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::ImplItem::Fn(v0) => {
-                f.debug_tuple_struct("Fn").field(v0).finish();
+                f.debug_tuple_struct("Fn")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::ImplItem::Type(v0) => {
-                f.debug_tuple_struct("Type").field(v0).finish();
+                f.debug_tuple_struct("Type")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::ImplItem::Macro(v0) => {
-                f.debug_tuple_struct("Macro").field(v0).finish();
+                f.debug_tuple_struct("Macro")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::ImplItem::Verbatim(v0) => {
-                f.debug_tuple_struct("Verbatim").field(v0).finish();
+                f.debug_tuple_struct("Verbatim")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::ImplItemConst {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ImplItemConst {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ImplItemConst")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("defaultness", &self.defaultness)
-            .field("const_token", &self.const_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("colon_token", &self.colon_token)
-            .field("ty", &self.ty)
-            .field("eq_token", &self.eq_token)
-            .field("expr", &self.expr)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "defaultness",
+                &self.defaultness as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "const_token",
+                &self.const_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ImplItemFn {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ImplItemFn {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ImplItemFn")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("defaultness", &self.defaultness)
-            .field("sig", &self.sig)
-            .field("block", &self.block)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "defaultness",
+                &self.defaultness as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "sig",
+                &self.sig as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "block",
+                &self.block as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ImplItemMacro {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ImplItemMacro {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ImplItemMacro")
-            .field("attrs", &self.attrs)
-            .field("mac", &self.mac)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mac",
+                &self.mac as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ImplItemType {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ImplItemType {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ImplItemType")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("defaultness", &self.defaultness)
-            .field("type_token", &self.type_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("eq_token", &self.eq_token)
-            .field("ty", &self.ty)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "defaultness",
+                &self.defaultness as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "type_token",
+                &self.type_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ImplRestriction {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ImplRestriction {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::Index {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Index {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Index")
-            .field("index", &self.index)
-            .field("span", &self.span)
+            .field_with(
+                "index",
+                &self.index as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "span",
+                &self.span as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Item {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Item {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::Item::Const(v0) => {
-                f.debug_tuple_struct("Const").field(v0).finish();
+                f.debug_tuple_struct("Const")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::Enum(v0) => {
-                f.debug_tuple_struct("Enum").field(v0).finish();
+                f.debug_tuple_struct("Enum")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::ExternCrate(v0) => {
-                f.debug_tuple_struct("ExternCrate").field(v0).finish();
+                f.debug_tuple_struct("ExternCrate")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::Fn(v0) => {
-                f.debug_tuple_struct("Fn").field(v0).finish();
+                f.debug_tuple_struct("Fn")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::ForeignMod(v0) => {
-                f.debug_tuple_struct("ForeignMod").field(v0).finish();
+                f.debug_tuple_struct("ForeignMod")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::Impl(v0) => {
-                f.debug_tuple_struct("Impl").field(v0).finish();
+                f.debug_tuple_struct("Impl")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::Macro(v0) => {
-                f.debug_tuple_struct("Macro").field(v0).finish();
+                f.debug_tuple_struct("Macro")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::Mod(v0) => {
-                f.debug_tuple_struct("Mod").field(v0).finish();
+                f.debug_tuple_struct("Mod")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::Static(v0) => {
-                f.debug_tuple_struct("Static").field(v0).finish();
+                f.debug_tuple_struct("Static")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::Struct(v0) => {
-                f.debug_tuple_struct("Struct").field(v0).finish();
+                f.debug_tuple_struct("Struct")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::Trait(v0) => {
-                f.debug_tuple_struct("Trait").field(v0).finish();
+                f.debug_tuple_struct("Trait")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::TraitAlias(v0) => {
-                f.debug_tuple_struct("TraitAlias").field(v0).finish();
+                f.debug_tuple_struct("TraitAlias")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::Type(v0) => {
-                f.debug_tuple_struct("Type").field(v0).finish();
+                f.debug_tuple_struct("Type")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::Union(v0) => {
-                f.debug_tuple_struct("Union").field(v0).finish();
+                f.debug_tuple_struct("Union")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::Use(v0) => {
-                f.debug_tuple_struct("Use").field(v0).finish();
+                f.debug_tuple_struct("Use")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Item::Verbatim(v0) => {
-                f.debug_tuple_struct("Verbatim").field(v0).finish();
+                f.debug_tuple_struct("Verbatim")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::ItemConst {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemConst {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemConst")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("const_token", &self.const_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("colon_token", &self.colon_token)
-            .field("ty", &self.ty)
-            .field("eq_token", &self.eq_token)
-            .field("expr", &self.expr)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "const_token",
+                &self.const_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemEnum {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemEnum {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemEnum")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("enum_token", &self.enum_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("brace_token", &self.brace_token)
-            .field("variants", &self.variants)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "enum_token",
+                &self.enum_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "brace_token",
+                &self.brace_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "variants",
+                &self.variants as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemExternCrate {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemExternCrate {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemExternCrate")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("extern_token", &self.extern_token)
-            .field("crate_token", &self.crate_token)
-            .field("ident", &self.ident)
-            .field("rename", &self.rename)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "extern_token",
+                &self.extern_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "crate_token",
+                &self.crate_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "rename",
+                &self.rename as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemFn {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemFn {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemFn")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("sig", &self.sig)
-            .field("block", &self.block)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "sig",
+                &self.sig as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "block",
+                &self.block as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemForeignMod {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemForeignMod {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemForeignMod")
-            .field("attrs", &self.attrs)
-            .field("unsafety", &self.unsafety)
-            .field("abi", &self.abi)
-            .field("brace_token", &self.brace_token)
-            .field("items", &self.items)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "unsafety",
+                &self.unsafety as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "abi",
+                &self.abi as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "brace_token",
+                &self.brace_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "items",
+                &self.items as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemImpl {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemImpl {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemImpl")
-            .field("attrs", &self.attrs)
-            .field("defaultness", &self.defaultness)
-            .field("unsafety", &self.unsafety)
-            .field("impl_token", &self.impl_token)
-            .field("generics", &self.generics)
-            .field("trait_", &self.trait_)
-            .field("self_ty", &self.self_ty)
-            .field("brace_token", &self.brace_token)
-            .field("items", &self.items)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "defaultness",
+                &self.defaultness as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "unsafety",
+                &self.unsafety as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "impl_token",
+                &self.impl_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "trait_",
+                &self.trait_ as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "self_ty",
+                &self.self_ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "brace_token",
+                &self.brace_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "items",
+                &self.items as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemMacro {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemMacro {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemMacro")
-            .field("attrs", &self.attrs)
-            .field("ident", &self.ident)
-            .field("mac", &self.mac)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mac",
+                &self.mac as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemMod {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemMod {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemMod")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("unsafety", &self.unsafety)
-            .field("mod_token", &self.mod_token)
-            .field("ident", &self.ident)
-            .field("content", &self.content)
-            .field("semi", &self.semi)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "unsafety",
+                &self.unsafety as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mod_token",
+                &self.mod_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "content",
+                &self.content as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi",
+                &self.semi as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemStatic {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemStatic {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemStatic")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("static_token", &self.static_token)
-            .field("mutability", &self.mutability)
-            .field("ident", &self.ident)
-            .field("colon_token", &self.colon_token)
-            .field("ty", &self.ty)
-            .field("eq_token", &self.eq_token)
-            .field("expr", &self.expr)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "static_token",
+                &self.static_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mutability",
+                &self.mutability as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemStruct {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemStruct {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemStruct")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("struct_token", &self.struct_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("fields", &self.fields)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "struct_token",
+                &self.struct_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "fields",
+                &self.fields as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemTrait {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemTrait {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemTrait")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("unsafety", &self.unsafety)
-            .field("auto_token", &self.auto_token)
-            .field("restriction", &self.restriction)
-            .field("trait_token", &self.trait_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("colon_token", &self.colon_token)
-            .field("supertraits", &self.supertraits)
-            .field("brace_token", &self.brace_token)
-            .field("items", &self.items)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "unsafety",
+                &self.unsafety as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "auto_token",
+                &self.auto_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "restriction",
+                &self.restriction as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "trait_token",
+                &self.trait_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "supertraits",
+                &self.supertraits as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "brace_token",
+                &self.brace_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "items",
+                &self.items as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemTraitAlias {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemTraitAlias {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemTraitAlias")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("trait_token", &self.trait_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("eq_token", &self.eq_token)
-            .field("bounds", &self.bounds)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "trait_token",
+                &self.trait_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bounds",
+                &self.bounds as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemType {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemType {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemType")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("type_token", &self.type_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("eq_token", &self.eq_token)
-            .field("ty", &self.ty)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "type_token",
+                &self.type_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemUnion {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemUnion {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemUnion")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("union_token", &self.union_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("fields", &self.fields)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "union_token",
+                &self.union_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "fields",
+                &self.fields as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ItemUse {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ItemUse {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ItemUse")
-            .field("attrs", &self.attrs)
-            .field("vis", &self.vis)
-            .field("use_token", &self.use_token)
-            .field("leading_colon", &self.leading_colon)
-            .field("tree", &self.tree)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "vis",
+                &self.vis as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "use_token",
+                &self.use_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "leading_colon",
+                &self.leading_colon as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "tree",
+                &self.tree as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Label {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Label {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Label")
-            .field("name", &self.name)
-            .field("colon_token", &self.colon_token)
+            .field_with(
+                "name",
+                &self.name as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Lifetime {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Lifetime {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Lifetime")
-            .field("apostrophe", &self.apostrophe)
-            .field("ident", &self.ident)
+            .field_with(
+                "apostrophe",
+                &self.apostrophe as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::LifetimeParam {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::LifetimeParam {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("LifetimeParam")
-            .field("attrs", &self.attrs)
-            .field("lifetime", &self.lifetime)
-            .field("colon_token", &self.colon_token)
-            .field("bounds", &self.bounds)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "lifetime",
+                &self.lifetime as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bounds",
+                &self.bounds as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Lit {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Lit {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::Lit::Str(v0) => {
-                f.debug_tuple_struct("Str").field(v0).finish();
+                f.debug_tuple_struct("Str")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Lit::ByteStr(v0) => {
-                f.debug_tuple_struct("ByteStr").field(v0).finish();
+                f.debug_tuple_struct("ByteStr")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Lit::CStr(v0) => {
-                f.debug_tuple_struct("CStr").field(v0).finish();
+                f.debug_tuple_struct("CStr")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Lit::Byte(v0) => {
-                f.debug_tuple_struct("Byte").field(v0).finish();
+                f.debug_tuple_struct("Byte")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Lit::Char(v0) => {
-                f.debug_tuple_struct("Char").field(v0).finish();
+                f.debug_tuple_struct("Char")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Lit::Int(v0) => {
-                f.debug_tuple_struct("Int").field(v0).finish();
+                f.debug_tuple_struct("Int")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Lit::Float(v0) => {
-                f.debug_tuple_struct("Float").field(v0).finish();
+                f.debug_tuple_struct("Float")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Lit::Bool(v0) => {
-                f.debug_tuple_struct("Bool").field(v0).finish();
+                f.debug_tuple_struct("Bool")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Lit::Verbatim(v0) => {
-                f.debug_tuple_struct("Verbatim").field(v0).finish();
+                f.debug_tuple_struct("Verbatim")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::Local {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Local {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Local")
-            .field("attrs", &self.attrs)
-            .field("let_token", &self.let_token)
-            .field("pat", &self.pat)
-            .field("init", &self.init)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "let_token",
+                &self.let_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "pat",
+                &self.pat as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "init",
+                &self.init as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::LocalInit {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::LocalInit {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("LocalInit")
-            .field("eq_token", &self.eq_token)
-            .field("expr", &self.expr)
-            .field("diverge", &self.diverge)
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "expr",
+                &self.expr as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "diverge",
+                &self.diverge as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Macro {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Macro {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Macro")
-            .field("path", &self.path)
-            .field("bang_token", &self.bang_token)
-            .field("delimiter", &self.delimiter)
-            .field("tokens", &self.tokens)
+            .field_with(
+                "path",
+                &self.path as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bang_token",
+                &self.bang_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "delimiter",
+                &self.delimiter as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "tokens",
+                &self.tokens as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::MacroDelimiter {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::MacroDelimiter {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::MacroDelimiter::Paren(v0) => {
-                f.debug_tuple_struct("Paren").field(v0).finish();
+                f.debug_tuple_struct("Paren")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::MacroDelimiter::Brace(v0) => {
-                f.debug_tuple_struct("Brace").field(v0).finish();
+                f.debug_tuple_struct("Brace")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::MacroDelimiter::Bracket(v0) => {
-                f.debug_tuple_struct("Bracket").field(v0).finish();
+                f.debug_tuple_struct("Bracket")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::Member {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Member {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::Member::Named(v0) => {
-                f.debug_tuple_struct("Named").field(v0).finish();
+                f.debug_tuple_struct("Named")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Member::Unnamed(v0) => {
-                f.debug_tuple_struct("Unnamed").field(v0).finish();
+                f.debug_tuple_struct("Unnamed")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::Meta {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Meta {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::Meta::Path(v0) => {
-                f.debug_tuple_struct("Path").field(v0).finish();
+                f.debug_tuple_struct("Path")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Meta::List(v0) => {
-                f.debug_tuple_struct("List").field(v0).finish();
+                f.debug_tuple_struct("List")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Meta::NameValue(v0) => {
-                f.debug_tuple_struct("NameValue").field(v0).finish();
+                f.debug_tuple_struct("NameValue")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::MetaList {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::MetaList {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("MetaList")
-            .field("path", &self.path)
-            .field("delimiter", &self.delimiter)
-            .field("tokens", &self.tokens)
+            .field_with(
+                "path",
+                &self.path as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "delimiter",
+                &self.delimiter as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "tokens",
+                &self.tokens as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::MetaNameValue {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::MetaNameValue {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("MetaNameValue")
-            .field("path", &self.path)
-            .field("eq_token", &self.eq_token)
-            .field("value", &self.value)
+            .field_with(
+                "path",
+                &self.path as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "value",
+                &self.value as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ParenthesizedGenericArguments {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ParenthesizedGenericArguments {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("ParenthesizedGenericArguments")
-            .field("paren_token", &self.paren_token)
-            .field("inputs", &self.inputs)
-            .field("output", &self.output)
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "inputs",
+                &self.inputs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "output",
+                &self.output as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Pat {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Pat {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::Pat::Const(v0) => {
-                f.debug_tuple_struct("Const").field(v0).finish();
+                f.debug_tuple_struct("Const")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Ident(v0) => {
-                f.debug_tuple_struct("Ident").field(v0).finish();
+                f.debug_tuple_struct("Ident")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Lit(v0) => {
-                f.debug_tuple_struct("Lit").field(v0).finish();
+                f.debug_tuple_struct("Lit")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Macro(v0) => {
-                f.debug_tuple_struct("Macro").field(v0).finish();
+                f.debug_tuple_struct("Macro")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Or(v0) => {
-                f.debug_tuple_struct("Or").field(v0).finish();
+                f.debug_tuple_struct("Or")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Paren(v0) => {
-                f.debug_tuple_struct("Paren").field(v0).finish();
+                f.debug_tuple_struct("Paren")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Path(v0) => {
-                f.debug_tuple_struct("Path").field(v0).finish();
+                f.debug_tuple_struct("Path")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Range(v0) => {
-                f.debug_tuple_struct("Range").field(v0).finish();
+                f.debug_tuple_struct("Range")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Reference(v0) => {
-                f.debug_tuple_struct("Reference").field(v0).finish();
+                f.debug_tuple_struct("Reference")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Rest(v0) => {
-                f.debug_tuple_struct("Rest").field(v0).finish();
+                f.debug_tuple_struct("Rest")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Slice(v0) => {
-                f.debug_tuple_struct("Slice").field(v0).finish();
+                f.debug_tuple_struct("Slice")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Struct(v0) => {
-                f.debug_tuple_struct("Struct").field(v0).finish();
+                f.debug_tuple_struct("Struct")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Tuple(v0) => {
-                f.debug_tuple_struct("Tuple").field(v0).finish();
+                f.debug_tuple_struct("Tuple")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::TupleStruct(v0) => {
-                f.debug_tuple_struct("TupleStruct").field(v0).finish();
+                f.debug_tuple_struct("TupleStruct")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Type(v0) => {
-                f.debug_tuple_struct("Type").field(v0).finish();
+                f.debug_tuple_struct("Type")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Verbatim(v0) => {
-                f.debug_tuple_struct("Verbatim").field(v0).finish();
+                f.debug_tuple_struct("Verbatim")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Pat::Wild(v0) => {
-                f.debug_tuple_struct("Wild").field(v0).finish();
+                f.debug_tuple_struct("Wild")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::PatIdent {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PatIdent {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PatIdent")
-            .field("attrs", &self.attrs)
-            .field("by_ref", &self.by_ref)
-            .field("mutability", &self.mutability)
-            .field("ident", &self.ident)
-            .field("subpat", &self.subpat)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "by_ref",
+                &self.by_ref as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mutability",
+                &self.mutability as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "subpat",
+                &self.subpat as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PatOr {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PatOr {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PatOr")
-            .field("attrs", &self.attrs)
-            .field("leading_vert", &self.leading_vert)
-            .field("cases", &self.cases)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "leading_vert",
+                &self.leading_vert as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "cases",
+                &self.cases as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PatParen {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PatParen {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PatParen")
-            .field("attrs", &self.attrs)
-            .field("paren_token", &self.paren_token)
-            .field("pat", &self.pat)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "pat",
+                &self.pat as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PatReference {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PatReference {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PatReference")
-            .field("attrs", &self.attrs)
-            .field("and_token", &self.and_token)
-            .field("mutability", &self.mutability)
-            .field("pat", &self.pat)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "and_token",
+                &self.and_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mutability",
+                &self.mutability as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "pat",
+                &self.pat as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PatRest {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PatRest {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PatRest")
-            .field("attrs", &self.attrs)
-            .field("dot2_token", &self.dot2_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "dot2_token",
+                &self.dot2_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PatSlice {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PatSlice {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PatSlice")
-            .field("attrs", &self.attrs)
-            .field("bracket_token", &self.bracket_token)
-            .field("elems", &self.elems)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bracket_token",
+                &self.bracket_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "elems",
+                &self.elems as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PatStruct {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PatStruct {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PatStruct")
-            .field("attrs", &self.attrs)
-            .field("qself", &self.qself)
-            .field("path", &self.path)
-            .field("brace_token", &self.brace_token)
-            .field("fields", &self.fields)
-            .field("rest", &self.rest)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "qself",
+                &self.qself as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "path",
+                &self.path as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "brace_token",
+                &self.brace_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "fields",
+                &self.fields as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "rest",
+                &self.rest as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PatTuple {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PatTuple {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PatTuple")
-            .field("attrs", &self.attrs)
-            .field("paren_token", &self.paren_token)
-            .field("elems", &self.elems)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "elems",
+                &self.elems as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PatTupleStruct {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PatTupleStruct {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PatTupleStruct")
-            .field("attrs", &self.attrs)
-            .field("qself", &self.qself)
-            .field("path", &self.path)
-            .field("paren_token", &self.paren_token)
-            .field("elems", &self.elems)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "qself",
+                &self.qself as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "path",
+                &self.path as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "elems",
+                &self.elems as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PatType {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PatType {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PatType")
-            .field("attrs", &self.attrs)
-            .field("pat", &self.pat)
-            .field("colon_token", &self.colon_token)
-            .field("ty", &self.ty)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "pat",
+                &self.pat as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PatWild {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PatWild {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PatWild")
-            .field("attrs", &self.attrs)
-            .field("underscore_token", &self.underscore_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "underscore_token",
+                &self.underscore_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Path {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Path {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Path")
-            .field("leading_colon", &self.leading_colon)
-            .field("segments", &self.segments)
+            .field_with(
+                "leading_colon",
+                &self.leading_colon as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "segments",
+                &self.segments as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PathArguments {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PathArguments {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::PathArguments::None => f.debug_ident("None"),
             syn::PathArguments::AngleBracketed(v0) => {
-                f.debug_tuple_struct("AngleBracketed").field(v0).finish();
+                f.debug_tuple_struct("AngleBracketed")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::PathArguments::Parenthesized(v0) => {
-                f.debug_tuple_struct("Parenthesized").field(v0).finish();
+                f.debug_tuple_struct("Parenthesized")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::PathSegment {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PathSegment {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PathSegment")
-            .field("ident", &self.ident)
-            .field("arguments", &self.arguments)
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "arguments",
+                &self.arguments as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PredicateLifetime {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PredicateLifetime {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PredicateLifetime")
-            .field("lifetime", &self.lifetime)
-            .field("colon_token", &self.colon_token)
-            .field("bounds", &self.bounds)
+            .field_with(
+                "lifetime",
+                &self.lifetime as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bounds",
+                &self.bounds as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::PredicateType {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::PredicateType {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("PredicateType")
-            .field("lifetimes", &self.lifetimes)
-            .field("bounded_ty", &self.bounded_ty)
-            .field("colon_token", &self.colon_token)
-            .field("bounds", &self.bounds)
+            .field_with(
+                "lifetimes",
+                &self.lifetimes as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bounded_ty",
+                &self.bounded_ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bounds",
+                &self.bounds as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::QSelf {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::QSelf {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("QSelf")
-            .field("lt_token", &self.lt_token)
-            .field("ty", &self.ty)
-            .field("position", &self.position)
-            .field("as_token", &self.as_token)
-            .field("gt_token", &self.gt_token)
+            .field_with(
+                "lt_token",
+                &self.lt_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "position",
+                &self.position as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "as_token",
+                &self.as_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "gt_token",
+                &self.gt_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::RangeLimits {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::RangeLimits {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::RangeLimits::HalfOpen(v0) => {
-                f.debug_tuple_struct("HalfOpen").field(v0).finish();
+                f.debug_tuple_struct("HalfOpen")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::RangeLimits::Closed(v0) => {
-                f.debug_tuple_struct("Closed").field(v0).finish();
+                f.debug_tuple_struct("Closed")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::Receiver {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Receiver {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Receiver")
-            .field("attrs", &self.attrs)
-            .field("reference", &self.reference)
-            .field("mutability", &self.mutability)
-            .field("self_token", &self.self_token)
-            .field("colon_token", &self.colon_token)
-            .field("ty", &self.ty)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "reference",
+                &self.reference as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mutability",
+                &self.mutability as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "self_token",
+                &self.self_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::ReturnType {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::ReturnType {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::ReturnType::Default => f.debug_ident("Default"),
             syn::ReturnType::Type(v0, v1) => {
-                f.debug_tuple_struct("Type").field(v0).field(v1).finish();
+                f.debug_tuple_struct("Type")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .field_with(v1 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::Signature {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Signature {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Signature")
-            .field("constness", &self.constness)
-            .field("asyncness", &self.asyncness)
-            .field("unsafety", &self.unsafety)
-            .field("abi", &self.abi)
-            .field("fn_token", &self.fn_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("paren_token", &self.paren_token)
-            .field("inputs", &self.inputs)
-            .field("variadic", &self.variadic)
-            .field("output", &self.output)
+            .field_with(
+                "constness",
+                &self.constness as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "asyncness",
+                &self.asyncness as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "unsafety",
+                &self.unsafety as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "abi",
+                &self.abi as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "fn_token",
+                &self.fn_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "inputs",
+                &self.inputs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "variadic",
+                &self.variadic as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "output",
+                &self.output as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::StaticMutability {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::StaticMutability {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::StaticMutability::Mut(v0) => {
-                f.debug_tuple_struct("Mut").field(v0).finish();
+                f.debug_tuple_struct("Mut")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::StaticMutability::None => f.debug_ident("None"),
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::Stmt {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Stmt {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::Stmt::Local(v0) => {
-                f.debug_tuple_struct("Local").field(v0).finish();
+                f.debug_tuple_struct("Local")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Stmt::Item(v0) => {
-                f.debug_tuple_struct("Item").field(v0).finish();
+                f.debug_tuple_struct("Item")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Stmt::Expr(v0, v1) => {
-                f.debug_tuple_struct("Expr").field(v0).field(v1).finish();
+                f.debug_tuple_struct("Expr")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .field_with(v1 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Stmt::Macro(v0) => {
-                f.debug_tuple_struct("Macro").field(v0).finish();
+                f.debug_tuple_struct("Macro")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::StmtMacro {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::StmtMacro {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("StmtMacro")
-            .field("attrs", &self.attrs)
-            .field("mac", &self.mac)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mac",
+                &self.mac as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TraitBound {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TraitBound {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TraitBound")
-            .field("paren_token", &self.paren_token)
-            .field("modifier", &self.modifier)
-            .field("lifetimes", &self.lifetimes)
-            .field("path", &self.path)
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "modifier",
+                &self.modifier as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "lifetimes",
+                &self.lifetimes as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "path",
+                &self.path as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TraitBoundModifier {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TraitBoundModifier {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::TraitBoundModifier::None => f.debug_ident("None"),
             syn::TraitBoundModifier::Maybe(v0) => {
-                f.debug_tuple_struct("Maybe").field(v0).finish();
+                f.debug_tuple_struct("Maybe")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::TraitItem {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TraitItem {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::TraitItem::Const(v0) => {
-                f.debug_tuple_struct("Const").field(v0).finish();
+                f.debug_tuple_struct("Const")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::TraitItem::Fn(v0) => {
-                f.debug_tuple_struct("Fn").field(v0).finish();
+                f.debug_tuple_struct("Fn")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::TraitItem::Type(v0) => {
-                f.debug_tuple_struct("Type").field(v0).finish();
+                f.debug_tuple_struct("Type")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::TraitItem::Macro(v0) => {
-                f.debug_tuple_struct("Macro").field(v0).finish();
+                f.debug_tuple_struct("Macro")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::TraitItem::Verbatim(v0) => {
-                f.debug_tuple_struct("Verbatim").field(v0).finish();
+                f.debug_tuple_struct("Verbatim")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::TraitItemConst {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TraitItemConst {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TraitItemConst")
-            .field("attrs", &self.attrs)
-            .field("const_token", &self.const_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("colon_token", &self.colon_token)
-            .field("ty", &self.ty)
-            .field("default", &self.default)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "const_token",
+                &self.const_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ty",
+                &self.ty as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "default",
+                &self.default as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TraitItemFn {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TraitItemFn {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TraitItemFn")
-            .field("attrs", &self.attrs)
-            .field("sig", &self.sig)
-            .field("default", &self.default)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "sig",
+                &self.sig as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "default",
+                &self.default as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TraitItemMacro {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TraitItemMacro {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TraitItemMacro")
-            .field("attrs", &self.attrs)
-            .field("mac", &self.mac)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mac",
+                &self.mac as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TraitItemType {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TraitItemType {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TraitItemType")
-            .field("attrs", &self.attrs)
-            .field("type_token", &self.type_token)
-            .field("ident", &self.ident)
-            .field("generics", &self.generics)
-            .field("colon_token", &self.colon_token)
-            .field("bounds", &self.bounds)
-            .field("default", &self.default)
-            .field("semi_token", &self.semi_token)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "type_token",
+                &self.type_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "generics",
+                &self.generics as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bounds",
+                &self.bounds as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "default",
+                &self.default as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Type {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Type {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::Type::Array(v0) => {
-                f.debug_tuple_struct("Array").field(v0).finish();
+                f.debug_tuple_struct("Array")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::BareFn(v0) => {
-                f.debug_tuple_struct("BareFn").field(v0).finish();
+                f.debug_tuple_struct("BareFn")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::Group(v0) => {
-                f.debug_tuple_struct("Group").field(v0).finish();
+                f.debug_tuple_struct("Group")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::ImplTrait(v0) => {
-                f.debug_tuple_struct("ImplTrait").field(v0).finish();
+                f.debug_tuple_struct("ImplTrait")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::Infer(v0) => {
-                f.debug_tuple_struct("Infer").field(v0).finish();
+                f.debug_tuple_struct("Infer")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::Macro(v0) => {
-                f.debug_tuple_struct("Macro").field(v0).finish();
+                f.debug_tuple_struct("Macro")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::Never(v0) => {
-                f.debug_tuple_struct("Never").field(v0).finish();
+                f.debug_tuple_struct("Never")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::Paren(v0) => {
-                f.debug_tuple_struct("Paren").field(v0).finish();
+                f.debug_tuple_struct("Paren")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::Path(v0) => {
-                f.debug_tuple_struct("Path").field(v0).finish();
+                f.debug_tuple_struct("Path")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::Ptr(v0) => {
-                f.debug_tuple_struct("Ptr").field(v0).finish();
+                f.debug_tuple_struct("Ptr")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::Reference(v0) => {
-                f.debug_tuple_struct("Reference").field(v0).finish();
+                f.debug_tuple_struct("Reference")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::Slice(v0) => {
-                f.debug_tuple_struct("Slice").field(v0).finish();
+                f.debug_tuple_struct("Slice")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::TraitObject(v0) => {
-                f.debug_tuple_struct("TraitObject").field(v0).finish();
+                f.debug_tuple_struct("TraitObject")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::Tuple(v0) => {
-                f.debug_tuple_struct("Tuple").field(v0).finish();
+                f.debug_tuple_struct("Tuple")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Type::Verbatim(v0) => {
-                f.debug_tuple_struct("Verbatim").field(v0).finish();
+                f.debug_tuple_struct("Verbatim")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::TypeArray {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypeArray {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypeArray")
-            .field("bracket_token", &self.bracket_token)
-            .field("elem", &self.elem)
-            .field("semi_token", &self.semi_token)
-            .field("len", &self.len)
+            .field_with(
+                "bracket_token",
+                &self.bracket_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "elem",
+                &self.elem as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "semi_token",
+                &self.semi_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "len",
+                &self.len as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TypeBareFn {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypeBareFn {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypeBareFn")
-            .field("lifetimes", &self.lifetimes)
-            .field("unsafety", &self.unsafety)
-            .field("abi", &self.abi)
-            .field("fn_token", &self.fn_token)
-            .field("paren_token", &self.paren_token)
-            .field("inputs", &self.inputs)
-            .field("variadic", &self.variadic)
-            .field("output", &self.output)
+            .field_with(
+                "lifetimes",
+                &self.lifetimes as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "unsafety",
+                &self.unsafety as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "abi",
+                &self.abi as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "fn_token",
+                &self.fn_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "inputs",
+                &self.inputs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "variadic",
+                &self.variadic as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "output",
+                &self.output as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TypeGroup {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypeGroup {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypeGroup")
-            .field("group_token", &self.group_token)
-            .field("elem", &self.elem)
+            .field_with(
+                "group_token",
+                &self.group_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "elem",
+                &self.elem as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TypeImplTrait {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypeImplTrait {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypeImplTrait")
-            .field("impl_token", &self.impl_token)
-            .field("bounds", &self.bounds)
+            .field_with(
+                "impl_token",
+                &self.impl_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bounds",
+                &self.bounds as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TypeInfer {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypeInfer {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypeInfer")
-            .field("underscore_token", &self.underscore_token)
+            .field_with(
+                "underscore_token",
+                &self.underscore_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TypeMacro {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("TypeMacro").field("mac", &self.mac).finish();
+impl<__With> DebugWith<__With> for syn::TypeMacro {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
+        f.debug_struct("TypeMacro")
+            .field_with(
+                "mac",
+                &self.mac as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .finish();
     }
 }
-impl DebugPls for syn::TypeNever {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("TypeNever").field("bang_token", &self.bang_token).finish();
+impl<__With> DebugWith<__With> for syn::TypeNever {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
+        f.debug_struct("TypeNever")
+            .field_with(
+                "bang_token",
+                &self.bang_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .finish();
     }
 }
-impl DebugPls for syn::TypeParam {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypeParam {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypeParam")
-            .field("attrs", &self.attrs)
-            .field("ident", &self.ident)
-            .field("colon_token", &self.colon_token)
-            .field("bounds", &self.bounds)
-            .field("eq_token", &self.eq_token)
-            .field("default", &self.default)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon_token",
+                &self.colon_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bounds",
+                &self.bounds as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "eq_token",
+                &self.eq_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "default",
+                &self.default as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TypeParamBound {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypeParamBound {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::TypeParamBound::Trait(v0) => {
-                f.debug_tuple_struct("Trait").field(v0).finish();
+                f.debug_tuple_struct("Trait")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::TypeParamBound::Lifetime(v0) => {
-                f.debug_tuple_struct("Lifetime").field(v0).finish();
+                f.debug_tuple_struct("Lifetime")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::TypeParamBound::Verbatim(v0) => {
-                f.debug_tuple_struct("Verbatim").field(v0).finish();
+                f.debug_tuple_struct("Verbatim")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::TypeParen {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypeParen {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypeParen")
-            .field("paren_token", &self.paren_token)
-            .field("elem", &self.elem)
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "elem",
+                &self.elem as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TypePath {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypePath {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypePath")
-            .field("qself", &self.qself)
-            .field("path", &self.path)
+            .field_with(
+                "qself",
+                &self.qself as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "path",
+                &self.path as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TypePtr {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypePtr {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypePtr")
-            .field("star_token", &self.star_token)
-            .field("const_token", &self.const_token)
-            .field("mutability", &self.mutability)
-            .field("elem", &self.elem)
+            .field_with(
+                "star_token",
+                &self.star_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "const_token",
+                &self.const_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mutability",
+                &self.mutability as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "elem",
+                &self.elem as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TypeReference {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypeReference {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypeReference")
-            .field("and_token", &self.and_token)
-            .field("lifetime", &self.lifetime)
-            .field("mutability", &self.mutability)
-            .field("elem", &self.elem)
+            .field_with(
+                "and_token",
+                &self.and_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "lifetime",
+                &self.lifetime as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "mutability",
+                &self.mutability as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "elem",
+                &self.elem as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TypeSlice {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypeSlice {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypeSlice")
-            .field("bracket_token", &self.bracket_token)
-            .field("elem", &self.elem)
+            .field_with(
+                "bracket_token",
+                &self.bracket_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "elem",
+                &self.elem as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TypeTraitObject {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypeTraitObject {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypeTraitObject")
-            .field("dyn_token", &self.dyn_token)
-            .field("bounds", &self.bounds)
+            .field_with(
+                "dyn_token",
+                &self.dyn_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "bounds",
+                &self.bounds as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::TypeTuple {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::TypeTuple {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("TypeTuple")
-            .field("paren_token", &self.paren_token)
-            .field("elems", &self.elems)
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "elems",
+                &self.elems as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::UnOp {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::UnOp {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::UnOp::Deref(v0) => {
-                f.debug_tuple_struct("Deref").field(v0).finish();
+                f.debug_tuple_struct("Deref")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::UnOp::Not(v0) => {
-                f.debug_tuple_struct("Not").field(v0).finish();
+                f.debug_tuple_struct("Not")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::UnOp::Neg(v0) => {
-                f.debug_tuple_struct("Neg").field(v0).finish();
+                f.debug_tuple_struct("Neg")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::UseGlob {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("UseGlob").field("star_token", &self.star_token).finish();
+impl<__With> DebugWith<__With> for syn::UseGlob {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
+        f.debug_struct("UseGlob")
+            .field_with(
+                "star_token",
+                &self.star_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .finish();
     }
 }
-impl DebugPls for syn::UseGroup {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::UseGroup {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("UseGroup")
-            .field("brace_token", &self.brace_token)
-            .field("items", &self.items)
+            .field_with(
+                "brace_token",
+                &self.brace_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "items",
+                &self.items as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::UseName {
-    fn fmt(&self, f: Formatter<'_>) {
-        f.debug_struct("UseName").field("ident", &self.ident).finish();
+impl<__With> DebugWith<__With> for syn::UseName {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
+        f.debug_struct("UseName")
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .finish();
     }
 }
-impl DebugPls for syn::UsePath {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::UsePath {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("UsePath")
-            .field("ident", &self.ident)
-            .field("colon2_token", &self.colon2_token)
-            .field("tree", &self.tree)
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "colon2_token",
+                &self.colon2_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "tree",
+                &self.tree as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::UseRename {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::UseRename {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("UseRename")
-            .field("ident", &self.ident)
-            .field("as_token", &self.as_token)
-            .field("rename", &self.rename)
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "as_token",
+                &self.as_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "rename",
+                &self.rename as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::UseTree {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::UseTree {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::UseTree::Path(v0) => {
-                f.debug_tuple_struct("Path").field(v0).finish();
+                f.debug_tuple_struct("Path")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::UseTree::Name(v0) => {
-                f.debug_tuple_struct("Name").field(v0).finish();
+                f.debug_tuple_struct("Name")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::UseTree::Rename(v0) => {
-                f.debug_tuple_struct("Rename").field(v0).finish();
+                f.debug_tuple_struct("Rename")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::UseTree::Glob(v0) => {
-                f.debug_tuple_struct("Glob").field(v0).finish();
+                f.debug_tuple_struct("Glob")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::UseTree::Group(v0) => {
-                f.debug_tuple_struct("Group").field(v0).finish();
+                f.debug_tuple_struct("Group")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
         }
     }
 }
-impl DebugPls for syn::Variadic {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Variadic {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Variadic")
-            .field("attrs", &self.attrs)
-            .field("pat", &self.pat)
-            .field("dots", &self.dots)
-            .field("comma", &self.comma)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "pat",
+                &self.pat as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "dots",
+                &self.dots as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "comma",
+                &self.comma as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Variant {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Variant {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("Variant")
-            .field("attrs", &self.attrs)
-            .field("ident", &self.ident)
-            .field("fields", &self.fields)
-            .field("discriminant", &self.discriminant)
+            .field_with(
+                "attrs",
+                &self.attrs as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "ident",
+                &self.ident as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "fields",
+                &self.fields as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "discriminant",
+                &self.discriminant as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::VisRestricted {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::VisRestricted {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("VisRestricted")
-            .field("pub_token", &self.pub_token)
-            .field("paren_token", &self.paren_token)
-            .field("in_token", &self.in_token)
-            .field("path", &self.path)
+            .field_with(
+                "pub_token",
+                &self.pub_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "paren_token",
+                &self.paren_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "in_token",
+                &self.in_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "path",
+                &self.path as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::Visibility {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::Visibility {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::Visibility::Public(v0) => {
-                f.debug_tuple_struct("Public").field(v0).finish();
+                f.debug_tuple_struct("Public")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Visibility::Restricted(v0) => {
-                f.debug_tuple_struct("Restricted").field(v0).finish();
+                f.debug_tuple_struct("Restricted")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::Visibility::Inherited => f.debug_ident("Inherited"),
         }
     }
 }
-impl DebugPls for syn::WhereClause {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::WhereClause {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         f.debug_struct("WhereClause")
-            .field("where_token", &self.where_token)
-            .field("predicates", &self.predicates)
+            .field_with(
+                "where_token",
+                &self.where_token as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
+            .field_with(
+                "predicates",
+                &self.predicates as &dyn DebugWith<__With>,
+                __with_associated_data,
+            )
             .finish();
     }
 }
-impl DebugPls for syn::WherePredicate {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<__With> DebugWith<__With> for syn::WherePredicate {
+    fn fmt(&self, __with_associated_data: &__With, f: Formatter<'_>) {
         match self {
             syn::WherePredicate::Lifetime(v0) => {
-                f.debug_tuple_struct("Lifetime").field(v0).finish();
+                f.debug_tuple_struct("Lifetime")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             syn::WherePredicate::Type(v0) => {
-                f.debug_tuple_struct("Type").field(v0).finish();
+                f.debug_tuple_struct("Type")
+                    .field_with(v0 as &dyn DebugWith<__With>, __with_associated_data)
+                    .finish();
             }
             _ => unreachable!(),
         }
     }
 }
-impl DebugPls for syn::token::Abstract {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Abstract {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Abstract");
     }
 }
-impl DebugPls for syn::token::And {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::And {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("And");
     }
 }
-impl DebugPls for syn::token::AndAnd {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::AndAnd {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("AndAnd");
     }
 }
-impl DebugPls for syn::token::AndEq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::AndEq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("AndEq");
     }
 }
-impl DebugPls for syn::token::As {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::As {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("As");
     }
 }
-impl DebugPls for syn::token::Async {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Async {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Async");
     }
 }
-impl DebugPls for syn::token::At {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::At {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("At");
     }
 }
-impl DebugPls for syn::token::Auto {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Auto {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Auto");
     }
 }
-impl DebugPls for syn::token::Await {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Await {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Await");
     }
 }
-impl DebugPls for syn::token::Become {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Become {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Become");
     }
 }
-impl DebugPls for syn::token::Box {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Box {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Box");
     }
 }
-impl DebugPls for syn::token::Break {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Break {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Break");
     }
 }
-impl DebugPls for syn::token::Caret {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Caret {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Caret");
     }
 }
-impl DebugPls for syn::token::CaretEq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::CaretEq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("CaretEq");
     }
 }
-impl DebugPls for syn::token::Colon {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Colon {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Colon");
     }
 }
-impl DebugPls for syn::token::Comma {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Comma {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Comma");
     }
 }
-impl DebugPls for syn::token::Const {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Const {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Const");
     }
 }
-impl DebugPls for syn::token::Continue {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Continue {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Continue");
     }
 }
-impl DebugPls for syn::token::Crate {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Crate {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Crate");
     }
 }
-impl DebugPls for syn::token::Default {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Default {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Default");
     }
 }
-impl DebugPls for syn::token::Do {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Do {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Do");
     }
 }
-impl DebugPls for syn::token::Dollar {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Dollar {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Dollar");
     }
 }
-impl DebugPls for syn::token::Dot {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Dot {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Dot");
     }
 }
-impl DebugPls for syn::token::DotDot {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::DotDot {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("DotDot");
     }
 }
-impl DebugPls for syn::token::DotDotDot {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::DotDotDot {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("DotDotDot");
     }
 }
-impl DebugPls for syn::token::DotDotEq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::DotDotEq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("DotDotEq");
     }
 }
-impl DebugPls for syn::token::Dyn {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Dyn {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Dyn");
     }
 }
-impl DebugPls for syn::token::Else {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Else {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Else");
     }
 }
-impl DebugPls for syn::token::Enum {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Enum {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Enum");
     }
 }
-impl DebugPls for syn::token::Eq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Eq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Eq");
     }
 }
-impl DebugPls for syn::token::EqEq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::EqEq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("EqEq");
     }
 }
-impl DebugPls for syn::token::Extern {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Extern {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Extern");
     }
 }
-impl DebugPls for syn::token::FatArrow {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::FatArrow {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("FatArrow");
     }
 }
-impl DebugPls for syn::token::Final {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Final {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Final");
     }
 }
-impl DebugPls for syn::token::Fn {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Fn {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Fn");
     }
 }
-impl DebugPls for syn::token::For {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::For {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("For");
     }
 }
-impl DebugPls for syn::token::Ge {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Ge {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Ge");
     }
 }
-impl DebugPls for syn::token::Gt {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Gt {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Gt");
     }
 }
-impl DebugPls for syn::token::If {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::If {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("If");
     }
 }
-impl DebugPls for syn::token::Impl {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Impl {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Impl");
     }
 }
-impl DebugPls for syn::token::In {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::In {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("In");
     }
 }
-impl DebugPls for syn::token::LArrow {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::LArrow {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("LArrow");
     }
 }
-impl DebugPls for syn::token::Le {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Le {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Le");
     }
 }
-impl DebugPls for syn::token::Let {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Let {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Let");
     }
 }
-impl DebugPls for syn::token::Loop {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Loop {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Loop");
     }
 }
-impl DebugPls for syn::token::Lt {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Lt {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Lt");
     }
 }
-impl DebugPls for syn::token::Macro {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Macro {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Macro");
     }
 }
-impl DebugPls for syn::token::Match {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Match {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Match");
     }
 }
-impl DebugPls for syn::token::Minus {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Minus {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Minus");
     }
 }
-impl DebugPls for syn::token::MinusEq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::MinusEq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("MinusEq");
     }
 }
-impl DebugPls for syn::token::Mod {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Mod {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Mod");
     }
 }
-impl DebugPls for syn::token::Move {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Move {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Move");
     }
 }
-impl DebugPls for syn::token::Mut {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Mut {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Mut");
     }
 }
-impl DebugPls for syn::token::Ne {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Ne {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Ne");
     }
 }
-impl DebugPls for syn::token::Not {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Not {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Not");
     }
 }
-impl DebugPls for syn::token::Or {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Or {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Or");
     }
 }
-impl DebugPls for syn::token::OrEq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::OrEq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("OrEq");
     }
 }
-impl DebugPls for syn::token::OrOr {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::OrOr {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("OrOr");
     }
 }
-impl DebugPls for syn::token::Override {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Override {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Override");
     }
 }
-impl DebugPls for syn::token::PathSep {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::PathSep {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("PathSep");
     }
 }
-impl DebugPls for syn::token::Percent {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Percent {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Percent");
     }
 }
-impl DebugPls for syn::token::PercentEq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::PercentEq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("PercentEq");
     }
 }
-impl DebugPls for syn::token::Plus {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Plus {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Plus");
     }
 }
-impl DebugPls for syn::token::PlusEq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::PlusEq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("PlusEq");
     }
 }
-impl DebugPls for syn::token::Pound {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Pound {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Pound");
     }
 }
-impl DebugPls for syn::token::Priv {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Priv {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Priv");
     }
 }
-impl DebugPls for syn::token::Pub {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Pub {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Pub");
     }
 }
-impl DebugPls for syn::token::Question {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Question {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Question");
     }
 }
-impl DebugPls for syn::token::RArrow {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::RArrow {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("RArrow");
     }
 }
-impl DebugPls for syn::token::Ref {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Ref {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Ref");
     }
 }
-impl DebugPls for syn::token::Return {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Return {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Return");
     }
 }
-impl DebugPls for syn::token::SelfType {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::SelfType {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("SelfType");
     }
 }
-impl DebugPls for syn::token::SelfValue {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::SelfValue {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("SelfValue");
     }
 }
-impl DebugPls for syn::token::Semi {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Semi {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Semi");
     }
 }
-impl DebugPls for syn::token::Shl {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Shl {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Shl");
     }
 }
-impl DebugPls for syn::token::ShlEq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::ShlEq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("ShlEq");
     }
 }
-impl DebugPls for syn::token::Shr {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Shr {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Shr");
     }
 }
-impl DebugPls for syn::token::ShrEq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::ShrEq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("ShrEq");
     }
 }
-impl DebugPls for syn::token::Slash {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Slash {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Slash");
     }
 }
-impl DebugPls for syn::token::SlashEq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::SlashEq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("SlashEq");
     }
 }
-impl DebugPls for syn::token::Star {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Star {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Star");
     }
 }
-impl DebugPls for syn::token::StarEq {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::StarEq {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("StarEq");
     }
 }
-impl DebugPls for syn::token::Static {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Static {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Static");
     }
 }
-impl DebugPls for syn::token::Struct {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Struct {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Struct");
     }
 }
-impl DebugPls for syn::token::Super {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Super {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Super");
     }
 }
-impl DebugPls for syn::token::Tilde {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Tilde {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Tilde");
     }
 }
-impl DebugPls for syn::token::Trait {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Trait {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Trait");
     }
 }
-impl DebugPls for syn::token::Try {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Try {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Try");
     }
 }
-impl DebugPls for syn::token::Type {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Type {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Type");
     }
 }
-impl DebugPls for syn::token::Typeof {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Typeof {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Typeof");
     }
 }
-impl DebugPls for syn::token::Underscore {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Underscore {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Underscore");
     }
 }
-impl DebugPls for syn::token::Union {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Union {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Union");
     }
 }
-impl DebugPls for syn::token::Unsafe {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Unsafe {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Unsafe");
     }
 }
-impl DebugPls for syn::token::Unsized {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Unsized {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Unsized");
     }
 }
-impl DebugPls for syn::token::Use {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Use {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Use");
     }
 }
-impl DebugPls for syn::token::Virtual {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Virtual {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Virtual");
     }
 }
-impl DebugPls for syn::token::Where {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Where {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Where");
     }
 }
-impl DebugPls for syn::token::While {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::While {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("While");
     }
 }
-impl DebugPls for syn::token::Yield {
-    fn fmt(&self, f: Formatter<'_>) {
+impl<W> DebugWith<W> for syn::token::Yield {
+    fn fmt(&self, _with: &W, f: Formatter<'_>) {
         f.debug_ident("Yield");
     }
 }

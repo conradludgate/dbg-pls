@@ -171,8 +171,7 @@ impl Printer {
     }
 
     pub fn qpath(&mut self, qself: &Option<QSelf>, path: &Path, kind: PathKind) {
-        let Some(qself) = qself
-        else {
+        let Some(qself) = qself else {
             self.path(path, kind);
             return;
         };

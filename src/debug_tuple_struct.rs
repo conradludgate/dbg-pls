@@ -1,4 +1,4 @@
-use crate::{DebugPls, Formatter};
+use crate::{DebugPls, DebugWith, Formatter};
 
 /// A helper designed to assist with creation of
 /// [`DebugPls`] implementations for tuple structs.
@@ -48,6 +48,13 @@ impl<'a> DebugTupleStruct<'a> {
     #[must_use]
     pub fn field(mut self, value: &dyn DebugPls) -> Self {
         self.expr.args.push(Formatter::process(value));
+        self
+    }
+
+    /// Adds the field to the tuple struct output.
+    #[must_use]
+    pub fn field_with<T>(mut self, value: &dyn DebugWith<T>, with: &T) -> Self {
+        self.expr.args.push(Formatter::process_with(value, with));
         self
     }
 

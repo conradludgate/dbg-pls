@@ -1,4 +1,4 @@
-use crate::{DebugPls, Formatter};
+use crate::{DebugPls, DebugWith, Formatter};
 
 /// A helper designed to assist with creation of
 /// [`DebugPls`] implementations for structs.
@@ -59,6 +59,21 @@ impl<'a> DebugStruct<'a> {
     pub fn field(mut self, name: &str, value: &dyn DebugPls) -> Self {
         self.expr.fields.push(syn::FieldValue {
             expr: Formatter::process(value),
+            attrs: vec![],
+            member: syn::Member::Named(syn::parse_str(name).unwrap()),
+            colon_token: Some(syn::token::Colon::default()),
+        });
+        self
+    }
+
+    /// Adds the field to the struct output.
+    ///
+    /// # Panics
+    /// This will panic if the name is not a valid identifier
+    #[must_use]
+    pub fn field_with<T>(mut self, name: &str, value: &dyn DebugWith<T>, with: &T) -> Self {
+        self.expr.fields.push(syn::FieldValue {
+            expr: Formatter::process_with(value, with),
             attrs: vec![],
             member: syn::Member::Named(syn::parse_str(name).unwrap()),
             colon_token: Some(syn::token::Colon::default()),
