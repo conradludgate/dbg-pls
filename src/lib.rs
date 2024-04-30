@@ -188,7 +188,7 @@ pub use pretty::pretty;
 #[cfg(feature = "colors")]
 mod colors;
 #[cfg(feature = "colors")]
-pub use colors::color;
+pub use colors::{color, color_with};
 
 #[cfg(feature = "derive")]
 #[cfg_attr(docsrs, doc(cfg(feature = "derive")))]
