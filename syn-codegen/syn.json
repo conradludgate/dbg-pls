@@ -1,5 +1,5 @@
 {
-  "version": "2.0.29",
+  "version": "2.0.60",
   "types": [
     {
       "ident": "Abi",
@@ -1500,6 +1500,7 @@
       "ident": "ExprMethodCall",
       "features": {
         "any": [
+          "derive",
           "full"
         ]
       },
@@ -1622,6 +1623,7 @@
       "ident": "ExprReference",
       "features": {
         "any": [
+          "derive",
           "full"
         ]
       },
@@ -1706,6 +1708,7 @@
       "ident": "ExprStruct",
       "features": {
         "any": [
+          "derive",
           "full"
         ]
       },
@@ -1999,6 +2002,7 @@
       "ident": "FieldValue",
       "features": {
         "any": [
+          "derive",
           "full"
         ]
       },
@@ -3362,6 +3366,11 @@
             "syn": "LitByteStr"
           }
         ],
+        "CStr": [
+          {
+            "syn": "LitCStr"
+          }
+        ],
         "Byte": [
           {
             "syn": "LitByte"
@@ -3417,6 +3426,12 @@
     },
     {
       "ident": "LitByteStr",
+      "features": {
+        "any": []
+      }
+    },
+    {
+      "ident": "LitCStr",
       "features": {
         "any": []
       }
