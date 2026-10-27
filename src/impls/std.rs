@@ -11,8 +11,8 @@ use std::{
 };
 
 use crate::{DebugWith, Formatter};
-use syn::RangeLimits;
 use syn::__private::Span;
+use syn::RangeLimits;
 
 impl<W, T: ?Sized + DebugWith<W>> DebugWith<W> for Box<T> {
     fn fmt(&self, with: &W, f: Formatter<'_>) {
@@ -127,11 +127,22 @@ macro_rules! debug_floats {
     ($ty:ident) => {
         impl<W> DebugWith<W> for $ty {
             fn fmt(&self, _with: &W, f: Formatter<'_>) {
-                let mut buf = ryu::Buffer::new();
-                f.write_expr(syn::ExprLit {
-                    attrs: vec![],
-                    lit: syn::LitFloat::new(buf.format(*self), Span::call_site()).into(),
-                });
+                // Non-finite values have no Rust literal syntax.
+                let constant: syn::ExprPath = if self.is_nan() {
+                    syn::parse_quote!($ty::NAN)
+                } else if *self == $ty::INFINITY {
+                    syn::parse_quote!($ty::INFINITY)
+                } else if *self == $ty::NEG_INFINITY {
+                    syn::parse_quote!($ty::NEG_INFINITY)
+                } else {
+                    let mut buf = ryu::Buffer::new();
+                    f.write_expr(syn::ExprLit {
+                        attrs: vec![],
+                        lit: syn::LitFloat::new(buf.format(*self), Span::call_site()).into(),
+                    });
+                    return;
+                };
+                f.write_expr(constant);
             }
         }
     };
