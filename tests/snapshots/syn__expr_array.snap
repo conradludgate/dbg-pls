@@ -39,39 +39,37 @@ Array(ExprArray {
 })
 
 color:
-[32mArray[0m[31m([0m[32mExprArray[0m [31m{[0m
-    attrs[31m:[0m [31m[[0m[31m][0m[31m,[0m
-    bracket_token[31m:[0m [32mBracket[0m[31m,[0m
+[32mArray[31m([32mExprArray[0m [31m{[0m
+    attrs[31m:[0m [31m[],[0m
+    bracket_token[31m:[0m [32mBracket[31m,[0m
     elems[31m:[0m [31m[[0m
-        [32mLit[0m[31m([0m[32mExprLit[0m [31m{[0m
-            attrs[31m:[0m [31m[[0m[31m][0m[31m,[0m
-            lit[31m:[0m [32mStr[0m[31m([0m[32mLitStr[0m [31m{[0m
-                token[31m:[0m [33m[31m"[33mHello, World! I am a long string[31m"[33m[0m[31m,[0m
-            [31m}[0m[31m)[0m[31m,[0m
-        [31m}[0m[31m)[0m[31m,[0m
-        [32mComma[0m[31m,[0m
-        [32mLit[0m[31m([0m[32mExprLit[0m [31m{[0m
-            attrs[31m:[0m [31m[[0m[31m][0m[31m,[0m
-            lit[31m:[0m [32mInt[0m[31m([0m[32mLitInt[0m [31m{[0m token[31m:[0m 420 [31m}[0m[31m)[0m[31m,[0m
-        [31m}[0m[31m)[0m[31m,[0m
-        [32mComma[0m[31m,[0m
-        [32mLit[0m[31m([0m[32mExprLit[0m [31m{[0m
-            attrs[31m:[0m [31m[[0m[31m][0m[31m,[0m
-            lit[31m:[0m [32mStr[0m[31m([0m[32mLitStr[0m [31m{[0m
-                token[31m:[0m [33m[31m"[33mWait, you can't mix and match types in arrays, is this python?[31m"[33m[0m[31m,[0m
-            [31m}[0m[31m)[0m[31m,[0m
-        [31m}[0m[31m)[0m[31m,[0m
-        [32mComma[0m[31m,[0m
-        [32mLit[0m[31m([0m[32mExprLit[0m [31m{[0m
-            attrs[31m:[0m [31m[[0m[31m][0m[31m,[0m
-            lit[31m:[0m [32mInt[0m[31m([0m[32mLitInt[0m [31m{[0m token[31m:[0m 69 [31m}[0m[31m)[0m[31m,[0m
-        [31m}[0m[31m)[0m[31m,[0m
-        [32mComma[0m[31m,[0m
-        [32mLit[0m[31m([0m[32mExprLit[0m [31m{[0m
-            attrs[31m:[0m [31m[[0m[31m][0m[31m,[0m
-            lit[31m:[0m [32mStr[0m[31m([0m[32mLitStr[0m [31m{[0m token[31m:[0m [33m[31m"[33mNice.[31m"[33m[0m [31m}[0m[31m)[0m[31m,[0m
-        [31m}[0m[31m)[0m[31m,[0m
-    [31m][0m[31m,[0m
-[31m}[0m[31m)[0m
-
-
+        [32mLit[31m([32mExprLit[0m [31m{[0m
+            attrs[31m:[0m [31m[],[0m
+            lit[31m:[0m [32mStr[31m([32mLitStr[0m [31m{[0m
+                token[31m:[0m [31m"[33mHello, World! I am a long string[31m",[0m
+            [31m}),[0m
+        [31m}),[0m
+        [32mComma[31m,[0m
+        [32mLit[31m([32mExprLit[0m [31m{[0m
+            attrs[31m:[0m [31m[],[0m
+            lit[31m:[0m [32mInt[31m([32mLitInt[0m [31m{[0m token[31m:[0m 420 [31m}),[0m
+        [31m}),[0m
+        [32mComma[31m,[0m
+        [32mLit[31m([32mExprLit[0m [31m{[0m
+            attrs[31m:[0m [31m[],[0m
+            lit[31m:[0m [32mStr[31m([32mLitStr[0m [31m{[0m
+                token[31m:[0m [31m"[33mWait, you can't mix and match types in arrays, is this python?[31m",[0m
+            [31m}),[0m
+        [31m}),[0m
+        [32mComma[31m,[0m
+        [32mLit[31m([32mExprLit[0m [31m{[0m
+            attrs[31m:[0m [31m[],[0m
+            lit[31m:[0m [32mInt[31m([32mLitInt[0m [31m{[0m token[31m:[0m 69 [31m}),[0m
+        [31m}),[0m
+        [32mComma[31m,[0m
+        [32mLit[31m([32mExprLit[0m [31m{[0m
+            attrs[31m:[0m [31m[],[0m
+            lit[31m:[0m [32mStr[31m([32mLitStr[0m [31m{[0m token[31m:[0m [31m"[33mNice.[31m"[0m [31m}),[0m
+        [31m}),[0m
+    [31m],[0m
+[31m})[0m

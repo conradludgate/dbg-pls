@@ -1,6 +1,6 @@
 ---
 source: tests/derive.rs
-expression: "Rangeful {\n    range: 1..4,\n    range_from: 1..,\n    range_to: ..7,\n    range_full: ..,\n    range_inclusive: 1234..=1236,\n    range_inclusive_to: ..=70,\n}"
+expression: "Rangeful\n{\n    range: 1..4, range_from: 1.., range_to: ..7, range_full: ..,\n    range_inclusive: 1234..=1236, range_inclusive_to: ..=70,\n}"
 ---
 >>> pretty
 Rangeful {
@@ -15,11 +15,9 @@ Rangeful {
 >>> color
 [32mRangeful[0m [31m{[0m
     range[31m:[0m 1[31m..[0m4[31m,[0m
-    range_from[31m:[0m 1[31m..[0m[31m,[0m
+    range_from[31m:[0m 1[31m..,[0m
     range_to[31m:[0m [31m..[0m7[31m,[0m
-    range_full[31m:[0m [31m..[0m[31m,[0m
+    range_full[31m:[0m [31m..,[0m
     range_inclusive[31m:[0m 1234[31m..=[0m1236[31m,[0m
     range_inclusive_to[31m:[0m [31m..=[0m70[31m,[0m
 [31m}[0m
-
-
