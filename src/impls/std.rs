@@ -3,10 +3,11 @@ mod fnptr;
 mod tuple;
 
 use std::{
+    cell::OnceCell,
     ops,
     ops::ControlFlow,
     rc::Rc,
-    sync::{Arc, Mutex, MutexGuard, TryLockError},
+    sync::{Arc, Mutex, MutexGuard, OnceLock, TryLockError},
     task::Poll,
 };
 
@@ -82,6 +83,29 @@ impl<W, T: ?Sized + DebugWith<W>> DebugWith<W> for Mutex<T> {
         }
         .field("poisoned", &self.is_poisoned())
         .finish_non_exhaustive();
+    }
+}
+
+impl<W, T: DebugWith<W>> DebugWith<W> for OnceCell<T> {
+    fn fmt(&self, with: &W, f: Formatter<'_>) {
+        let d = f.debug_tuple_struct("OnceCell");
+        match self.get() {
+            Some(value) => d.field_with(value, with),
+            None => d.field(&"<uninit>"),
+        }
+        .finish();
+    }
+}
+
+impl<W, T: DebugWith<W>> DebugWith<W> for OnceLock<T> {
+    fn fmt(&self, with: &W, f: Formatter<'_>) {
+        let d = f.debug_tuple_struct("OnceLock");
+        // get() also returns None during initialization, without waiting for it.
+        match self.get() {
+            Some(value) => d.field_with(value, with),
+            None => d.field(&"<uninit>"),
+        }
+        .finish();
     }
 }
 
