@@ -160,6 +160,12 @@
 //! ]
 //! ```
 //!
+//! # Once-initialized values
+//!
+//! [`std::cell::OnceCell`] and [`std::sync::OnceLock`] display their contents
+//! when initialized, or a `"<uninit>"` placeholder otherwise. Formatting does
+//! not initialize a cell or wait for another thread to finish initializing it.
+//!
 //! # How it works
 //!
 //! All [`DebugPls`] implementations are forced to output only valid
