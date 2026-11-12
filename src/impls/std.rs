@@ -4,6 +4,7 @@ mod tuple;
 
 use std::{
     cell::OnceCell,
+    convert::Infallible,
     ops,
     ops::ControlFlow,
     rc::Rc,
@@ -220,6 +221,12 @@ impl<W> DebugWith<W> for str {
 impl<W> DebugWith<W> for String {
     fn fmt(&self, with: &W, f: Formatter<'_>) {
         DebugWith::fmt(self.as_str(), with, f);
+    }
+}
+
+impl<W> DebugWith<W> for Infallible {
+    fn fmt(&self, _with: &W, _f: Formatter<'_>) {
+        match *self {}
     }
 }
 
